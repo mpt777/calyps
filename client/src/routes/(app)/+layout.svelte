@@ -7,7 +7,7 @@
 
 	import { browser } from '$app/environment';
 	// import { LightSwitch } from '@skeletonlabs/skeleton';
-	import { onMount } from 'svelte';
+	import { onMount, setContext } from 'svelte';
     import LightSwitch from '$components/common/LightSwitch.svelte';
     import Drawer from '$components/common/Drawer.svelte';
     import Tooltip from '$components/common/Tooltip.svelte';
@@ -23,6 +23,9 @@
 
 
 	let breadcrumbs = $derived(page.data.breadcrumbs || []);
+
+	let drawerState = $state(false);
+	setContext('drawerState', drawerState);
 </script>
 
 <svelte:head>

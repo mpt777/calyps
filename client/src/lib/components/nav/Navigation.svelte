@@ -2,9 +2,6 @@
 <script>
     import { page } from '$app/state';
     import { url } from '$utils/url';
-	// import { getDrawerStore } from "@skeletonlabs/skeleton";
-
-	// const drawerStore = getDrawerStore();
 
     import NavLink from '$components/nav/NavLink.svelte';
 

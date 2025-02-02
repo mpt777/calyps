@@ -1,11 +1,10 @@
 <script lang="ts">
+	import { setContext } from 'svelte';
+
+	
 	import { Modal } from '@skeletonlabs/skeleton-svelte';
+	import { drawerState } from '$scripts/globalState.svelte';
 
-	let drawerState = $state(false);
-
-	function drawerClose() {
-		drawerState = false;
-	}
 
   let {_trigger, _content} = $props();
 </script>
@@ -20,15 +19,24 @@ Tips for Drawer modals:
 -->
 
 <Modal
-	bind:open={drawerState}
+	bind:open={drawerState.open}
 	triggerBase="btn preset-tonal"
-	contentBase="bg-surface-100-900 p-4 space-y-4 shadow-xl w-[480px] h-screen"
+	contentBase="bg-surface-100-900 p-4 shadow-xl w-[200px] h-screen"
 	positionerJustify="justify-start"
 	positionerAlign=""
 	positionerPadding=""
-	transitionsPositionerIn={{ x: -480, duration: 200 }}
-	transitionsPositionerOut={{ x: -480, duration: 200 }}
+	transitionsPositionerIn={{ x: -200, duration: 200 }}
+	transitionsPositionerOut={{ x: -200, duration: 200 }}
 >
 	{#snippet trigger()}{@render _trigger()}{/snippet}
-	{#snippet content()}{@render _content()}{/snippet}
+	{#snippet content()}
+	<div class="relative h-full">
+		<button class="btn preset-tonal absolute top-0 right-0" onclick={() => drawerState.open = false}>
+				<a><i class="ri-close-large-line"></i></a>
+		</button>
+
+
+		{@render _content()}
+	</div>
+	{/snippet}
 </Modal>
