@@ -2,6 +2,10 @@
 import { onMount } from 'svelte';
 
 onMount(() => {
+    const perfectFrameTime = 1000 / 60;
+    let deltaTime = 0;
+    let lastTimestamp = 0;
+
   let context, controller, rectangle, loop, wall, movingWall, teleportWall, badDude, pewpew, canWin;
   context = document.getElementById("gameCanvas").getContext("2d");
 
@@ -23,9 +27,9 @@ onMount(() => {
 
   let spawnBlock;
 
-  let gravity = 3;
+  let gravity = 1;
   let speed = 4;
-  let jumpHeight = 8;
+  let jumpHeight = 9;
   let maxGravity = 25;
 
   //This counts out score, and it is used to place the squares in the top right corner
@@ -136,9 +140,9 @@ onMount(() => {
       },
 
       /* Call this on each game cycle. */
-      update: function () {
+      update: function (deltaTime) {
 
-          this.count++; // Keep track of how many cycles have passed since the last frame change.
+          this.count += 1 * deltaTime; // Keep track of how many cycles have passed since the last frame change.
 
           if (this.count >= this.delay) { // If enough cycles have passed, we change the frame.
 
@@ -329,22 +333,21 @@ onMount(() => {
 
       if (!(placeFree(rectangle.x, rectangle.y + 1))) {
           gravity = 0;
-          jumpCoolDownCounter += 1;
+          jumpCoolDownCounter += 1 * deltaTime;
       } else if (gravity <= maxGravity) {
           gravity += 1;
       } else {
           gravity = maxGravity;
       }
 
-      if (jumpCoolDownCounter == jumpCoolDownTime) { //change what jump timer needs to equal to change the jumping cooldown
-          jumpCoolDownCounter = 0;
+      if (jumpCoolDownCounter >= jumpCoolDownTime) { //change what jump timer needs to equal to change the jumping cooldown
+          jumpCoolDownCounter -= jumpCoolDownTime;
           rectangle.jumping = true;
       }
 
       for (let i = gravity; i > 0; i--) {
-          if (placeFree(rectangle.x, rectangle.y + i)) {
-              rectangle.y += i;
-
+          if (placeFree(rectangle.x, rectangle.y + (i * deltaTime))) {
+              rectangle.y += i * deltaTime;
               break;
           }
       }
@@ -360,12 +363,12 @@ onMount(() => {
       if (!(placeFree(rectangle.x, rectangle.y - 1))) {
           rectangle.jumpSpeed = 0;
       } else {
-          rectangle.jumpSpeed -= 1;
+          rectangle.jumpSpeed -= 0.5;
       }
 
       for (let j = rectangle.jumpSpeed; j > 0; j--) {
           if (placeFree(rectangle.x, rectangle.y - j)) {
-              rectangle.y -= j;
+              rectangle.y -= j * deltaTime;
           }
       }
   }
@@ -655,9 +658,9 @@ onMount(() => {
           //movingPlatforms[2] = new movingWall(gridNum * 31, gridNum * 25, gridNum * 5, gridNum * .5, "tan", gridNum * 18, 0, 1, 0, 0, 0);
           //movingPlatforms[3] = new movingWall(gridNum * 43, gridNum * 25, gridNum * 1, gridNum * 50, "pink", gridNum * 0, 0, 0, 0, 0, 0);
           //(x, y, width, height, color, xMove, yMove, moveSpeedX, moveSpeedY, delayTimeX, delayTimeY, centeredMoveAni, startDelayX, startDelayY)
-          movingWalls[0] = new movingWall(gridNum * 8, gridNum * 38, gridNum * 4, gridNum * 1, GRASS_IMAGE, 0, gridNum * 1, 0, 1, 0, 250, 0, 0, 0); // lilly pads
-          movingWalls[1] = new movingWall(gridNum * 15, gridNum * 38, gridNum * 4, gridNum * 1, GRASS_IMAGE, 0, gridNum * 1, 0, 1, 0, 250, 0, 0, 50);
-          movingWalls[2] = new movingWall(gridNum * 22, gridNum * 38, gridNum * 4, gridNum * 1, GRASS_IMAGE, 0, gridNum * 1, 0, 1, 0, 250, 0, 0, 100);
+          movingWalls[0] = new movingWall(gridNum * 8, gridNum * 37, gridNum * 4, gridNum * 1, GRASS_IMAGE, 0, gridNum * 1, 0, 0, 0, 0, 0, 0, 0); // lilly pads
+          movingWalls[1] = new movingWall(gridNum * 15, gridNum * 37, gridNum * 4, gridNum * 1, GRASS_IMAGE, 0, gridNum * 1, 0, 0, 0, 0, 0, 0, 0);
+          movingWalls[2] = new movingWall(gridNum * 22, gridNum * 37, gridNum * 4, gridNum * 1, GRASS_IMAGE, 0, gridNum * 1, 0, 0, 0, 0, 0, 0, 0);
 
           movingWalls[3] = new movingWall(gridNum * -1, gridNum * 12, gridNum * 10, gridNum * 2, CLOUD_MAP, gridNum * 1, 0, .05, 0, 0, 0, 1, 0, 100); // cloud 1
           movingWalls[4] = new movingWall(gridNum * -1, gridNum * 10, gridNum * 6, gridNum * 3, CLOUD_MAP, gridNum * 1, 0, .05, 0, 0, 0, 1, 0, 100);
@@ -671,17 +674,17 @@ onMount(() => {
           movingWalls[11] = new movingWall(gridNum * 40, gridNum * 13, gridNum * 5, gridNum * 3, CLOUD_MAP, gridNum * -1, 0, .04, 0, 0, 0, 1, 0, 0);
           movingWalls[12] = new movingWall(gridNum * 31, gridNum * 10, gridNum * 5, gridNum * 1, CLOUD_MAP, gridNum * -1, 0, .04, 0, 0, 0, 1, 0, 0); // top of cloud 2
 
-          movingWalls[13] = new movingWall(gridNum * 52, gridNum * 7, gridNum * 11, gridNum * 2, CLOUD_MAP, gridNum * 1, 0, .05, 0, 0, 0, 1, 0, 0); //cloud 3
-          movingWalls[14] = new movingWall(gridNum * 54, gridNum * 9, gridNum * 9, gridNum * 1, CLOUD_MAP, gridNum * 1, 0, .05, 0, 0, 0, 1, 0, 0);
-          movingWalls[15] = new movingWall(gridNum * 55, gridNum * 5, gridNum * 6, gridNum * 3, CLOUD_MAP, gridNum * 1, 0, .05, 0, 0, 0, 1, 0, 0);
-          movingWalls[16] = new movingWall(gridNum * 57, gridNum * 3, gridNum * 6, gridNum * 3, CLOUD_MAP, gridNum * 1, 0, .05, 0, 0, 0, 1, 0, 0);
+          movingWalls[13] = new movingWall(gridNum * 51, gridNum * 7, gridNum * 11, gridNum * 2, CLOUD_MAP, gridNum * 1, 0, .05, 0, 0, 0, 1, 0, 0); //cloud 3
+          movingWalls[14] = new movingWall(gridNum * 52, gridNum * 9, gridNum * 9, gridNum * 2, CLOUD_MAP, gridNum * 1, 0, .05, 0, 0, 0, 1, 0, 0);
+          movingWalls[15] = new movingWall(gridNum * 53, gridNum * 5, gridNum * 6, gridNum * 4, CLOUD_MAP, gridNum * 1, 0, .05, 0, 0, 0, 1, 0, 0);
+          movingWalls[16] = new movingWall(gridNum * 56, gridNum * 3, gridNum * 6, gridNum * 5, CLOUD_MAP, gridNum * 1, 0, .05, 0, 0, 0, 1, 0, 0);
 
           movingWalls[17] = new movingWall(gridNum * 13, gridNum * 13, gridNum * 5, gridNum * 1, CLOUD_MAP, gridNum * -1, 0, .05, 0, 0, 0, 0, 0, 0);
           movingWalls[18] = new movingWall(gridNum * 14, gridNum * 14, gridNum * 3, gridNum * 1, CLOUD_MAP, gridNum * -1, 0, .05, 0, 0, 0, 0, 0, 0);
           //movingWalls[18] = new movingWall(gridNum * 14, gridNum * 12, gridNum * 3, gridNum * 1, GRASS_IMAGE, gridNum * -1, 0, .05, 0, 0, 0, 0, 0, 0);
 
           teleportWalls[0] = new teleportWall(gridNum * 57, gridNum * 29, gridNum * 1, gridNum * 2, DOOR_IMAGE, gridNum * 0, 0, 0, 0, 0, 0, 0, 0, 0, 1); //boat telepprter
-          teleportWalls[1] = new teleportWall(gridNum * 54, gridNum * 5, gridNum * 1, gridNum * 2, DOOR_IMAGE, gridNum * 1, 0, .05, 0, 0, 0, 1, 0, 0, -1);
+          teleportWalls[1] = new teleportWall(gridNum * 52, gridNum * 5, gridNum * 1, gridNum * 2, DOOR_IMAGE, gridNum * 1, 0, .05, 0, 0, 0, 1, 0, 0, -1);
 
 
           endGoals[0] = new movingWall(gridNum * 1, gridNum * 3, gridNum, gridNum, GOAL_IMAGE, gridNum * 1, gridNum, 0.05, .2, 0, 0); //cloud1boi
@@ -728,6 +731,7 @@ onMount(() => {
 
           endGoals[0] = new movingWall(gridNum * 100, gridNum * 100, gridNum, gridNum, GOAL_IMAGE, gridNum * 1, gridNum, 0.05, .2, 0, 0); //cloud1boi
 
+          
           deathWalls[0] = new wall(gridNum * 0, gameH - gridNum, gameW, gridNum, WATER_IMAGE);
           
           healthPickUps[0] = new movingWall(gridNum * 16.5, gridNum * 33, gridNum, gridNum, HEART_IMAGE, 0, gridNum, 0, .2, 0, 0);
@@ -751,7 +755,7 @@ onMount(() => {
 
       for (let s = speed; s > 0; s--) {
           if (placeFree(rectangle.x + s * dir, rectangle.y)) {
-              rectangle.x += s * dir;
+              rectangle.x += s * dir * deltaTime;
               break;
           }
       }
@@ -790,15 +794,15 @@ onMount(() => {
 
 
               if (placeFree(rectangle.x + movingWalls[i].moveSpeedX * movingWalls[i].moveSwitchX, rectangle.y)) { //the place to the left or right free
-                  rectangle.x += movingWalls[i].moveSpeedX * movingWalls[i].moveSwitchX;
+                  rectangle.x += movingWalls[i].moveSpeedX * movingWalls[i].moveSwitchX * deltaTime;
               }
               if (placeFree(rectangle.x, rectangle.y + movingWalls[i].moveSpeedY * (movingWalls[i].moveSwitchY))) {
-                  rectangle.y += movingWalls[i].moveSpeedY * (movingWalls[i].moveSwitchY);
+                  rectangle.y += movingWalls[i].moveSpeedY * (movingWalls[i].moveSwitchY) * deltaTime;
               }
 
               //might delete this line
               if (movingWalls[i].moveSwitchY == 1) {
-                  rectangle.y += -0.5;
+                  rectangle.y += -0.5 * deltaTime;
               }
               gravity = 0;
           }
@@ -812,7 +816,7 @@ onMount(() => {
 
           if (collisionDetect(movingWallsTemp, movingWallsTempWALL)) { //makes the rectangle not stick when it jumps into the side of a moving wall
               if (rectangle.y < movingWalls[i].y + movingWalls[i].height && rectangle.y + rectangle.height > movingWalls[i].y) {
-                  rectangle.x += movingWalls[i].moveSpeedX * movingWalls[i].moveSwitchX;
+                  rectangle.x += movingWalls[i].moveSpeedX * movingWalls[i].moveSwitchX * deltaTime;
               }
 
           }
@@ -857,16 +861,16 @@ onMount(() => {
               if (controller.down == 0 && collisionDetect(movingWallsTemp, movingPlatforms[p])) {
 
                   if (placeFree(rectangle.x + (movingPlatforms[p].moveSpeedX * movingPlatforms[p].moveSwitchX), rectangle.y)) {
-                      rectangle.x += movingPlatforms[p].moveSpeedX * movingPlatforms[p].moveSwitchX;
+                      rectangle.x += movingPlatforms[p].moveSpeedX * movingPlatforms[p].moveSwitchX * deltaTime;
                   }
 
                   if (placeFree(rectangle.x, rectangle.y + ((movingPlatforms[p].moveSpeedY * movingPlatforms[p].moveSwitchY)))) {
-                      rectangle.y += (movingPlatforms[p].moveSpeedY) * movingPlatforms[p].moveSwitchY;
+                      rectangle.y += (movingPlatforms[p].moveSpeedY) * movingPlatforms[p].moveSwitchY * deltaTime;
 
                   }
 
                   if (movingPlatforms[p].moveSwitchY == -1) {
-                      rectangle.y -= .5;
+                      rectangle.y -= .5 * deltaTime;
                       gravity = 0;
                   }
                   playerMovingPlatformTimer += 1;
@@ -972,7 +976,7 @@ onMount(() => {
       }
 
 
-      rectangle.animation.update();
+      rectangle.animation.update(deltaTime);
   }
 
   function drawPewpew() {
@@ -990,19 +994,21 @@ onMount(() => {
   function drawBadDudesPewPew() {
 
       for (let i = 0; i < badDudes.length; i++) {
-          if (badDudes[i].badDudeCoolDown != 0) {
-              badDudes[i].badDudeCoolDown -= 1;
-          }
-          if (badDudes[i].badDudeCoolDown == 1) {
-              if (badDudes[i].moveSpeedX - badDudes[i].moveSpeedY == 0) {
-                  badDudesPewPew[pewCountBadDudes] = new pewpew(badDudes[i].x + (gridNum * (badDudes[i].direction)), badDudes[i].y + (.25 * gridNum), gridNum, .5 * gridNum, ARROW_PEW, gameW, 0, 5, 0, badDudes[i].direction)
-              } else {
-                  badDudesPewPew[pewCountBadDudes] = new pewpew(badDudes[i].x, badDudes[i].y + (.25 * gridNum), gridNum, .5 * gridNum, ARROW_PEW, gameW, 0, 5, 0, badDudes[i].moveSwitchX);
-              }
-              badDudesPewPew[pewCountBadDudes].shotFromEnemy = true;
-              badDudes[i].badDudeCoolDown = badDudes[i].badDudeCoolDownOG;
-              pewCountBadDudes += 1;
-          }
+        if (badDudes[i].badDudeCoolDownOG == 0) {
+            continue
+        }
+        if (badDudes[i].badDudeCoolDown >= 0)  {
+            badDudes[i].badDudeCoolDown -= 1 * deltaTime;
+        } else {
+            if (badDudes[i].moveSpeedX - badDudes[i].moveSpeedY == 0) {
+                badDudesPewPew[pewCountBadDudes] = new pewpew(badDudes[i].x + (gridNum * (badDudes[i].direction)), badDudes[i].y + (.25 * gridNum), gridNum, .5 * gridNum, ARROW_PEW, gameW, 0, 5, 0, badDudes[i].direction)
+            } else {
+                badDudesPewPew[pewCountBadDudes] = new pewpew(badDudes[i].x, badDudes[i].y + (.25 * gridNum), gridNum, .5 * gridNum, ARROW_PEW, gameW, 0, 5, 0, badDudes[i].moveSwitchX);
+            }
+            badDudesPewPew[pewCountBadDudes].shotFromEnemy = true;
+            badDudes[i].badDudeCoolDown = badDudes[i].badDudeCoolDownOG;
+            pewCountBadDudes += 1;
+        }
       }
 
 
@@ -1283,16 +1289,17 @@ onMount(() => {
       rectangle.lifeCount += 1;
   }
 
+
   function movingAnimation(objectToAnimate) {
       for (let ani = 0; ani < objectToAnimate.length; ani++) {
 
           if (objectToAnimate[ani].moveSwitchX != 0) {
 
               if (!objectToAnimate[ani].centeredMoveAni) {
-                  if (Math.sign(objectToAnimate[ani].xMove) == 1 && objectToAnimate[ani].x < objectToAnimate[ani].xOriginal) { //these two function make the animated bounce from start to one side
+                  if (Math.sign(objectToAnimate[ani].xMove) == 1 && objectToAnimate[ani].x <= objectToAnimate[ani].xOriginal) { //these two function make the animated bounce from start to one side
                       objectToAnimate[ani].moveSwitchXTF = true;
                   }
-                  if (Math.sign(objectToAnimate[ani].xMove) == -1 && objectToAnimate[ani].x > objectToAnimate[ani].xOriginal) { //this is teh second funtion
+                  if (Math.sign(objectToAnimate[ani].xMove) == -1 && objectToAnimate[ani].x >= objectToAnimate[ani].xOriginal) { //this is teh second funtion
                       objectToAnimate[ani].moveSwitchXTF = true;
                   }
               }
@@ -1301,25 +1308,25 @@ onMount(() => {
                   objectToAnimate[ani].moveSwitchXTF = true;
               }
 
-              if (objectToAnimate[ani].startDelayX < 1) { // the start delay. If it is zero, start moving it, if not, subtract 1 from the start delay and try again
+              if (objectToAnimate[ani].startDelayX <= 0) { // the start delay. If it is zero, start moving it, if not, subtract 1 from the start delay and try again
 
                   if (objectToAnimate[ani].moveSwitchXTF == true) {
-                      if (objectToAnimate[ani].delayCounterX == objectToAnimate[ani].delayTimeX) {
+                      if (objectToAnimate[ani].delayCounterX >= objectToAnimate[ani].delayTimeX) {
                           objectToAnimate[ani].moveSwitchX *= -1;
                           objectToAnimate[ani].delayCounterX = 0;
                           objectToAnimate[ani].moveSwitchXTF = false;
                       } else {
-                          objectToAnimate[ani].delayCounterX += 1;
+                          objectToAnimate[ani].delayCounterX += 1 * deltaTime;
                       }
                   }
 
                   if (objectToAnimate[ani].moveSwitchX == 1 && objectToAnimate[ani].moveSwitchXTF == false) {
-                      objectToAnimate[ani].x += objectToAnimate[ani].moveSpeedX * objectToAnimate[ani].moveSwitchX;
+                      objectToAnimate[ani].x += objectToAnimate[ani].moveSpeedX * objectToAnimate[ani].moveSwitchX * deltaTime;
                       objectToAnimate[ani].delayCounterX = 0;
                   }
 
                   if (objectToAnimate[ani].moveSwitchX == -1 && objectToAnimate[ani].moveSwitchXTF == false) {
-                      objectToAnimate[ani].x += objectToAnimate[ani].moveSpeedX * objectToAnimate[ani].moveSwitchX;
+                      objectToAnimate[ani].x += objectToAnimate[ani].moveSpeedX * objectToAnimate[ani].moveSwitchX * deltaTime;
                       objectToAnimate[ani].delayCounterX = 0;
                   }
               } else {
@@ -1332,10 +1339,10 @@ onMount(() => {
           if (objectToAnimate[ani].moveSwitchY != 0) {
 
               if (!objectToAnimate[ani].centeredMoveAni) {
-                  if (Math.sign(objectToAnimate[ani].yMove) == -1 && objectToAnimate[ani].y < objectToAnimate[ani].yOriginal) { //these two function make the animated bounce from start to one side
+                  if (Math.sign(objectToAnimate[ani].yMove) == -1 && objectToAnimate[ani].y <= objectToAnimate[ani].yOriginal) { //these two function make the animated bounce from start to one side
                       objectToAnimate[ani].moveSwitchYTF = true;
                   }
-                  if (Math.sign(objectToAnimate[ani].yMove) == 1 && objectToAnimate[ani].y > objectToAnimate[ani].yOriginal) { //this is teh second funtion
+                  if (Math.sign(objectToAnimate[ani].yMove) == 1 && objectToAnimate[ani].y >= objectToAnimate[ani].yOriginal) { //this is teh second funtion
                       objectToAnimate[ani].moveSwitchYTF = true;
                   }
               }
@@ -1343,35 +1350,36 @@ onMount(() => {
                   objectToAnimate[ani].moveSwitchYTF = true;
               }
 
-              if (objectToAnimate[ani].startDelayY < 1) {
+              if (objectToAnimate[ani].startDelayY <= 0) {
 
                   if (objectToAnimate[ani].moveSwitchYTF == true) {
-                      if (objectToAnimate[ani].delayCounterY == objectToAnimate[ani].delayTimeY) {
+                      if (objectToAnimate[ani].delayCounterY >= (objectToAnimate[ani].delayTimeY || 0)) {
                           objectToAnimate[ani].moveSwitchY *= -1;
-                          objectToAnimate[ani].delayCounterY = 0;
+                          objectToAnimate[ani].delayCounterY -=objectToAnimate[ani].delayTimeY;
                           objectToAnimate[ani].moveSwitchYTF = false;
                       } else {
-                          objectToAnimate[ani].delayCounterY += 1;
+                          objectToAnimate[ani].delayCounterY += 1 * deltaTime;
                       }
                   }
 
                   if (objectToAnimate[ani].moveSwitchY == 1 && objectToAnimate[ani].moveSwitchYTF == false) {
-                      objectToAnimate[ani].y += objectToAnimate[ani].moveSpeedY * objectToAnimate[ani].moveSwitchY;
+                      objectToAnimate[ani].y += objectToAnimate[ani].moveSpeedY * objectToAnimate[ani].moveSwitchY * deltaTime;
                       objectToAnimate[ani].delayCounterY = 0;
                   }
 
                   if (objectToAnimate[ani].moveSwitchY == -1 && objectToAnimate[ani].moveSwitchYTF == false) {
-                      objectToAnimate[ani].y += objectToAnimate[ani].moveSpeedY * objectToAnimate[ani].moveSwitchY;
+                      objectToAnimate[ani].y += objectToAnimate[ani].moveSpeedY * objectToAnimate[ani].moveSwitchY * deltaTime;
                       objectToAnimate[ani].delayCounterY = 0;
                   }
               } else {
-                  objectToAnimate[ani].startDelayY -= 1;
+                  objectToAnimate[ani].startDelayY -= 1 * deltaTime;
               }
           }
 
 
       }
   }
+
 
   function shootingAnimation(objectToShoot) {
       for (let i = 0; i < objectToShoot.length; i++) {
@@ -1403,7 +1411,7 @@ onMount(() => {
           }
 
           if (objectToShoot[i].isColliding == false) {
-              objectToShoot[i].x += objectToShoot[i].moveSpeedX * objectToShoot[i].direction;
+              objectToShoot[i].x += objectToShoot[i].moveSpeedX * objectToShoot[i].direction * deltaTime;
           }
           if (objectToShoot[i].isColliding == true) {
               if (objectToShoot[i].shotFromEnemy) {
@@ -1530,7 +1538,10 @@ onMount(() => {
 
   let initialLoad = 0;
 
-  loop = function () {
+  loop = function (timestamp ) {
+
+    deltaTime = (timestamp - lastTimestamp) / perfectFrameTime;
+    lastTimestamp = timestamp;
       
       
       if(gamePause == false) {

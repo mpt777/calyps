@@ -8,8 +8,7 @@
 			Simply add this total to the value of your tickets to get your final score in this great game.`},
 		{url:"projects/widgets/tato", title:"Tato's Grand Adventure", description:`Play as Tato in this 2d platformer! Travel over numerous levels to collect each of the spell plates. Dodge the evil blue cubes and put an end to Nature's Wrath.<br><br>
 			Tato's Adventure is a 2d platformer written in plain JavaScript and HTML5. This was my first exposure in game development, and the project that started my love of development.<br><br>
-			*No Mobile Support*<br>
-			*No High Refresh Monitor Support*<br>`},	
+			*No Mobile Support*<br>`},	
 	]
 
 </script>

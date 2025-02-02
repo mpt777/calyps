@@ -1,18 +1,28 @@
 <script>
 	import { url } from '$utils/url.js';
+	import { fly, fade } from 'svelte/transition';
 
-	export let data;
+	let {data } = $props();
 
-	let inputedName = ""
-	let giftee = "";
+	let inputedName = $state("");
+	let giftee = $state("");
+	let toggle = $state(false);
+
+	let oldName = inputedName;
+
 
 	const lookup = Object.fromEntries(
 		Object.entries(data.pairs_str).map(([k, v]) => [k.toLowerCase(), v])
 	);
 
+	$effect(() =>  {
+		if (inputedName != oldName) {giftee = ""}
+	})
 
 	function findGiftee() {
 		let name = inputedName.toLocaleLowerCase()
+		oldName = inputedName;
+		toggle = !toggle;
 		if (name in lookup) {
 			giftee = lookup[name]
 		} else {
@@ -35,16 +45,22 @@
 		<section class="p-4">Please enter your name (case insesitive) to reveal who will be your giftee!</section>
 		<section class="p-4 space-y-4">
 
-			<div class="input-group input-group-divider grid-cols-[auto_1fr_auto]">
-				<div class="input-group-shim">Your Name</div>
+			<div class="input-group divide-surface-200-800 grid-cols-[auto_1fr_auto] divide-x">
+				<div class="input-group-cell preset-tonal-surface">Your Name</div>
 				<input type="text" class="input--min-w-4" bind:value={inputedName}/>
-				<button class="h-full variant-filled-tertiary" onclick="{() => findGiftee()}">Find!</button>
+				<a class="btn h-full preset-filled-primary-500 rounded-none cursor-pointer" onclick="{() => findGiftee()}">Find!</a>
 			</div>
 
 			<div class="flex justify-center">
 				<div class="text-center">
 					<div>Your Giftee</div>
-					<div class="text-5xl h-[4rem]">{giftee}</div>
+					<div class="text-5xl h-[4rem]">
+						{#key toggle}
+						<div in:fade={{ duration: 200 }}>
+							<div in:fly={{ y: -10, duration: 200 }}>{giftee}</div>
+						</div>
+						{/key}
+					</div>
 					<div></div>
 				</div>
 			</div>
