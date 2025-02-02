@@ -52,7 +52,7 @@
 					<i class="ri-menu-line"></i>
 					{/snippet}
 					{#snippet _content()}
-					<Navigation/>
+					<div class="p-0 pb-12 pt-8 h-full"><Navigation/></div>
 					{/snippet}
 				</Drawer>
 
@@ -72,7 +72,7 @@
 	<!-- Grid Columns -->
 	<div class="grid grid-cols-1 md:grid-cols-[auto_1fr]">
 	  <!-- Left Sidebar. -->
-	  <aside class="p-1 bg-surface-50-900-token hidden md:block border-r border-surface-500/30">
+	  <aside class="p-4 bg-surface-50-900-token hidden md:block border-r border-surface-500/30 ">
       <Navigation/>
     </aside>
 	  <!-- Main Content -->

@@ -6,7 +6,7 @@
     import NavLink from '$components/nav/NavLink.svelte';
 
 </script>
-<div class="flex flex-col justify-between h-full p-4 w-32">
+<div class="flex flex-col justify-between h-full w-32">
     <nav class="list-nav">
         <ul class="">
             <li><NavLink title="Home" href="/"/></li>
