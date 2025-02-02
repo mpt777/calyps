@@ -52,7 +52,7 @@
 					<i class="ri-menu-line"></i>
 					{/snippet}
 					{#snippet _content()}
-					<div class="p-0 pb-12 pt-8 h-full"><Navigation/></div>
+					<div class="p-0 pb-4 pt-8 h-full"><Navigation/></div>
 					{/snippet}
 				</Drawer>
 
