@@ -45,6 +45,17 @@
 		<div class="flex justify-between">
 		  <div class="h4"><a href="/">Calyps.io</a></div>
 		  <div class="flex gap-4 items-center">
+
+				{#if page.data.user}
+				<a href="{url('profile')}" class="cursor-pointer">
+					<Avatar
+						name={page.data.user.username?.charAt(0)}
+						border="border-4 border-surface-300-600-token hover:!border-primary-500"
+						size="size-10"
+					/>
+				</a>
+				{/if}
+				
 				<LightSwitch/>
 
 				<Drawer >
@@ -56,15 +67,7 @@
 					{/snippet}
 				</Drawer>
 
-				{#if page.data.user}
-				<a href="{url('profile')}" class="cursor-pointer">
-					<Avatar
-						name={page.data.user.username?.charAt(0)}
-						border="border-4 border-surface-300-600-token hover:!border-primary-500"
-						size="size-10"
-					/>
-				</a>
-				{/if}
+
 				
 			</div>
 		</div>

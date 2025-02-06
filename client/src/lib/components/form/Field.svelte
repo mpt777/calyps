@@ -1,6 +1,6 @@
 <script>
   // @ts-nocheck
-    let {value="", placeholder="", label="", name, forName="", autocomplete="", required=false, choices=[], constraints=[], type="text", css="", baseClass=undefined, form=undefined} = $props();
+    let {input, error, value="", placeholder="", label="", name, forName="", autocomplete="", required=false, choices=[], constraints=[], type="text", css="", baseClass=undefined, form=undefined} = $props();
       import Input from "./Input.svelte";
       import Errors from "./Errors.svelte";
   
@@ -17,11 +17,17 @@
       {#if label}
           <span class="label-text {requiredClass}">{label}</span>
       {/if}
+
+      {#if input}
+        {@render input()}
+      {:else}
+        {#if name}<Input bind:value={value} placeholder={placeholder} name={name} autocomplete={autocomplete} type={type} classes={classes} required={required} baseClass={baseClass} {...constraints} choices={choices} css={css}/>{/if}
+      {/if}
+
+      {#if error}
+        {@render error()}
+      {:else}
+        {#if errors?.[name]}<Errors error="{errors?.[name]}" />{/if}
+      {/if}
       
-      <slot name="input">
-          {#if name}<Input bind:value={value} placeholder={placeholder} name={name} autocomplete={autocomplete} type={type} classes={classes} required={required} baseClass={baseClass} {...constraints} choices={choices} css={css}/>{/if}
-      </slot>
-      <slot name="error">
-          {#if errors?.[name]}<Errors error="{errors?.[name]}" />{/if}
-      </slot>
   </label>

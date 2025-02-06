@@ -14,6 +14,8 @@ import datetime
 import os
 from pathlib import Path
 
+from server.data.initialize import DataInitializerRegister
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -46,7 +48,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     "colorfield",
+    'durationwidget',
 
+    "server",
     "common",
     "media",
     "recipe",

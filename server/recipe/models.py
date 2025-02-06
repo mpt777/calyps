@@ -4,13 +4,6 @@ from django.db import models
 from common.models import TimeStampedModel
 
 # Register your models here.
-CHOICES = (
-  ("draft", "Draft"),
-  ("private", "Private"),
-  ("unlisted", "Unlisted"),
-  ("friends", "Friends"),
-  ("public", "Public"),
-)
 
 class Recipe(TimeStampedModel):
   name = models.CharField(max_length=255)
@@ -26,7 +19,39 @@ class Recipe(TimeStampedModel):
 
   servings = models.PositiveSmallIntegerField(default=1)
 
-  visibility = models.CharField(default="draft", choices=CHOICES, max_length=255)
+  # visibility = models.CharField(default="draft", choices=CHOICES, max_length=255)
+  visibility = models.ForeignKey("common.Visibility", related_name="recipes", on_delete=models.PROTECT)
 
   def __str__(self):
     return self.name
+
+
+class Ingredient(TimeStampedModel):
+  recipe = models.ForeignKey("Recipe", related_name="ingredients", on_delete=models.CASCADE)
+  name = models.CharField(max_length=255)
+  amount = models.FloatField(default=1.0)
+  unit = models.ForeignKey("Unit", related_name="ingredients", on_delete=models.PROTECT)
+
+  def __str__(self):
+    return self.name
+  
+
+
+SYSTEM_CHOICES = (
+  (0, "Imperial"),
+  (1, "Metric")
+)
+
+KIND_CHOICES = (
+  (0, "Volume"),
+  (1, "Weight")
+)
+
+class Unit(models.Model):
+  name = models.CharField(max_length=255)
+  code = models.CharField(max_length=6)
+  system = models.PositiveSmallIntegerField(choices=SYSTEM_CHOICES)
+  kind = models.PositiveSmallIntegerField(choices=KIND_CHOICES)
+
+  def __str__(self):
+    return f"{self.name} {self.code}"

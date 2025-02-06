@@ -23,7 +23,7 @@ services:
       context: ./client
       dockerfile: ./Dockerfile
     environment:
-      NODE_ENV: production
+      NODE_ENV: development
       NPM_CONFIG_UNSAFE_PERM: true
     ports:
       - 3000:3000

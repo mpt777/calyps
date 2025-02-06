@@ -16,10 +16,17 @@ class TimeStampedModel(models.Model):
 
 
 
-# class Status(models.Model):
-#   name = models.CharField(max_length=255)
-#   color = ColorField(default="#777")
-#   sequence = models.PositiveSmallIntegerField(default=0)
+class Visibility(models.Model):
+  name = models.CharField(max_length=255)
+  code = models.CharField(max_length=15)
+  color = ColorField(default="#777")
+  sequence = models.PositiveSmallIntegerField(default=0)
+
+  class Meta:
+    ordering = ("sequence",)
+
+  def __str__(self):
+    return f"{self.name} {self.code}"
 
 
 class Tag(models.Model):

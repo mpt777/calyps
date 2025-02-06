@@ -7,7 +7,7 @@
 
 	// const toastStore = getToastStore();
 	import type { Message } from '$scripts/message';
-    import { page } from '$app/state';
+	import { page } from '$app/state';
 
 
 	function createToasts(messages : []) {

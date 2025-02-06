@@ -11,10 +11,11 @@ then
     echo "PostgreSQL started"
 fi
 
-python manage.py flush --no-input
+# python manage.py flush --no-input
 python manage.py makemigrations --merge --no-input
 python manage.py makemigrations --no-input
 python manage.py migrate --no-input
 python manage.py initadmin
+python manage.py initialize_data
 
 exec "$@"
