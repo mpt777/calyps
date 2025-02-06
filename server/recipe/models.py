@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.db import models
+from django.utils.text import slugify
 
 from common.models import TimeStampedModel
 
@@ -7,7 +8,7 @@ from common.models import TimeStampedModel
 
 class Recipe(TimeStampedModel):
   name = models.CharField(max_length=255)
-  handle = models.CharField(max_length=255)
+  handle = models.CharField(max_length=255, unique=True)
   description = models.TextField(blank=True, null=True)
   instructions = models.TextField(blank=True, null=True)
   
@@ -24,6 +25,11 @@ class Recipe(TimeStampedModel):
 
   def __str__(self):
     return self.name
+  
+  def save(self, *args, **kwargs):
+    self.handle = slugify(self.handle)
+    super(Recipe, self).save(*args, **kwargs)
+    
 
 
 class Ingredient(TimeStampedModel):

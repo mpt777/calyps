@@ -11,16 +11,18 @@ class RecipeViewSet(viewsets.ModelViewSet):
     serializer_class = RecipeSerializer
 
     def get_object(self):
-      recipe_id = self.kwargs.get('pk')  # `pk` corresponds to the recipe ID
+        recipe_id = self.kwargs.get('pk')  # `pk` corresponds to the recipe ID
 
-      # If an ID is provided in the URL, we attempt to fetch by ID
-      if recipe_id:
-          try:
-              return Recipe.objects.get(handle=recipe_id)
-          except :
-              raise NotFound(f"Recipe with ID {recipe_id} not found.")
-
-      raise NotFound("Recipe not found. Provide either ID or handle.")
+        if not recipe_id:
+            raise NotFound("Recipe not found. Provide either ID or handle.")
+        
+        try:
+            return Recipe.objects.get(handle=recipe_id)
+        except Recipe.DoesNotExist:
+            try:
+                return Recipe.objects.get(id=recipe_id)
+            except Recipe.DoesNotExist:
+                raise NotFound(f"Recipe with ID or handle {recipe_id} not found.")
 
     def perform_create(self, serializer):
         """Automatically assign created_by during recipe creation."""

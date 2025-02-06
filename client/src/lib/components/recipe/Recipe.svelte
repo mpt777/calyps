@@ -23,7 +23,6 @@
 
     let _system = $derived(getSystemFromString(system))
     let ingredients = $derived((recipe.ingredients || []).map(e => Ingredient.asSystem(e, _system, parseFloat(scalar) || 1)))
-    // let scalar = $state((Math.max(0, parseFloat(scalar))).toString())
 
 </script>
 
