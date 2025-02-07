@@ -21,10 +21,3 @@ export async function load({ params }) {
       breadcrumbs
   };
 }
-
-export const actions = {
-    default: async(event) => {
-      console.log("here")
-        return event
-    }
-}

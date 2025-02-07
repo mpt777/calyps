@@ -13,6 +13,7 @@
   import IngredientCheck from './IngredientCheck.svelte';
   import { Ingredient, getSystemFromString} from './Ingredient';
     import Tooltip from '$components/common/Tooltip.svelte';
+    import { url } from '$utils/url';
     // import Image from "$components/image/Image.svelte"
     
     // export let recipe: RecipeInterface;
@@ -44,7 +45,7 @@
                         </div>
                         {/snippet}
                         {#snippet _trigger()}
-                        <a href="/recipe/{recipe._id}/edit" class="btn btn-sm variant-filled-tertiary">
+                        <a href="{url("recipe_edit", {handle:recipe.handle})}" class="btn btn-sm variant-filled-tertiary">
                             <i class="ri-pencil-line text-3xl"></i>
                         </a>
                         {/snippet}

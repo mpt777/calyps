@@ -1,15 +1,36 @@
 from django.urls import include, path
-from rest_framework import viewsets
+from rest_framework.response import Response
+from rest_framework import viewsets, status
 from .models import Recipe, Ingredient
 from .serializers import RecipeSerializer, IngredientSerializer
 from utils.view.utils import check_owner_permission
-from rest_framework.exceptions import PermissionDenied, NotFound
+from rest_framework.exceptions import PermissionDenied, NotFound, ValidationError
 from rest_framework.routers import DefaultRouter
+from rest_framework.views import exception_handler
 
 class RecipeViewSet(viewsets.ModelViewSet):
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        try:
+            serializer.is_valid(raise_exception=True)  # Raises ValidationError if invalid
+            recipe = serializer.save()
+
+            # Custom success response
+            return Response(
+                {"message": "Recipe created successfully!", "recipe": RecipeSerializer(recipe).data},
+                status=status.HTTP_201_CREATED
+            )
+
+        except ValidationError as e:
+            # Custom error response
+            return Response(
+                {"message": "Validation failed", "errors": e.detail},  # e.detail contains the error dictionary
+                status=status.HTTP_400_BAD_REQUEST
+            )
+    
     def get_object(self):
         recipe_id = self.kwargs.get('pk')  # `pk` corresponds to the recipe ID
 

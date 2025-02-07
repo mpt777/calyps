@@ -1,4 +1,6 @@
 <script lang="ts">
+    import DurationField from "./DurationField.svelte";
+
     
   export let value : any;
   export let placeholder = "";
@@ -46,6 +48,8 @@
   class="{baseClass} {errorClass} {css}"
   bind:value
   on:input={handleInput} /></textarea> -->
+{:else if type === "duration"}
+<DurationField bind:value name={name}></DurationField>
 {:else if type === "file"}
   <input
   {...inputProperties}

@@ -29,7 +29,7 @@ class IngredientInlineSerializer(IngredientSerializer):
 
 
 class RecipeSerializer(serializers.ModelSerializer):
-    ingredients = IngredientInlineSerializer(many=True)
+    ingredients = IngredientInlineSerializer(many=True, required=False, allow_empty=True)
     image = serializers.StringRelatedField()  # Returns image as a string
     created_by = serializers.StringRelatedField()  # Returns username of creator
     # visibility = serializers.SlugRelatedField(queryset=Visibility., slug_field='code') # Returns visibility as a string
@@ -69,14 +69,14 @@ class RecipeSerializer(serializers.ModelSerializer):
             instance.ingredients.add(ingredient)
             
     def create(self, validated_data):
-        ingredients_data = validated_data.pop('ingredients')
+        ingredients_data = validated_data.pop('ingredients', [])
         validated_data["created_by"] = User.objects.get(id=1)
         recipe = Recipe.objects.create(**validated_data)
         self._process_related(recipe, ingredients_data)
         return recipe
 
     def update(self, instance, validated_data):
-        ingredients_data = validated_data.pop('ingredients')
+        ingredients_data = validated_data.pop('ingredients', [])
 
         for i in range(len(ingredients_data)):
             ingredients_data[i]["id"] = self.initial_data["ingredients"][i]["id"]
