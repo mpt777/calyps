@@ -285,13 +285,13 @@ export class Ingredient {
     // ingredient : IngrdientInterface;
     unit: Unit;
     amount: number;
-    title: string;
+    name: string;
     scalar: number;
 
-    constructor(amount : number, unit : Unit, title : string, scalar : number = 1) {
+    constructor(amount : number, unit : Unit, name : string, scalar : number = 1) {
         this.unit = unit;
         this.amount = amount;
-        this.title = title;
+        this.name = name;
         this.scalar = scalar;
     }
 
@@ -314,13 +314,11 @@ export class Ingredient {
         return pluralize(this.unit.title, this.getScaledAmount())
     }
 
-    static asSystem(ingredient, system : System, scalar : number) {
-        console.log("x", ingredient, system)
-        let unit = getUnitFromString(ingredient.unit);
+    static asSystem(ingredient : Ingredient, system : System, scalar : number) {
+        let unit = getUnitFromString(ingredient.unit_code);
        
-        console.log()
         if (unit.system == system || system == System.Default){
-            return new Ingredient(ingredient.amount, unit, ingredient.title, scalar)
+            return new Ingredient(ingredient.amount, unit, ingredient.name, scalar)
         }
 
         let systemAsString = Object.values(System)[Object.keys(System).indexOf(system)];
@@ -328,7 +326,7 @@ export class Ingredient {
 
         let ingredients = validUnits.map(function(validUnit) {
             let transformedAmount = UnitConverter.convertAmount(unit, validUnit, ingredient.amount) || 0;
-            return new Ingredient(transformedAmount, validUnit, ingredient.title, scalar)
+            return new Ingredient(transformedAmount, validUnit, ingredient.name, scalar)
         }).filter(e => e.amount !== 0)
 
         return ingredients.filter(e => e.getScaledAmount() > 1).reduce((prev, curr) => prev.getScaledAmount() < curr.getScaledAmount() ? prev : curr) ||

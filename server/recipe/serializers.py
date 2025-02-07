@@ -1,6 +1,17 @@
 from rest_framework import serializers
+
+from common.serializers import VisibilitySerializer
+from common.models import Visibility
+
 from .models import Recipe, Ingredient, Unit
 from django.contrib.auth.models import User
+
+
+class UnitSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Unit
+        fields = ["id", "name", "code", "system", "kind"]
+
 
 class IngredientSerializer(serializers.ModelSerializer):
     unit_code = serializers.SlugRelatedField(read_only=True, slug_field='code', source='unit')  # Returns the unit as a string
@@ -14,7 +25,7 @@ class IngredientInlineSerializer(IngredientSerializer):
 
     class Meta:
         model = Ingredient
-        fields = ["id", "name", "amount", "unit", "recipe", "DELETE"]
+        fields = ["id", "name", "amount", "unit", "recipe", "unit_code", "DELETE"]
 
 
 class RecipeSerializer(serializers.ModelSerializer):
@@ -22,13 +33,23 @@ class RecipeSerializer(serializers.ModelSerializer):
     image = serializers.StringRelatedField()  # Returns image as a string
     created_by = serializers.StringRelatedField()  # Returns username of creator
     # visibility = serializers.SlugRelatedField(queryset=Visibility., slug_field='code') # Returns visibility as a string
+    visibility_choices = serializers.SerializerMethodField()
+    unit_choices = serializers.SerializerMethodField()
+
+    def get_visibility_choices(self, obj):
+        return VisibilitySerializer(Visibility.objects.all(), many=True).data
+    
+    def get_unit_choices(self, obj):
+        return UnitSerializer(Unit.objects.all(), many=True).data
+
 
     class Meta:
         model = Recipe
         fields = [
             "id", "name", "handle", "description", "instructions",
             "image", "created_by", "prep_time", "cook_time",
-            "servings", "visibility", "ingredients"
+            "servings", "visibility", "ingredients",
+            "visibility_choices", "unit_choices"
         ]
 
     def _process_related(self, instance, ingredients_data):

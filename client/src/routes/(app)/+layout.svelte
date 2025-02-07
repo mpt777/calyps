@@ -21,6 +21,7 @@
 	// import type { PopupSettings } from '@skeletonlabs/skeleton';
 	// import Breadcrumb from '$components/utils/Breadcrumb.svelte';
 
+	let { children } = $props();
 
 	let breadcrumbs = $derived(page.data.breadcrumbs || []);
 
@@ -55,7 +56,7 @@
 					/>
 				</a>
 				{/if}
-				
+
 				<LightSwitch/>
 
 				<Drawer >
@@ -81,7 +82,7 @@
 	  <!-- Main Content -->
     <div class="flex justify-between flex-col">
       <main class="space-y-4 p-4">
-        <slot></slot>
+        {@render children()}
       </main>
       <footer class="p-4 bg-surface-500/20">
         <div class="flex justify-between">

@@ -7,11 +7,12 @@
 	// import { Ingredient, System, getSystemFromString } from "./Ingredient";
 	import Input from "$components/form/Input.svelte";
 	// import RecipeTags from "./RecipeTags.svelte";
-	import { pluralize } from "$scripts/humanize";
+	import { formatTimeString, pluralize } from "$scripts/humanize";
 	import WakeLock from "./WakeLock.svelte";
   import Label from '$components/form/Label.svelte';
   import IngredientCheck from './IngredientCheck.svelte';
   import { Ingredient, getSystemFromString} from './Ingredient';
+    import Tooltip from '$components/common/Tooltip.svelte';
     // import Image from "$components/image/Image.svelte"
     
     // export let recipe: RecipeInterface;
@@ -36,11 +37,23 @@
                 </h1>
                 {#if page.data.user?.username === recipe.created_by}
                 <div>
-                    <a href="/recipe/{recipe._id}/edit" class="btn btn-sm variant-filled-tertiary">
-                        <i class="ri-pencil-line"></i> Edit
-                    </a>
+                    <Tooltip>
+                        {#snippet _content()}
+                        <div class="text-sm">
+                            Edit Recipe
+                        </div>
+                        {/snippet}
+                        {#snippet _trigger()}
+                        <a href="/recipe/{recipe._id}/edit" class="btn btn-sm variant-filled-tertiary">
+                            <i class="ri-pencil-line text-3xl"></i>
+                        </a>
+                        {/snippet}
+                    </Tooltip>
+                    
+
                 </div>
                 {/if}
+                
             </div>
 
             <!-- <RecipeTags tags={recipe.tags} css="justify-center"/> -->
@@ -48,59 +61,77 @@
             <!-- <Image image={recipe.image} /> -->
 
             <div class="flex gap-3 flex-wrap text-center justify-center items-center">
-                <div>
+                <div class="p-1">
                     <Label label="System"/>
-                    <Segment bind:value={system}>
-                        <Segment.Item value="DEFAULT">Written</Segment.Item>
-                        <Segment.Item value="US">US</Segment.Item>
-                        <Segment.Item value="Metric">Metric</Segment.Item>
+                    <Segment bind:value={system} >
+                        <Segment.Item value="DEFAULT" classes={"btn-sm"} >Written</Segment.Item>
+                        <Segment.Item value="US" classes={"btn-sm"} >US</Segment.Item>
+                        <Segment.Item value="Metric" classes={"btn-sm"} >Metric</Segment.Item>
                     </Segment>
                 </div>
-
+                
                 <div>
-                    <!-- <RadioGroup active="variant-filled-primary" hover="hover:variant-soft-primary" class="input-group-divider" display="flex">
-                        
-                        <RadioItem bind:group={scalar} name="justify" value={"1"}>1</RadioItem>
-                        <RadioItem bind:group={scalar} name="justify" value={"2"}>2</RadioItem>
-                        <RadioItem bind:group={scalar} name="justify" value={"3"}>3</RadioItem>
-                        <div class="input-group-divider"></div>
-                       
-                    </RadioGroup> -->
-                    <Input bind:value={scalar} type="number" css="p-0 bg-transparent border-none text-center w-10" style="{'min-width: 0 !important;'}"/>
+                    <Label label="Cook Mode"/>
+                    <WakeLock />
                 </div>
 
-                <WakeLock />
+                <div>
+                    <Label label="Servings"/>
+                    <Segment bind:value={scalar} >
+                        <Segment.Item value="1" classes={"btn-sm"} >1</Segment.Item>
+                        <Segment.Item value="2" classes={"btn-sm"} >2</Segment.Item>
+                        <Segment.Item value="3" classes={"btn-sm"} >3</Segment.Item>
+                        <Input bind:value={scalar} type="number" css="p-0 bg-transparent border-none text-center w-10" style="{'min-width: 0 !important;'}"/>
+                    </Segment>
                     
+                </div>
+
             </div>
             
             <div class="flex justify-around">
-                <div>Cook Time: {recipe.cook_time} {pluralize(recipe.cook_time, recipe.cook_time)}</div>
-                <div>Prep Time: {recipe.prep_time} {pluralize(recipe.prep_time, recipe.prep_time)}</div>
-                <div>Servings: {recipe.servings * parseFloat(scalar)}</div>
+                <div class="text-center">
+                    <div class="font-bold">Cook Time:</div>
+                    <div>{formatTimeString(recipe.cook_time)}</div>
+                </div>
+                <div class="text-center">
+                    <div class="font-bold">Prep Time:</div>
+                    <div>{formatTimeString(recipe.prep_time)}</div>
+                </div>
+                <div class="text-center">
+                    <div class="font-bold">Servings:</div>
+                    <div>{recipe.servings * parseFloat(scalar)}</div>
+                </div>
             </div>
 
         </div>
 
         <hr>
-        <div class="p-4 space-y-4">
+        <div class="p-4 space-y-8">
 
+            <div>
+                <h2 class="text-2xl md:text-3xl lg:text-4xl font-extrabold text-center">Description</h2>
+                <!-- <QuillDisplay value={recipe.description}/> -->
+            </div>
 
-            <h2 class="text-2xl md:text-3xl lg:text-4xl font-extrabold">Description</h2>
-            <!-- <QuillDisplay value={recipe.description}/> -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="space-y-4">
+                    <h2 class="text-2xl md:text-3xl lg:text-4xl font-extrabold text-center">Ingredients</h2>
+                    <ul class="list">
+                        {#each ingredients as ingredient }
+                            <li>
+                                <IngredientCheck name="{ingredient.getAmount()} {ingredient.pluralizeUnit()} {ingredient.name}" /> <!-- {} -->
+                            </li>
+                        {/each}
+                    </ul>
+                </div>
 
-            <h2 class="text-2xl md:text-3xl lg:text-4xl font-extrabold">Ingredients</h2>
-            <ul class="list">
-            {#each ingredients as ingredient }
-                <li>
-                    <IngredientCheck name="{ingredient.getAmount()} {ingredient.pluralizeUnit()} {ingredient.name}" /> <!-- {} -->
-                </li>
-            {/each}
-            </ul>
-
-            
-            <h2 class="text-2xl md:text-3xl lg:text-4xl font-extrabold">Instructions</h2>
-            <!-- <QuillDisplay value={recipe.instructions}/> -->
+                <div class="space-y-4">
+                    <h2 class="text-2xl md:text-3xl lg:text-4xl font-extrabold text-center">Instructions</h2>
+                    <!-- <QuillDisplay value={recipe.instructions}/> -->
+                </div>
+            </div>
+           
         </div>
-        
+
     </div>
 </div>

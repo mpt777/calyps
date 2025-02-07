@@ -24,4 +24,4 @@
   };
 </script>
 
-<Switch name="disturb" bind:checked={value}>Prevent Sleep</Switch>
+<Switch name="disturb" bind:checked={value}></Switch>
