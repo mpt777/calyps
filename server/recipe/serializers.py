@@ -25,7 +25,7 @@ class IngredientInlineSerializer(IngredientSerializer):
 
     class Meta:
         model = Ingredient
-        fields = ["id", "name", "amount", "unit", "recipe", "unit_code", "DELETE"]
+        fields = ["id", "name", "amount", "unit", "unit_code", "DELETE"]
 
 
 class RecipeSerializer(serializers.ModelSerializer):
@@ -65,6 +65,7 @@ class RecipeSerializer(serializers.ModelSerializer):
             for attr, value in ingredient_data.items():
                 setattr(ingredient, attr, value)
         else:
+            ingredient_data["recipe"] = instance
             ingredient = Ingredient.objects.create(**ingredient_data)
             instance.ingredients.add(ingredient)
             

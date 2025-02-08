@@ -1,5 +1,6 @@
 from django.db import models
-from colorfield.fields import ColorField
+
+from server.fields import ColorField
 
 #Django model utils TimeStampedModel
 class TimeStampedModel(models.Model):

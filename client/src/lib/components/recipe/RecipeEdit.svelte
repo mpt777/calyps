@@ -3,7 +3,14 @@
     import Field from "$components/form/Field.svelte";
     import Message from "$components/message/Message.svelte";
 
-  let {form, data} = $props();
+    import { superForm } from 'sveltekit-superforms';
+
+    import { recipeSchema } from '$lib/forms/recipe';
+
+    let {data} = $props();
+
+    const { form } = superForm(data.form);
+
 </script>
 
 <Message message={ form?.message } level={form?.level}/>
@@ -19,9 +26,14 @@
 
   <Field name="servings" placeholder="servings" label="servings" required={true} form={form}/>
 
-  <Field name="visibility" placeholder="visibility" label="visibility" required={true} form={form}/>
+  <Field name="visibility" placeholder="visibility" label="visibility" required={true} form={form}/>  
+</div>
 
-  
+<div class="space-y-4">
+  <Field name="name" placeholder="Name" label="Name" required={true} form={form}/>
+  <Field name="amount" placeholder="Amount" label="Amount" required={true} form={form}/>
+  <Field name="unit" placeholder="Unit" label="Unit" required={true} form={form}/>
+  <Field name="DELETE" placeholder="Delete" label="Delete" required={true} form={form}/>
 </div>
 
 <div class=" flex justify-center">

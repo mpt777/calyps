@@ -1,10 +1,10 @@
 <script>
   // @ts-nocheck
-    let {input, error, value="", placeholder="", label="", name, forName="", autocomplete="", required=false, choices=[], constraints=[], type="text", css="", baseClass=undefined, form=undefined} = $props();
+    let {input, error, errors, value=$bindable(), placeholder="", label="", name, forName="", autocomplete="", required=false, choices=[], constraints=[], type="text", css="", baseClass=undefined, form=undefined} = $props();
       import Input from "./Input.svelte";
       import Errors from "./Errors.svelte";
   
-    let errors = $derived(form?.errors);
+    // let errors = $derived(form?.errors);
 
     let requiredClass = required ? "required" : ""; 
     let hasErrors = errors && errors[name];
@@ -14,6 +14,7 @@
   
   
   <label class="label" for="{name || forName}">
+    {value}
       {#if label}
           <span class="label-text {requiredClass}">{label}</span>
       {/if}
