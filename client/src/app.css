@@ -1,4 +1,6 @@
 @import '/fonts/remix/remixicon.css?url';
+@import "quill/dist/quill.core.css";
+@import 'quill/dist/quill.snow.css'; 
 
 @tailwind base;
 @tailwind components;
@@ -6,7 +8,7 @@
 
 @layer components {
     .calyps--card {
-        @apply overflow-hidden bg-white/10 dark:bg-black/10 shadow-md border-surface-500/30 border card max-w-4xl overflow-hidden;      
+        @apply overflow-hidden bg-white/10 dark:bg-black/10 shadow-md border-surface-500/30 border card overflow-hidden;      
     }
 }
 
@@ -20,4 +22,29 @@
 
 .input-group input.input--min-w-4 {
     min-width: 1rem !important;
+}
+
+.required:after {
+    content:" *";
+    color: red;
+}
+
+
+.editor-wrapper * {
+    font-family: unset !important;
+}
+.ql-editor.ql-blank::before {
+    color: unset !important;
+}
+.ql-wrapper * {
+    font-size: unset !important;
+}
+
+.ql-wrapper .ql-toolbar {
+    border-radius: var(--radii-container) var(--radii-container) 0 0;
+    @apply preset-tonal
+}
+
+.ql-wrapper .ql-container {
+    border-radius: 0 0 var(--radii-container) var(--radii-container);
 }

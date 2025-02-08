@@ -1,3 +1,4 @@
+import bleach
 from django.contrib import admin
 from django.db import models
 from django.utils.text import slugify
@@ -5,6 +6,12 @@ from django.utils.text import slugify
 from common.models import TimeStampedModel
 
 # Register your models here.
+
+BLEACH = {
+  "tags": ["b", "i", "strong", "em", "p", "ul", "ol", "li", "a"],
+  "attributes": {"a": ["href"]},
+  "protocols": ["http", "https"] 
+}
 
 class Recipe(TimeStampedModel):
   name = models.CharField(max_length=255)
@@ -28,6 +35,11 @@ class Recipe(TimeStampedModel):
   
   def save(self, *args, **kwargs):
     self.handle = slugify(self.handle)
+    if self.description:
+     self.description = bleach.clean(self.description, **BLEACH)
+    if self.instructions:
+      self.instructions = bleach.clean(self.instructions, **BLEACH)
+
     super(Recipe, self).save(*args, **kwargs)
     
 

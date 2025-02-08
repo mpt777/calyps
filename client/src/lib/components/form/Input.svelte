@@ -1,7 +1,7 @@
 <script>
     import DurationField from "./DurationField.svelte";
 
-  let {input, error, errors, value=$bindable(), placeholder="", label="", name, forName="", autocomplete="", required=false, choices=[], constraints=[], type="text", css="", form=undefined, step=1} = $props();
+  let {input, error, errors, value=$bindable(), placeholder="", label="", name, forName="", autocomplete="", required=false, choices=[], _choices="", constraints=[], type="text", css="", form=undefined, step=1} = $props();
   const inputProperties = { type };
 
   let requiredClass = required ? "required" : ""; 
@@ -26,7 +26,6 @@
   }
 
 </script>
-{value}
 {#if type === "textarea"}
   <!-- <textarea
   {...inputProperties}
@@ -56,8 +55,7 @@
   {name}
   style="{css}"
   class="{baseClass} {errorClass} {css}"
-  bind:value={value}
-  on:input={handleInput} />
+  bind:value={value}/>
 {:else if type === "select"}
   <select
   {...inputProperties}
@@ -67,11 +65,15 @@
   {name}
   style="{css}"
   class="{baseClass} {errorClass} {css}"
-  bind:value
-  on:input={handleInput}>
+  bind:value>
+  {#if _choices}
+    {@render _choices()}
+  {:else}
+      {#if !required}<option value="">---</option>{/if}
       {#each choices as choice}
-      <option value="{choice}">{choice}</option>
+      <option value="{choice.value}">{choice.name}</option>
       {/each}
+  {/if}
   </select>
 {:else}
   <input

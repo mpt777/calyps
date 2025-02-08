@@ -12,7 +12,7 @@ export const recipeSchema = z.object({
     ingredients: z.object({
         name: z.string().min(1),
         amount: z.coerce.number().positive(),
-        unit: z.enum(["cup", "teaspoon","tablespoon","pint","quart","gallon","ounce","fluid ounce","pound","milliliter","liter","gram","kilogram"]),
+        unit: z.coerce.number().positive(),
         recipe: z.string(),
         delete: z.boolean().default(false),
     }).array().min(0),
@@ -20,7 +20,7 @@ export const recipeSchema = z.object({
     servings: z.coerce.number().min(1),
     cook_time: z.coerce.number().min(0),
     prep_time: z.coerce.number().min(0),
-    visibility: z.coerce.number().min(0),
+    visibility: z.number().default(1),
     // image: z.string().min(0)
     // image: z.object({
     //     image: z

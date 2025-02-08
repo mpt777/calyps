@@ -1,8 +1,8 @@
 from django.urls import include, path
 from rest_framework.response import Response
 from rest_framework import viewsets, status
-from .models import Recipe, Ingredient
-from .serializers import RecipeSerializer, IngredientSerializer
+from .models import Recipe, Ingredient, Unit
+from .serializers import RecipeSerializer, IngredientSerializer, UnitSerializer
 from utils.view.utils import check_owner_permission
 from rest_framework.exceptions import PermissionDenied, NotFound, ValidationError
 from rest_framework.routers import DefaultRouter
@@ -81,9 +81,15 @@ class IngredientViewSet(viewsets.ModelViewSet):
         return super().destroy(request, *args, **kwargs)
 
 
+class UnitViewset(viewsets.ModelViewSet):
+    queryset = Unit.objects.all()
+    serializer_class = UnitSerializer
+
+
 router = DefaultRouter()
 router.register(r'recipe', RecipeViewSet, basename='recipe')
 router.register(r'ingredient', IngredientViewSet, basename='ingredient')
+router.register(r'unit', UnitViewset, basename='unit')
 
 # Include the router's URLs into your URL configuration
 urlpatterns = [
