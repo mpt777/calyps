@@ -31,8 +31,8 @@ Tips for Drawer modals:
 	{#snippet trigger()}{@render _trigger()}{/snippet}
 	{#snippet content()}
 	<div class="relative h-full">
-		<button class="btn preset-tonal absolute top-0 right-0" onclick={() => drawerState.open = false}>
-				<a><i class="ri-close-large-line"></i></a>
+		<button class="btn preset-tonal absolute top-0 right-0" onclick={() => drawerState.open = false} aria-label="Toggle Drawer">
+				<i class="ri-close-large-line"></i>
 		</button>
 
 
