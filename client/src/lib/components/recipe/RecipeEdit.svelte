@@ -97,6 +97,8 @@
 
 
 <form method="POST" use:enhance class="space-y-4">
+
+  <input name="hack" value={JSON.stringify(myData)}>
     <Message message={ form?.message } level={form?.level}/>
 
 <div class="flex gap-8 max-w-screen-lg mx-auto flex-wrap md:flex-nowrap ">

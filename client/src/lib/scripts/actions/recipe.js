@@ -12,8 +12,9 @@ import { z } from 'zod';
 export async function postRecipe(event) {
   let d = await event.request.formData();
   console.log(d)
-  console.log("POST", event.request.data)
-  const form = recipeSchema.safeParse(event.data);
+  let data = JSON.parse(d.get("hack"))
+  console.log("POST", data)
+  const form = recipeSchema.safeParse(data);
 
   console.log("VALID FORM", form)
 
