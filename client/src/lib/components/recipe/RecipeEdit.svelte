@@ -225,9 +225,9 @@
       <div class="input-group divide-surface-200-800 grid-cols-[1fr_auto] divide-x overflow-visible">
         <Input name="handle" placeholder="handle" label="Handle" required={true} bind:value={formData.handle} errors={form?.errors} />
 
-        <a class="anchor cursor-pointer p-1" >
+        <!-- <a class="anchor cursor-pointer p-1" >
           <i class="ri-settings-2-line"></i>
-        </a>
+        </a> -->
 
         <!-- <Tooltip>
          onclick={setHandle()}
