@@ -49,7 +49,7 @@
     <span class="label-text {requiredClass}">{label}</span>
   </label>
   <div class="ql-wrapper">
-    <div bind:this={editor} />
+    <div bind:this={editor}></div>
   </div>
   <textarea bind:this={textarea} class="opacity-0 h-0 p-0 m-0 flex" required={required} name={name}></textarea>
   {#if errors[name]}
