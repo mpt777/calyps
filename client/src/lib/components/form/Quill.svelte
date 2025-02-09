@@ -51,7 +51,7 @@
   <div class="ql-wrapper">
     <div bind:this={editor} />
   </div>
-  <textarea bind:this={textarea} class="opacity-0 h-0 p-0 m-0 flex" required={required} name={name}/>
+  <textarea bind:this={textarea} class="opacity-0 h-0 p-0 m-0 flex" required={required} name={name}></textarea>
   {#if errors[name]}
   <p class="text-red-500 text-xs italic mt-3">{errors[name]}</p>
   {/if}
