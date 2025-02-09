@@ -13,7 +13,6 @@
   //     value = e.target.value;
   // };
 
-  let baseClass = undefined;
   let baseClassLookup = {
       textarea: "textarea",
       file: "",
@@ -21,9 +20,7 @@
       input: "input"
   }
 
-  if (baseClass === undefined){
-      baseClass = baseClassLookup[type] || "input"; 
-  }
+  let baseClass = baseClassLookup[type] || "input";
 
 </script>
 {#if type === "textarea"}

@@ -8,7 +8,6 @@ let hasErrors = errors && errors[name];
 let classes = hasErrors ? "with-error" : "";
 let errorClass = hasErrors ? "variant-ringed-error" : "";
 
-let baseClass = undefined;
 let baseClassLookup = {
     textarea: "textarea",
     file: "",
@@ -16,9 +15,7 @@ let baseClassLookup = {
     input: "input"
 }
 
-if (baseClass === undefined){
-    baseClass = baseClassLookup[type] || "input"; 
-}
+let baseClass = baseClassLookup[type] || "input";
 
 </script>
 <input
