@@ -128,7 +128,8 @@
               </div>
               {/snippet}
               {#snippet _trigger()}
-              <a href={url("recipe", {handle: data.form.handle})} class="anchor">
+              <!-- <a href={url("recipe", {handle: data.form.handle})} class="anchor" aria-label="View Recipe"> -->
+              <a href="/recipe/{data.form.handle}" class="anchor" aria-label="View Recipe">
                 <i class="ri-eye-line"></i>
               </a>
               {/snippet}
