@@ -188,7 +188,7 @@
         
         <section class="flex gap-x-4 gap-y-2 flex-wrap lg:flex-nowrap">
           <div class="flex gap-x-4 w-full">
-            <button type="button" class="my-handle outline-none">
+            <button type="button" class="my-handle outline-none" aria-label="Sort Ingredients">
               <i class="ri-draggable"></i>
             </button>
               <div class="w-full">
@@ -203,7 +203,7 @@
                 <Field name="unit" placeholder="Unit" label="Unit" required={true} errors={form?.errors?.ingredients?.[i]} bind:value={formData.ingredients[i].unit} choices={unitChoices} type="select"/>
               </div>
               <div class="grow-0">
-                  <button type="button" class="btn preset-filled-error-500" onclick={() => removeIngredient(ingredient, i)}>
+                  <button type="button" class="btn preset-filled-error-500" onclick={() => removeIngredient(ingredient, i)} aria-label="Delete Ingredient">
                       <i class="ri-delete-bin-2-line"></i>
                   </button>
               </div>
