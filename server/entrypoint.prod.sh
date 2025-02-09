@@ -12,6 +12,7 @@ then
     echo "PostgreSQL started"
 fi
 
+python manage.py migrate --no-input
 python manage.py initialize_data
 
 exec "$@"

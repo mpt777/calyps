@@ -18,6 +18,7 @@
       constraints=[], 
       type="text", 
       css="",
+      step=1,
       form=undefined
     } = $props();
 
@@ -37,7 +38,7 @@
       {#if input}
         {@render input()}
       {:else}
-        {#if name}<Input bind:value={value} placeholder={placeholder} name={name} autocomplete={autocomplete} type={type} classes={classes} required={required} {...constraints} choices={choices} css={css}/>{/if}
+        {#if name}<Input bind:value={value} placeholder={placeholder} name={name} autocomplete={autocomplete} type={type} classes={classes} required={required} {...constraints} choices={choices} css={css} step={step}/>{/if}
       {/if}
 
       {#if error}

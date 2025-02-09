@@ -151,18 +151,18 @@
 
         <div class="grid grid-cols-12 md:gap-8">
           <div class="col-span-12 lg:col-span-6">
-            <Field name="prep_time"  label="Prep Time" required={true} type="duration" bind:value={formData.prep_time} errors={form?.errors}/>
+            <Field name="prep_time"  label="Prep Time" required={false} type="duration" bind:value={formData.prep_time} errors={form?.errors}/>
 
           </div>
           <div class="col-span-12 lg:col-span-6">
-            <Field name="cook_time" label="Cook Time" required={true} type="duration" bind:value={formData.cook_time} errors={form?.errors}/>
+            <Field name="cook_time" label="Cook Time" required={false} type="duration" bind:value={formData.cook_time} errors={form?.errors}/>
           </div>
         </div>
 
         <hr>
         
-        <Quill name="description" placeholder="Description" label="Description" required={true} bind:value={formData.description} errors={form?.errors}/>
-        <Quill name="instructions" placeholder="Instructions" label="Instructions" required={true} bind:value={formData.instructions} errors={form?.errors}/>
+        <Quill name="description" placeholder="Description" label="Description" required={false} bind:value={formData.description} errors={form?.errors}/>
+        <Quill name="instructions" placeholder="Instructions" label="Instructions" required={false} bind:value={formData.instructions} errors={form?.errors}/>
 
       </section>
     </div>
@@ -196,7 +196,7 @@
                 <Field name="name" placeholder="Name" label="Name" required={true} errors={form?.errors?.ingredients?.[i]} bind:value={formData.ingredients[i].name}/>
               </div>
               <div class="">
-                <Field name="amount" placeholder="Amount" label="Amount" required={true} errors={form?.errors?.ingredients?.[i]} bind:value={formData.ingredients[i].amount} type="number"/>
+                <Field name="amount" placeholder="Amount" label="Amount" required={true} errors={form?.errors?.ingredients?.[i]} bind:value={formData.ingredients[i].amount} type="number" step={0.05}/>
               </div>
           </div>
           <div class="flex gap-x-4 items-end">
