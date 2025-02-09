@@ -43,7 +43,7 @@
       {#if error}
         {@render error()}
       {:else}
-        {#if errors?.[name]}<Errors error="{errors?.[name]}" />{/if}
+        {#if errors?.[name]}<Errors error={errors?.[name]}/>{/if}
       {/if}
       
   </label>
