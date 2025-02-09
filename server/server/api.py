@@ -32,6 +32,7 @@ class CurrentUser(APIView):
             return Response({"username": user.username, "email": user.email}, status=status.HTTP_200_OK)
         return Response({"error": "User not authenticated"}, status=status.HTTP_401_UNAUTHORIZED)
     
+    
 class RegistrationView(APIView):
     permission_classes = [AllowAny, ]
     def post(self, request):

@@ -21,11 +21,11 @@
     <section class="p-4 space-y-4">
       <Message message={ form?.message } level={form?.level}/>
       <div class="space-y-4">
-        <Field name="email" placeholder="Email" label="Email" autocomplete="email" required={true} form={form}/>
-        <Field name="username" placeholder="Username" label="Username" autocomplete="username" required={true} form={form}/>
+        <Field name="email" placeholder="Email" label="Email" autocomplete="email" required={true} errors={form?.errors}/>
+        <Field name="username" placeholder="Username" label="Username" autocomplete="username" required={true} errors={form?.errors}/>
         
-        <Field name="password" placeholder="Password" label="Password" autocomplete="password" required={true} form={form} type="password"/>
-        <Field name="password1" placeholder="Password" label="Password (Again)" autocomplete="password1" required={true} form={form} type="password"/>
+        <Field name="password" placeholder="Password" label="Password" autocomplete="password" required={true} errors={form?.errors} type="password"/>
+        <Field name="password1" placeholder="Password" label="Password (Again)" autocomplete="password1" required={true} errors={form?.errors} type="password"/>
       </div>
 
     </section>

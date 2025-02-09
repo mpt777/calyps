@@ -9,7 +9,6 @@
   const requestWakeLock = async () => {
     try {
       wakeLock = await navigator.wakeLock.request('screen');
-      console.log('Wake lock acquired');
     } catch (error) {
       console.error('Failed to acquire wake lock:', error);
     }
@@ -18,7 +17,6 @@
   const releaseWakeLock = () => {
     if (value) {
       wakeLock.release();
-      console.log('Wake lock released');
       wakeLock = null;
     }
   };

@@ -22,8 +22,8 @@ class Recipe(TimeStampedModel):
   image = models.ForeignKey("media.Image", related_name="recipies", blank=True, null=True, on_delete=models.SET_NULL)
   created_by = models.ForeignKey("auth.User", related_name="recipies", on_delete=models.CASCADE)
 
-  prep_time = models.DurationField(blank=True, null=True)
-  cook_time = models.DurationField(blank=True, null=True)
+  prep_time = models.PositiveIntegerField(blank=True, null=True)
+  cook_time = models.PositiveIntegerField(blank=True, null=True)
 
   servings = models.PositiveSmallIntegerField(default=1)
 
@@ -49,6 +49,10 @@ class Ingredient(TimeStampedModel):
   name = models.CharField(max_length=255)
   amount = models.FloatField(default=1.0)
   unit = models.ForeignKey("Unit", related_name="ingredients", on_delete=models.PROTECT)
+  sequence = models.PositiveSmallIntegerField(default=0)
+
+  class Meta:
+    ordering = ("recipe", "sequence")
 
   def __str__(self):
     return self.name

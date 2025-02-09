@@ -49,7 +49,7 @@ export async function handleFetch({ request, fetch, event }) {
 
 export function handleError({ error, event }) {
 
-  console.log("ERROR", error)
+  // console.log("ERROR", error)
   return {
       message: 'Whoops!',
       code: error?.code ?? 'UNKNOWN',

@@ -7,7 +7,9 @@ export const _url = {
   "projects":"/projects",
   "profile":"/profile",
 
-  "recipe_edit": "/recipe/[handle]/edit"
+  "recipe": "/recipe/[handle]",
+  "recipe_add": "/recipe/add",
+  "recipe_edit": "/recipe/[handle]/edit",
 }
 
 /**

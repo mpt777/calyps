@@ -18,9 +18,9 @@ class RecipeAdmin(admin.ModelAdmin):
   raw_id_fields = ("created_by", "image")
   search_fields = ("name", "handle")
   inlines = (IngredientInlineAdmin,)
-  formfield_overrides = {
-      models.DurationField: {'widget': TimeDurationWidget(show_days=False, show_seconds=False)},
-  }
+  # formfield_overrides = {
+  #     models.PositiveIntegerField: {'widget': TimeDurationWidget(show_days=False, show_seconds=False)},
+  # }
 
 
 class UnitAdmin(admin.ModelAdmin):

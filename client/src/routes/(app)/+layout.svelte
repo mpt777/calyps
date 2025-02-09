@@ -40,7 +40,7 @@
 <ToastMessage />
 {/if }
 
-<div class="grid h-screen grid-rows-[auto_1fr_auto]">
+<div class="flex flex-col h-screen overflow-hidden">
 	<!-- Header -->
 	<header class="bg-surface-50-900-token p-4 shadow-md z-10">
 		<div class="flex justify-between">
@@ -74,13 +74,13 @@
 		</div>
 	</header>
 	<!-- Grid Columns -->
-	<div class="grid grid-cols-1 md:grid-cols-[auto_1fr]">
+	<div class="flex h-full overflow-hidden">
 	  <!-- Left Sidebar. -->
 	  <aside class="p-4 bg-surface-50-900-token hidden md:block border-r border-surface-500/30 ">
       <Navigation/>
     </aside>
 	  <!-- Main Content -->
-    <div class="flex justify-between flex-col">
+    <div class="flex justify-between flex-col overflow-y-auto w-full">
       <main class="space-y-4 p-4">
         {@render children()}
       </main>

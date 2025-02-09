@@ -1,9 +1,10 @@
 <script>
-  import Input from "./Input.svelte";
-
   let hours = $state(0);
   let minutes = $state(0);
   let {value = $bindable(), name} = $props();
+
+  hours = Math.floor(value / 3600);
+  minutes = Math.floor((value % 3600) / 60);
 
   $effect(() => {
     value = hours * 3600 + minutes * 60;

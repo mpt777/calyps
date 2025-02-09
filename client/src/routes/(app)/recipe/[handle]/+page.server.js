@@ -9,7 +9,6 @@ export async function load({ params }) {
       console.error('API request failed:', error);
   }
 
-  console.log(recipe)
 
   let breadcrumbs = [
       {"link":"/", "label": "Home"},

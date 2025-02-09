@@ -1,9 +1,8 @@
 <script>
     import RecipeEdit from "$components/recipe/RecipeEdit.svelte";
 
-  let {data, form } = $props();
-
+  let {data, form} = $props();
 </script>
 <div>
-  <RecipeEdit data={data} form={form} />
+  <RecipeEdit data={data} form={data.form}/>
 </div>

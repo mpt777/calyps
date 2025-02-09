@@ -37,7 +37,6 @@ export async function loginUser(event){
         setUser(event, responseData.user)
     }
     else {
-        console.log("ERROR")
         return fail(400, {message: responseData?.message || responseData?.messages, errors: responseData?.errors, level:"error"})
     }
 
@@ -65,7 +64,6 @@ export async function signupUser(event) {
 
     tokenError(event, responseData);
 
-    console.log(responseData)
 
     if (response.ok){
         setAuthToken(event.cookies, responseData.access)

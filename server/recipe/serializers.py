@@ -22,10 +22,24 @@ class IngredientSerializer(serializers.ModelSerializer):
 
 class IngredientInlineSerializer(IngredientSerializer):
     DELETE = serializers.BooleanField(default=False)
+    # _id = serializers.IntegerField()
+
+    # def __init__(self, *args, **kwargs):
+    #     instance = kwargs.get('instance',"")
+    #     if instance:
+    #         kwargs['initial'] = kwargs.get('initial', {})
+    #         kwargs['initial']['form_id'] = instance.id 
+
+    #     super().__init__(*args, **kwargs)
+
+    
 
     class Meta:
         model = Ingredient
-        fields = ["id", "name", "amount", "unit", "unit_code", "DELETE"]
+        fields = ["id", "name", "amount", "unit", "unit_code","sequence", "DELETE"]
+        # extra_kwargs = {
+        #     '_id': {'write_only': True},
+        # }
 
 
 class RecipeSerializer(serializers.ModelSerializer):
@@ -35,6 +49,16 @@ class RecipeSerializer(serializers.ModelSerializer):
     # visibility = serializers.SlugRelatedField(queryset=Visibility., slug_field='code') # Returns visibility as a string
     visibility_choices = serializers.SerializerMethodField()
     unit_choices = serializers.SerializerMethodField()
+    # prep_time = serializers.SerializerMethodField()
+    # cook_time = serializers.SerializerMethodField()
+
+    # def get_prep_time(self, obj):
+    #     print(obj.prep_time.total_seconds())
+    #     return obj.prep_time.total_seconds() if obj.prep_time else 0
+
+    # def get_cook_time(self, obj):
+    #     print(obj.cook_time.total_seconds())
+    #     return obj.cook_time.total_seconds() if obj.cook_time else 0
 
     def get_visibility_choices(self, obj):
         return VisibilitySerializer(Visibility.objects.all(), many=True).data
@@ -57,8 +81,10 @@ class RecipeSerializer(serializers.ModelSerializer):
         DELETE = ingredient_data.pop("DELETE", False)
         ID = ingredient_data.pop("id", None)
 
-        if DELETE and ID:
-            Ingredient.objects.filter(id=ID).delete()
+        if DELETE:
+            if ID:
+                Ingredient.objects.filter(id=ID).delete()
+                continue
             continue
         if ID:
             ingredient = Ingredient.objects.get(id=ID)
@@ -80,7 +106,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         ingredients_data = validated_data.pop('ingredients', [])
 
         for i in range(len(ingredients_data)):
-            ingredients_data[i]["id"] = self.initial_data["ingredients"][i]["id"]
+            ingredients_data[i]["id"] = self.initial_data["ingredients"][i].get("id", "")
 
         for attr, value in validated_data.items():
             setattr(instance, attr, value)

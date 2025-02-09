@@ -31,6 +31,29 @@ class RecipeViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST
             )
     
+    @check_owner_permission()
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop("partial", False)  # Supports both PUT (full update) and PATCH (partial update)
+        instance = self.get_object()  # Get the existing object
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+
+        try:
+            serializer.is_valid(raise_exception=True)
+            updated_recipe = serializer.save()
+
+            # Custom success response
+            return Response(
+                {"message": "Recipe updated successfully!", "recipe": RecipeSerializer(updated_recipe).data},
+                status=status.HTTP_200_OK
+            )
+
+        except ValidationError as e:
+            # Custom error response
+            return Response(
+                {"message": "Update failed", "errors": e.detail},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+    
     def get_object(self):
         recipe_id = self.kwargs.get('pk')  # `pk` corresponds to the recipe ID
 
@@ -50,14 +73,10 @@ class RecipeViewSet(viewsets.ModelViewSet):
         serializer.save(created_by=self.request.user)
 
     @check_owner_permission()
-    def update(self, request, *args, **kwargs):
-        """Update a recipe (only if the current user is the creator)."""
-        return super().update(request, *args, **kwargs)
-
-    @check_owner_permission()
     def destroy(self, request, *args, **kwargs):
         """Delete a recipe (only if the current user is the creator)."""
         return super().destroy(request, *args, **kwargs)
+    
 
 class IngredientViewSet(viewsets.ModelViewSet):
     queryset = Ingredient.objects.all()

@@ -11,13 +11,17 @@
         <ul class="">
             <li><NavLink title="Home" href="/"/></li>
             <li><NavLink title="Games" href="/games"/></li>
-
-            <li><NavLink title="Recipe" href="/recipe"/></li>
-
             <li><NavLink title="Projects" href="/projects"/></li>
             <li><NavLink title="About" href="/about"/></li>
         </ul>
+
+        <hr class="my-4">
+
+        <ul class="">
+            <li><NavLink title="Recipe" href="/recipe"/></li>
+        </ul>
     </nav>
+
     <nav class="list-nav">
         <ul>
         {#if page.data.user}
