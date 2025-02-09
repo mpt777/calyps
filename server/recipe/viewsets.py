@@ -3,12 +3,14 @@ from rest_framework.response import Response
 from rest_framework import viewsets, status
 from .models import Recipe, Ingredient, Unit
 from .serializers import RecipeSerializer, IngredientSerializer, UnitSerializer
-from utils.view.utils import check_owner_permission
+from utils.view.utils import check_owner_permission, require_authentication
 from rest_framework.exceptions import PermissionDenied, NotFound, ValidationError
 from rest_framework.routers import DefaultRouter
 from rest_framework.views import exception_handler
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
 class RecipeViewSet(viewsets.ModelViewSet):
+    permission_classes = [AllowAny]
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
 
@@ -65,9 +67,10 @@ class RecipeViewSet(viewsets.ModelViewSet):
         except Recipe.DoesNotExist:
             try:
                 return Recipe.objects.get(id=recipe_id)
-            except Recipe.DoesNotExist:
+            except (Recipe.DoesNotExist, ValueError):
                 raise NotFound(f"Recipe with ID or handle {recipe_id} not found.")
 
+    @require_authentication
     def perform_create(self, serializer):
         """Automatically assign created_by during recipe creation."""
         serializer.save(created_by=self.request.user)
@@ -82,6 +85,7 @@ class IngredientViewSet(viewsets.ModelViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
 
+    @require_authentication
     def perform_create(self, serializer):
         """Automatically assign the recipe to the ingredient during creation."""
         recipe = serializer.validated_data.get('recipe')

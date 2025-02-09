@@ -8,7 +8,7 @@
 
 @layer components {
     .calyps--card {
-        @apply overflow-hidden bg-white/10 dark:bg-black/10 shadow-md border-surface-500/30 border card overflow-hidden;      
+        @apply bg-white/10 dark:bg-black/10 shadow-md border-surface-500/30 border card;      
     }
 }
 

@@ -41,3 +41,12 @@ def check_owner_permission(obj_attr='created_by'):
         
         return _wrapped_view
     return decorator
+
+def require_authentication(view_func):
+    @wraps(view_func)
+    def _wrapped_view(request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            # Redirect to login page if not authenticated
+            raise PermissionDenied("You do not have permission to access this resource.")
+        return view_func(request, *args, **kwargs)
+    return _wrapped_view

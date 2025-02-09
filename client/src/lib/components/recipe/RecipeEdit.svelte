@@ -19,6 +19,7 @@
   import { reorder, useSortable } from "$scripts/useSortable.svelte";
   import { enhance } from "$app/forms";
     import { generateHandle } from "$scripts/humanize";
+    import Input from "$components/form/Input.svelte";
 
   let {data, form} = $props();
 
@@ -40,11 +41,15 @@
 
 
   $effect(() => {
-    console.log(formData)
+    setHandle()
+  })
+
+  function setHandle() {
     if (!formData.id) {
       formData.handle = generateHandle(formData.name)
     }
-  })
+    formData.handle = generateHandle(formData.handle)
+  }
 
   //-------------------------------------------
 
@@ -123,7 +128,7 @@
               </div>
               {/snippet}
               {#snippet _trigger()}
-              <a href={url("recipe", {handle: "test"})} class="anchor">
+              <a href={url("recipe", {handle: data.form.handle})} class="anchor">
                 <i class="ri-eye-line"></i>
               </a>
               {/snippet}
@@ -217,7 +222,29 @@
     </header>
     <hr>
     <section class="p-4 space-y-4">
-      <Field name="handle" placeholder="handle" label="Handle" required={true} bind:value={formData.handle} errors={form?.errors} />
+      <div class="input-group divide-surface-200-800 grid-cols-[1fr_auto] divide-x overflow-visible">
+        <Input name="handle" placeholder="handle" label="Handle" required={true} bind:value={formData.handle} errors={form?.errors} />
+
+        <a class="anchor cursor-pointer p-1" >
+          <i class="ri-settings-2-line"></i>
+        </a>
+
+        <!-- <Tooltip>
+         onclick={setHandle()}
+          {#snippet _content()}
+          <div class="text-sm">
+              This is the Recipe Handle. It is how users will navigate to this recipe. Click to Format
+          </div>
+          {/snippet}
+          {#snippet _trigger()}
+          <a  class="p-1" onclick={setHandle()}>
+            <i class="ri-settings-2-line"></i>
+          </a>
+          {/snippet}
+        </Tooltip> -->
+
+      </div>
+      
 
       <Field name="visibility" placeholder="visibility" label="Visibility" required={true} bind:value={formData.visibility} errors={form?.errors} type="select" 
       choices={visibilityChoices}/>  

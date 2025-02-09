@@ -12,6 +12,6 @@
   openDelay={50}
   closeDelay={50}
 >
-  {#snippet trigger()}{@render _trigger()}{/snippet}
+  {#snippet trigger()}{@render _trigger({type:"button"})}{/snippet}
   {#snippet content()}{@render _content()}{/snippet}
 </Tooltip>

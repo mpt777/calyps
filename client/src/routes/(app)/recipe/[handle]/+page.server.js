@@ -1,13 +1,16 @@
 import { iapi } from "$utils/api";
+import { fail, error } from "@sveltejs/kit";
 
 export async function load({ params }) {
-  let recipe;
-  try {
-      const response = await iapi(`recipe/recipe/${params.handle}`); // Make an API request
-      recipe = await response.json();
-  } catch (error) {
-      console.error('API request failed:', error);
-  }
+    let recipe;
+
+    const response = await iapi(`recipe/recipe/${params.handle}`); // Make an API request
+
+    if (!response.ok) {
+        throw error(response.status, response.statusText)
+    }
+    console.log(response)
+    recipe = await response.json();
 
 
   let breadcrumbs = [

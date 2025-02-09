@@ -22,15 +22,26 @@ export function pluralize(word:string, value : number, suffix:string="s") {
   return value === 1 ? `${word}` : `${word}${suffix}`;
 }
 
-export function formatTimeString(timeStr : string) {
-  const [hours, minutes, seconds] = timeStr.split(':').map(Number);
-  let parts = [];
-
-  if (hours > 0) parts.push(`${hours} hour${hours !== 1 ? 's' : ''}`);
-  if (minutes > 0) parts.push(`${minutes} minute${minutes !== 1 ? 's' : ''}`);
-  if (seconds > 0) parts.push(`${seconds} second${seconds !== 1 ? 's' : ''}`);
-
-  return parts.length > 1 ? parts.slice(0, -1).join(', ') + ' and ' + parts.slice(-1) : parts[0] || '0 seconds';
+export function formatTimeString(seconds : number) {
+  const hours = Math.floor(seconds / 3600); // 1 hour = 3600 seconds
+  const minutes = Math.floor((seconds % 3600) / 60); // 1 minute = 60 seconds
+  
+  let result = '';
+  
+  if (hours > 0) {
+      result += `${hours} hour${hours !== 1 ? 's' : ''}`;
+  }
+  
+  if (minutes > 0) {
+      if (result.length > 0) result += ' and ';
+      result += `${minutes} minute${minutes !== 1 ? 's' : ''}`;
+  }
+  
+  if (result === '') {
+      result = '0 minutes'; // If no hours or minutes, just return 0 minutes
+  }
+  
+  return result;
 }
 
 export function generateHandle(name: string) {
@@ -39,6 +50,6 @@ export function generateHandle(name: string) {
       .replace(/\s+/g, '-')              // Replace spaces with hyphens
       .replace(/[^\w\-]+/g, '')          // Remove non-alphanumeric characters except hyphens
       .replace(/--+/g, '-')              // Replace multiple hyphens with a single hyphen
-      .replace(/^-+/, '')                // Remove leading hyphens
-      .replace(/-+$/, '');               // Remove trailing hyphens
+    //   .replace(/^-+/, '')                // Remove leading hyphens
+    //   .replace(/-+$/, '');               // Remove trailing hyphens
 }

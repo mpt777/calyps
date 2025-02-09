@@ -22,6 +22,7 @@ export default {
   ],
   safelist: [
     'bg-warning-500',
-    "preset-filled-error-500"
+    "preset-filled-error-500",
+    'preset-tonal-error',
   ]
 };
