@@ -11,14 +11,11 @@ import { z } from 'zod';
 
 export async function load({ params, fetch }) {
     const recipe = await(await papi(fetch, `recipe/recipe/${params.handle}`, {method: "GET"})).json();
-    // const form = await superValidate(recipe, zod(recipeSchema));
     const form = recipeSchema.parse(recipe);
     const units = await(await papi(fetch, "recipe/unit/")).json();
     const visbilities = await(await papi(fetch, "common/visibility/")).json();
 
-    // console.log(recipe, form)
-
-    return { recipe, form, message:"", units, visbilities};
+    return { form, message:"", units, visbilities};
 }
 
 export const actions = {

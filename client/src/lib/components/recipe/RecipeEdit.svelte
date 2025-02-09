@@ -18,13 +18,11 @@
 
   import { reorder, useSortable } from "$scripts/useSortable.svelte";
   import { enhance } from "$app/forms";
+    import { generateHandle } from "$scripts/humanize";
 
-  let {data, form } = $props();
+  let {data, form} = $props();
 
-
-  let errors=form?.errors;
-
-  // const { form: formData, errors, constraints, message, enhance } = superForm(data.form, {
+  // const { form: formData, errors, constraints, message, enhance } = superForm(formData, {
   //   customValidity: true,
   //   dataType: 'json'
   // });
@@ -38,11 +36,21 @@
     return {"value": e.id, "name": e.name}
   })
 
-  let myData = $state(data.form)
+  let formData = $state(data.form)
 
-  let ingredients = $state(form.ingredients)
 
-  ingredients.forEach(e=>{
+  $effect(() => {
+    console.log(formData)
+    if (!formData.id) {
+      formData.handle = generateHandle(formData.name)
+    }
+  })
+
+  //-------------------------------------------
+
+  formData.ingredients = formData.ingredients || []
+
+  formData.ingredients.forEach(e=>{
     e.u=generateUUID();
   })
 
@@ -53,27 +61,27 @@
     handle: '.my-handle',
     ghostClass: 'opacity-0',
     onEnd(evt) {
-      myData.ingredients = reorder(myData.ingredients, evt);
+      formData.ingredients = reorder(formData.ingredients, evt);
       sortIngredients()
     }
   });
 
   function sortIngredients() {
     let counter = 1
-    myData.ingredients.forEach((_, i) => {
+    formData.ingredients.forEach((_, i) => {
       let value = 0
-      if (!myData.ingredients[i].DELETE) {
+      if (!formData.ingredients[i].DELETE) {
         value = counter
         counter++
       }
-      myData.ingredients[i].sequence = value
+      formData.ingredients[i].sequence = value
     })
-    myData.ingredients = [...myData.ingredients]
+    formData.ingredients = [...formData.ingredients]
   }
 
   function addIngredient() {
     console.log("here")
-    myData.ingredients.push({
+    formData.ingredients.push({
       name: "",
       amount: 0,
       unit: data.units[0].id,
@@ -82,24 +90,24 @@
       DELETE:false
     })
     sortIngredients()
-    myData.ingredients = myData.ingredients
+    formData.ingredients = formData.ingredients
   }
 
   async function removeIngredient(item, i) {
-    myData.ingredients[i].DELETE=true;
-    myData.ingredients[i].amount=1;
-    myData.ingredients[i].name="DELETE";
+    formData.ingredients[i].DELETE=true;
+    formData.ingredients[i].amount=1;
+    formData.ingredients[i].name="DELETE";
     sortIngredients()
   }
 </script>
-<pre class="mt-5 w-fit border p-5">{JSON.stringify(myData, null, 2)}</pre>
-
+<!-- <pre class="mt-5 w-fit border p-5">{JSON.stringify(formData, null, 2)}</pre>
+<pre class="mt-5 w-fit border p-5">{JSON.stringify(form, null, 2)}</pre> -->
 
 
 <form method="POST" use:enhance class="space-y-4">
 
-  <input name="hack" value={JSON.stringify(myData)}>
-    <Message message={ form?.message } level={form?.level}/>
+  <input name="hack" value={JSON.stringify(formData)} class="hidden">
+  <Message message={ form?.message } level={form?.level}/>
 
 <div class="flex gap-8 max-w-screen-lg mx-auto flex-wrap md:flex-nowrap ">
   <div class="w-full">
@@ -128,27 +136,27 @@
       <section class="p-4 space-y-4">
         <div class="grid grid-cols-12 md:gap-8">
           <div class="col-span-12 md:col-span-8">
-            <Field name="name" placeholder="Name" label="Name" required={true} bind:value={form.name} errors={errors}/>
+            <Field name="name" placeholder="Name" label="Name" required={true} bind:value={formData.name} errors={form?.errors}/>
           </div>
           <div class="col-span-12 md:col-span-4">
-            <Field name="servings" placeholder="Servings" label="Servings" required={true} bind:value={form.servings} errors={errors} type="number"/>
+            <Field name="servings" placeholder="Servings" label="Servings" required={true} bind:value={formData.servings} errors={form?.errors} type="number"/>
           </div>
         </div>
 
         <div class="grid grid-cols-12 md:gap-8">
           <div class="col-span-12 lg:col-span-6">
-            <Field name="prep_time"  label="Prep Time" required={true} type="duration" bind:value={form.prep_time} errors={errors}/>
+            <Field name="prep_time"  label="Prep Time" required={true} type="duration" bind:value={formData.prep_time} errors={form?.errors}/>
 
           </div>
           <div class="col-span-12 lg:col-span-6">
-            <Field name="cook_time" label="Cook Time" required={true} type="duration" bind:value={form.cook_time} errors={errors}/>
+            <Field name="cook_time" label="Cook Time" required={true} type="duration" bind:value={formData.cook_time} errors={form?.errors}/>
           </div>
         </div>
 
         <hr>
         
-        <Quill name="description" placeholder="Description" label="Description" required={true} bind:value={form.description} errors={errors}/>
-        <Quill name="instructions" placeholder="Instructions" label="Instructions" required={true} bind:value={form.instructions} errors={errors}/>
+        <Quill name="description" placeholder="Description" label="Description" required={true} bind:value={formData.description} errors={form?.errors}/>
+        <Quill name="instructions" placeholder="Instructions" label="Instructions" required={true} bind:value={formData.instructions} errors={form?.errors}/>
 
       </section>
     </div>
@@ -166,25 +174,28 @@
       </header>
       <hr>
       <section class="p-4 space-y-4" bind:this={sortable}>
-        {#each myData.ingredients as ingredient, i ({u: ingredient.u})}
+        {#each formData.ingredients as ingredient, i ({u: ingredient.u})}
         <div>
-          {#if !myData.ingredients[i].DELETE}
-        <Field name="sequence"  label="sequence" required={false} type="number" bind:value={myData.ingredients[i].sequence} errors={errors?.ingredients?.[i]}/>
+          {#if !formData.ingredients[i].DELETE}
+          <div class="hidden">
+            <Field name="sequence"  label="sequence" required={false} type="number" errors={form?.errors?.ingredients?.[i]} bind:value={formData.ingredients[i].sequence} />
+          </div>
+        
         <section class="flex gap-x-4 gap-y-2 flex-wrap lg:flex-nowrap">
           <div class="flex gap-x-4 w-full">
             <button type="button" class="my-handle outline-none">
               <i class="ri-draggable"></i>
             </button>
               <div class="w-full">
-                <Field name="name" placeholder="Name" label="Name" required={true} errors={errors?.ingredients?.[i]} bind:value={myData.ingredients[i].name}/>
+                <Field name="name" placeholder="Name" label="Name" required={true} errors={form?.errors?.ingredients?.[i]} bind:value={formData.ingredients[i].name}/>
               </div>
               <div class="">
-                <Field name="amount" placeholder="Amount" label="Amount" required={true} errors={errors?.ingredients?.[i]} bind:value={myData.ingredients[i].amount} type="number"/>
+                <Field name="amount" placeholder="Amount" label="Amount" required={true} errors={form?.errors?.ingredients?.[i]} bind:value={formData.ingredients[i].amount} type="number"/>
               </div>
           </div>
           <div class="flex gap-x-4 items-end">
               <div class="w-full">
-                <Field name="unit" placeholder="Unit" label="Unit" required={true} errors={errors?.ingredients?.[i]} bind:value={myData.ingredients[i].unit} choices={unitChoices} type="select"/>
+                <Field name="unit" placeholder="Unit" label="Unit" required={true} errors={form?.errors?.ingredients?.[i]} bind:value={formData.ingredients[i].unit} choices={unitChoices} type="select"/>
               </div>
               <div class="grow-0">
                   <button type="button" class="btn preset-filled-error-500" onclick={() => removeIngredient(ingredient, i)}>
@@ -206,9 +217,9 @@
     </header>
     <hr>
     <section class="p-4 space-y-4">
-      <Field name="handle" placeholder="handle" label="Handle" required={true} bind:value={form.handle} errors={errors} />
+      <Field name="handle" placeholder="handle" label="Handle" required={true} bind:value={formData.handle} errors={form?.errors} />
 
-      <Field name="visibility" placeholder="visibility" label="Visibility" required={true} bind:value={form.visibility} errors={errors} type="select" 
+      <Field name="visibility" placeholder="visibility" label="Visibility" required={true} bind:value={formData.visibility} errors={form?.errors} type="select" 
       choices={visibilityChoices}/>  
 
       <div class=" flex justify-center">

@@ -6,6 +6,7 @@ const ACCEPTED_IMAGE_TYPES = ["image/jpg", "image/jepg", "image/png", "image/web
 
 
 export const recipeSchema = z.object({
+    id: z.number().optional(),
     name: z.string().min(2, "Name must be at least 2 characters."),
     handle: z.string().regex(/^[a-zA-Z0-9_-]+$/, "Handle can only contain letters, numbers, underscores, and hyphens."),
     description: z.string().optional(),
@@ -23,7 +24,7 @@ export const recipeSchema = z.object({
     servings: z.coerce.number().min(1, "Servings must be at least 1."),
     cook_time: z.coerce.number().min(0, "Cook time cannot be negative."),
     prep_time: z.coerce.number().min(0, "Prep time cannot be negative."),
-    visibility: z.number().default(1),
+    visibility: z.number().default(2),
 
     // image: z
     //     .any()

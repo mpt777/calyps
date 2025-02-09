@@ -32,3 +32,13 @@ export function formatTimeString(timeStr : string) {
 
   return parts.length > 1 ? parts.slice(0, -1).join(', ') + ' and ' + parts.slice(-1) : parts[0] || '0 seconds';
 }
+
+export function generateHandle(name: string) {
+  return (name || "")
+      .toLowerCase()                    // Convert to lowercase
+      .replace(/\s+/g, '-')              // Replace spaces with hyphens
+      .replace(/[^\w\-]+/g, '')          // Remove non-alphanumeric characters except hyphens
+      .replace(/--+/g, '-')              // Replace multiple hyphens with a single hyphen
+      .replace(/^-+/, '')                // Remove leading hyphens
+      .replace(/-+$/, '');               // Remove trailing hyphens
+}

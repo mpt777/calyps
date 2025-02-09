@@ -1,5 +1,6 @@
 import { recipeSchema } from "$lib/forms/recipe";
 import { addMessage, Message } from "$scripts/message";
+import { formatZodError } from "$scripts/validation";
 import { papi } from "$utils/api";
 import { toJson } from "$utils/form";
 import { url } from "$utils/url";
@@ -11,19 +12,12 @@ import { z } from 'zod';
 
 export async function postRecipe(event) {
   let d = await event.request.formData();
-  console.log(d)
   let data = JSON.parse(d.get("hack"))
-  console.log("POST", data)
   const form = recipeSchema.safeParse(data);
 
-  console.log("VALID FORM", form)
-
   if (!form.success) {
-      console.log("FAIL")
-      let errors = form.error.format()
-      let issues = form.error.issues
-      console.log(errors, issues)
-      return fail(400, { form, errors, message: "Validation Failed", level:"error"});
+      let errors = formatZodError(form.error.issues)
+      return fail(400, { errors, message: "Validation Failed", level:"error"});
   }
 
   let handle = "";
@@ -33,7 +27,7 @@ export async function postRecipe(event) {
     METHOD = "PATCH"
   }
 
-  console.log(METHOD)
+  console.log(METHOD, form.data)
 
   const response = await papi(event.fetch, `recipe/recipe/${handle}`, {
       method: METHOD,
@@ -44,6 +38,7 @@ export async function postRecipe(event) {
   });
 
   let responseData = await response.json()
+  console.log(responseData)
 
   if (response.ok){
     addMessage(event.cookies, new Message({message: "Recipe Updated!"}));
@@ -51,7 +46,6 @@ export async function postRecipe(event) {
     // return {form, message: responseData?.message || responseData?.messages || responseData?.detail || "Updated", level:"success"}
   }
   else {
-      form.errors = {...form.errors, ...responseData.errors};
-      return fail(400, {form, message: responseData?.message || responseData?.messages || responseData?.detail, level:"error"})
+      return fail(400, {errors:responseData.errors, message: responseData?.message || responseData?.messages || responseData?.detail || "Success", level:"error"})
   }
 }

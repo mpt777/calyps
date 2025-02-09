@@ -10,14 +10,18 @@ import { superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { z } from 'zod';
 import { safeJson } from "$scripts/permissions/permissions";
+import { getDefaults } from "$scripts/validation";
 
 export async function load({ fetch }) {
-    const form = await superValidate(zod(recipeSchema));
+    // const form = await superValidate(zod(recipeSchema));
     
+    console.log("here")
+    const form = getDefaults(recipeSchema);
+    console.log("HELLO", form)
     const units = await safeJson(await papi(fetch, "recipe/unit/"));
     const visbilities = await safeJson(await papi(fetch, "common/visibility/"));
 
-    return { form, message:"", units, visbilities};
+    return { form:form, message:"", units, visbilities};
 }
 
 export const actions = {

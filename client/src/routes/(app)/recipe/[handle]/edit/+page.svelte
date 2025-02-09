@@ -4,5 +4,5 @@
   let {data, form} = $props();
 </script>
 <div>
-  <RecipeEdit data={data} form={data.form}/>
+  <RecipeEdit data={data} form={form}/>
 </div>

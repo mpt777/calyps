@@ -29,8 +29,6 @@
     let classes = hasErrors ? "with-error" : "";
 
   </script>
-  
-  
   <label class="label" for="{name || forName}">
       {#if label}
           <span class="label-text {requiredClass}">{label}</span>

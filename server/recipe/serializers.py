@@ -47,8 +47,8 @@ class RecipeSerializer(serializers.ModelSerializer):
     image = serializers.StringRelatedField()  # Returns image as a string
     created_by = serializers.StringRelatedField()  # Returns username of creator
     # visibility = serializers.SlugRelatedField(queryset=Visibility., slug_field='code') # Returns visibility as a string
-    visibility_choices = serializers.SerializerMethodField()
-    unit_choices = serializers.SerializerMethodField()
+    # visibility_choices = serializers.SerializerMethodField()
+    # unit_choices = serializers.SerializerMethodField()
     # prep_time = serializers.SerializerMethodField()
     # cook_time = serializers.SerializerMethodField()
 
@@ -73,7 +73,7 @@ class RecipeSerializer(serializers.ModelSerializer):
             "id", "name", "handle", "description", "instructions",
             "image", "created_by", "prep_time", "cook_time",
             "servings", "visibility", "ingredients",
-            "visibility_choices", "unit_choices"
+            # "visibility_choices", "unit_choices"
         ]
 
     def _process_related(self, instance, ingredients_data):
@@ -90,6 +90,7 @@ class RecipeSerializer(serializers.ModelSerializer):
             ingredient = Ingredient.objects.get(id=ID)
             for attr, value in ingredient_data.items():
                 setattr(ingredient, attr, value)
+                ingredient.save()
         else:
             ingredient_data["recipe"] = instance
             ingredient = Ingredient.objects.create(**ingredient_data)
