@@ -2,35 +2,28 @@
 	import { url } from '$utils/url.js';
 	import { fly, fade } from 'svelte/transition';
 
-	let {data } = $props();
+	let { data } = $props();
 
 	let inputedName = $state("");
 	let giftee = $state("");
 	let toggle = $state(false);
 
-	let oldName = inputedName;
-
-
+	console.log(data)
 	const lookup = Object.fromEntries(
 		Object.entries(data.pairs_str).map(([k, v]) => [k.toLowerCase(), v])
 	);
 
-	$effect(() =>  {
-		if (inputedName != oldName) {giftee = ""}
-	})
+	$effect(() => {
+		if (!lookup[inputedName.trim().toLowerCase()]) {
+			giftee = "";
+		}
+	});
 
 	function findGiftee() {
-		let name = inputedName.toLocaleLowerCase()
-		oldName = inputedName;
+		let name = inputedName.trim().toLowerCase();
 		toggle = !toggle;
-		if (name in lookup) {
-			giftee = lookup[name]
-		} else {
-			giftee = "Not Found"
-		}
-		
+		giftee = lookup[name] ?? "Not Found";
 	}
-
 </script>
 <div class="flex justify-center">
 	<div class="calyps--card">

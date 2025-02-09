@@ -1,7 +1,7 @@
 from django.contrib.auth.models import Group, User
 from rest_framework import routers, serializers, viewsets, permissions
 from django.urls import include, path, re_path
-
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import *
 
 
@@ -53,9 +53,7 @@ class SecretSantaSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class SecretSantaViewset(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
+    permission_classes = [AllowAny,]
     queryset = SecretSanta.objects.all()
     serializer_class = SecretSantaSerializer
 
