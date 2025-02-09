@@ -82,7 +82,7 @@
                     <Segment.Item value="1" classes={"btn-sm"} >1</Segment.Item>
                     <Segment.Item value="2" classes={"btn-sm"} >2</Segment.Item>
                     <Segment.Item value="3" classes={"btn-sm"} >3</Segment.Item>
-                    <Input bind:value={scalar} type="number" css="p-0 bg-transparent border-none text-center w-10" style="{'min-width: 0 !important;'}"/>
+                    <Input bind:value={scalar} type="number" css="p-0 bg-transparent border-none text-center w-10"/>
                 </Segment>
                 
             </div>
