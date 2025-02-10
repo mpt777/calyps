@@ -9,8 +9,7 @@ from common.models import TimeStampedModel
 
 BLEACH = {
   "tags": ["b", "i", "strong", "em", "p", "ul", "ol", "li", "a", "span", "div"],
-  "attributes": {"a": ["href"], "span":["contenteditable"]},
-  "*": ["class"],
+  "attributes": {"a": ["href"], "span":["contenteditable"], "*": ["class"]},
   "protocols": ["http", "https"] 
 }
 
