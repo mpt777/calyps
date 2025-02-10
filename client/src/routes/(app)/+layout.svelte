@@ -97,17 +97,17 @@
 								</div>
 								{/snippet}
 								{#snippet _trigger()}
-								<a href="https://emptytxt.com">
+								<a href="https://emptytxt.com" aria-label="Legacy Site">
 									<img src="/favicon.ico" class="inline w-4 pb-1" alt="emptytx logo">
 								</a>
 								{/snippet}
 							</Tooltip>
 
-						<a href="https://www.youtube.com/@mpt777">
+						<a href="https://www.youtube.com/@mpt777" aria-label="Youtube">
               <i class="ri-youtube-fill"></i>
             </a>
 
-            <a href="https://github.com/mpt777">
+            <a href="https://github.com/mpt777" aria-label="GitHub">
               <i class="ri-github-fill"></i>
             </a>
           </div>
