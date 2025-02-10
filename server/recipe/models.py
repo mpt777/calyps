@@ -1,6 +1,7 @@
 import bleach
 from django.contrib import admin
 from django.db import models
+from django.forms import ValidationError
 from django.utils.text import slugify
 
 from common.models import TimeStampedModel
@@ -32,6 +33,11 @@ class Recipe(TimeStampedModel):
 
   def __str__(self):
     return self.name
+  
+  def clean(self):
+    self.handle = slugify(self.handle)
+    if self.handle in ["add", "edit"]:
+      raise ValidationError({"handle":"Invalid Handle"})
   
   def save(self, *args, **kwargs):
     self.handle = slugify(self.handle)

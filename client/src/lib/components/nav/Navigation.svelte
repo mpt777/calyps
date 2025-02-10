@@ -5,6 +5,11 @@
 
     import NavLink from '$components/nav/NavLink.svelte';
 
+    let redirectTo = page.url.pathname;
+    if (["/login", "/signup"].includes(page.url.pathname)) {
+        redirectTo = ""
+    }
+
 </script>
 <div class="flex flex-col justify-between h-full w-32">
     <nav class="list-nav">
@@ -33,8 +38,8 @@
                 </form>
             </li>
         {:else}
-            <li><NavLink title="Login" href="{url("login")}?redirectTo={page.url.pathname}"/></li>
-            <li><NavLink title="Signup" href="{url("signup")}?redirectTo={page.url.pathname}"/></li>
+            <li><NavLink title="Login" href="{url("login")}?redirectTo={redirectTo}"/></li>
+            <li><NavLink title="Signup" href="{url("signup")}?redirectTo={redirectTo}"/></li>
         {/if}
         </ul>
     </nav>
