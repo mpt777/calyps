@@ -9,8 +9,8 @@ export const recipeSchema = z.object({
     id: z.number().optional(),
     name: z.string().min(2, "Name must be at least 2 characters."),
     handle: z.string().regex(/^[a-zA-Z0-9_-]+$/, "Handle can only contain letters, numbers, underscores, and hyphens."),
-    description: z.string().optional(),
-    instructions: z.string().optional(),
+    description: z.string().optional().default(""),
+    instructions: z.string().optional().default(""),
     ingredients: z.array(
         z.object({
             name: z.string().min(1, "Ingredient name is required."),
@@ -20,7 +20,7 @@ export const recipeSchema = z.object({
             unit: z.coerce.number().positive("Unit must be a positive number."),
             DELETE: z.boolean().default(false),
         })
-    ).optional(), // Allows ingredients to be omitted
+    ).optional().default([]), // Allows ingredients to be omitted
     servings: z.coerce.number().min(1, "Servings must be at least 1."),
     cook_time: z.coerce.number().min(0, "Cook time cannot be negative."),
     prep_time: z.coerce.number().min(0, "Prep time cannot be negative."),

@@ -15,7 +15,6 @@ import { getDefaults } from "$scripts/validation";
 export async function load({ fetch }) {
     // const form = await superValidate(zod(recipeSchema));
     
-    console.log("here")
     const form = getDefaults(recipeSchema);
     console.log("HELLO", form)
     const units = await safeJson(await papi(fetch, "recipe/unit/"));
