@@ -8,8 +8,8 @@ from common.models import TimeStampedModel
 # Register your models here.
 
 BLEACH = {
-  "tags": ["b", "i", "strong", "em", "p", "ul", "ol", "li", "a", "span", "div"],
-  "attributes": {"a": ["href"], "span":["contenteditable"], "*": ["class"]},
+  "tags": ["b", "i", "strong", "em", "p", "ul", "ol", "li", "a", "span", "div", "h1","h2","h3","h4","h5","h6", "blockquote", "s","u"] ,
+  "attributes": {"a": ["href"], "span":["contenteditable"], "*": ["class", "data-list"]},
   "protocols": ["http", "https"] 
 }
 
