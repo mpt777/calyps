@@ -49,7 +49,6 @@ class Recipe(TimeStampedModel):
     super(Recipe, self).save(*args, **kwargs)
     
 
-
 class Ingredient(TimeStampedModel):
   recipe = models.ForeignKey("Recipe", related_name="ingredients", on_delete=models.CASCADE)
   name = models.CharField(max_length=255)
@@ -62,6 +61,18 @@ class Ingredient(TimeStampedModel):
 
   def __str__(self):
     return self.name
+  
+
+class RecipeCollection(TimeStampedModel):
+  recipe = models.ForeignKey("Recipe", related_name="recipe_collections", on_delete=models.CASCADE)
+  collection = models.ForeignKey("common.Collection", related_name="recipe_collections", on_delete=models.CASCADE)
+  sequence = models.PositiveSmallIntegerField(default=0)
+
+  class Meta:
+    ordering = ("recipe", "sequence")
+
+  def __str__(self):
+    return f"{self.recipe} - {self.collection}"
   
 
 
@@ -83,3 +94,5 @@ class Unit(models.Model):
 
   def __str__(self):
     return f"{self.name} {self.code}"
+  
+  
