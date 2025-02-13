@@ -10,6 +10,7 @@ from rest_framework.views import APIView, exception_handler
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.generics import ListAPIView
 from rest_framework.filters import SearchFilter
+from django.db.models import Q
 
 
 class RecipeAPIView(APIView):
@@ -110,7 +111,11 @@ class RecipeSearchView(ListAPIView):
         Always apply hard filters before returning data.
         """
         ## Paginator
-        return Recipe.objects.filter(visibility__code="public")
+        return Recipe.objects.filter(
+            Q(visibility__code="public") |
+            Q(created_by_id=self.request.user.id)
+            # Q(visibility__code__in=["friends"])
+        ).distinct()
 
     
 
