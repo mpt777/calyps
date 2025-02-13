@@ -36,17 +36,17 @@
 
 				<div class="input-group-shim !p-0">
 					<div class="flex !p-0 h-full">
-						<button type="button" class="btn h-full preset-filled-warning-500 rounded-none cursor-pointer" onclick={() => train.count = Math.max(train.count-1, 0)} aria-label="Remove Segment">-</button>
-						<button type="button" class="btn h-full preset-filled-tertiary-500 rounded-none cursor-pointer"  onclick={() => train.count++} aria-label="Add Segment">+</button>
+						<a class="btn h-full preset-filled-warning-500 rounded-none cursor-pointer" onclick={() => train.count = Math.max(train.count-1, 0)} aria-label="Remove Segment">-</a>
+						<a class="btn h-full preset-filled-tertiary-500 rounded-none cursor-pointer"  onclick={() => train.count++} aria-label="Add Segment">+</a>
 					</div>
 				</div>
 			</div>
 			{/each}
 
 			<div class="input-group divide-surface-200-800 grid-cols-[auto_1fr_auto] divide-x">
-				<button type="button" class="btn btn-lg h-full preset-filled-primary-500 rounded-none cursor-pointer" onclick={calculate} aria-label="Calculate Results">
+				<a class="btn btn-lg h-full preset-filled-primary-500 rounded-none cursor-pointer" onclick={calculate} aria-label="Calculate Results">
 					<i class="ri-calculator-line"></i> Results 
-				</button>
+				</a>
 				<button>{result}</button>
 			</div>
 

@@ -69,8 +69,8 @@
 
 				<div class="input-group-shim !p-0">
 					<div class="flex !p-0 h-full">
-						<button type="button" class="btn h-full preset-filled-warning-500 rounded-none cursor-pointer" onclick={() => diceCount = Math.max(diceCount-1, 0)}>-</button>
-						<button type="button" class="btn h-full preset-filled-tertiary-500 rounded-none cursor-pointer" onclick={() => diceCount++}>+</button>
+						<a class="btn h-full preset-filled-warning-500 rounded-none cursor-pointer" onclick={() => diceCount = Math.max(diceCount-1, 0)}>-</a>
+						<a class="btn h-full preset-filled-tertiary-500 rounded-none cursor-pointer" onclick={() => diceCount++}>+</a>
 					</div>
 				</div>
 			</div>
@@ -81,8 +81,8 @@
 
 				<div class="input-group-shim !p-0">
 					<div class="flex !p-0 h-full">
-						<button type="button" class="btn h-full preset-filled-warning-500 rounded-none cursor-pointer" onclick={() => interest = Math.max(interest-1, 0)}>-</button>
-						<button type="button" class="btn h-full preset-filled-tertiary-500 rounded-none cursor-pointer" onclick={() => interest++}>+</button>
+						<a class="btn h-full preset-filled-warning-500 rounded-none cursor-pointer" onclick={() => interest = Math.max(interest-1, 0)}>-</a>
+						<a class="btn h-full preset-filled-tertiary-500 rounded-none cursor-pointer" onclick={() => interest++}>+</a>
 					</div>
 				</div>
 			</div>
@@ -101,9 +101,9 @@
 			</div>
 
 			<div class="input-group divide-surface-200-800 grid-cols-[auto_1fr_auto] divide-x">
-				<button type="button" class="btn btn-lg h-full preset-filled-primary-500 rounded-none cursor-pointer" onclick={calculate}>
+				<a class="btn btn-lg h-full preset-filled-primary-500 rounded-none cursor-pointer" onclick={calculate} aria-label="Calculate">
 					<i class="ri-calculator-line"></i> Results 
-				</button>
+				</a>
 				<button>{result.toFixed(4)}</button>
 			</div>
 

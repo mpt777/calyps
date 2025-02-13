@@ -6,59 +6,17 @@ from .serializers import RecipeSerializer, IngredientSerializer, UnitSerializer
 from utils.view.utils import check_owner_permission, require_authentication
 from rest_framework.exceptions import PermissionDenied, NotFound, ValidationError
 from rest_framework.routers import DefaultRouter
-from rest_framework.views import exception_handler
+from rest_framework.views import APIView, exception_handler
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.generics import ListAPIView
+from rest_framework.filters import SearchFilter
 
-class RecipeViewSet(viewsets.ModelViewSet):
+
+class RecipeAPIView(APIView):
     permission_classes = [AllowAny]
-    queryset = Recipe.objects.all()
-    serializer_class = RecipeSerializer
 
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        try:
-            serializer.is_valid(raise_exception=True)  # Raises ValidationError if invalid
-            recipe = serializer.save()
-
-            # Custom success response
-            return Response(
-                {"message": "Recipe created successfully!", "recipe": RecipeSerializer(recipe).data},
-                status=status.HTTP_201_CREATED
-            )
-
-        except ValidationError as e:
-            # Custom error response
-            return Response(
-                {"message": "Validation failed", "errors": e.detail},  # e.detail contains the error dictionary
-                status=status.HTTP_400_BAD_REQUEST
-            )
-    
-    @check_owner_permission()
-    def update(self, request, *args, **kwargs):
-        partial = kwargs.pop("partial", False)  # Supports both PUT (full update) and PATCH (partial update)
-        instance = self.get_object()  # Get the existing object
-        serializer = self.get_serializer(instance, data=request.data, partial=partial)
-
-        try:
-            serializer.is_valid(raise_exception=True)
-            updated_recipe = serializer.save()
-
-            # Custom success response
-            return Response(
-                {"message": "Recipe updated successfully!", "recipe": RecipeSerializer(updated_recipe).data},
-                status=status.HTTP_200_OK
-            )
-
-        except ValidationError as e:
-            # Custom error response
-            return Response(
-                {"message": "Update failed", "errors": e.detail},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-    
-    def get_object(self):
-        recipe_id = self.kwargs.get('pk')  # `pk` corresponds to the recipe ID
-
+    def get_object(self, recipe_id):
+        """Retrieve a recipe by ID or handle."""
         if not recipe_id:
             raise NotFound("Recipe not found. Provide either ID or handle.")
         
@@ -70,15 +28,90 @@ class RecipeViewSet(viewsets.ModelViewSet):
             except (Recipe.DoesNotExist, ValueError):
                 raise NotFound(f"Recipe with ID or handle {recipe_id} not found.")
 
-    @require_authentication
-    def perform_create(self, serializer):
-        """Automatically assign created_by during recipe creation."""
-        serializer.save(created_by=self.request.user)
+    def get(self, request, *args, **kwargs):
+        """Handle GET request to retrieve a specific recipe."""
+        recipe_id = kwargs.get('pk')
 
-    @check_owner_permission()
-    def destroy(self, request, *args, **kwargs):
-        """Delete a recipe (only if the current user is the creator)."""
-        return super().destroy(request, *args, **kwargs)
+        # if not recipe_id:
+        #     recipes = Recipe.objects.all()
+        #     serializer = RecipeSerializer(recipes, many=True)
+        #     return Response(serializer.data, status=status.HTTP_200_OK)
+
+        recipe = self.get_object(recipe_id)
+        serializer = RecipeSerializer(recipe)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @require_authentication
+    def post(self, request, *args, **kwargs):
+        """Handle POST request to create a new recipe."""
+        serializer = RecipeSerializer(data=request.data)
+        try:
+            serializer.is_valid(raise_exception=True)
+            recipe = serializer.save(created_by=request.user)  # Assuming user is set during creation
+            return Response(
+                {"message": "Recipe created successfully!", "recipe": RecipeSerializer(recipe).data},
+                status=status.HTTP_201_CREATED
+            )
+        except ValidationError as e:
+            return Response(
+                {"message": "Validation failed", "errors": e.detail},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+    @check_owner_permission
+    @require_authentication
+    def patch(self, request, *args, **kwargs):
+        """Handle PATCH request to partially update an existing recipe."""
+        recipe_id = kwargs.get('pk')
+        recipe = self.get_object(recipe_id)
+        serializer = RecipeSerializer(recipe, data=request.data, partial=True)
+        
+        try:
+            serializer.is_valid(raise_exception=True)
+            updated_recipe = serializer.save()
+            return Response(
+                {"message": "Recipe updated successfully!", "recipe": RecipeSerializer(updated_recipe).data},
+                status=status.HTTP_200_OK
+            )
+        except ValidationError as e:
+            return Response(
+                {"message": "Update failed", "errors": e.detail},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+    @check_owner_permission
+    @require_authentication
+    def delete(self, request, *args, **kwargs):
+        """Handle DELETE request to delete a recipe."""
+        recipe_id = kwargs.get('pk')
+        recipe = self.get_object(recipe_id)
+
+        if recipe.created_by != request.user:  # Check ownership
+            return Response(
+                {"message": "You do not have permission to delete this recipe."},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        recipe.delete()
+        return Response(
+            {"message": "Recipe deleted successfully."},
+            status=status.HTTP_204_NO_CONTENT
+        )
+
+
+class RecipeSearchView(ListAPIView):
+    permission_classes = [AllowAny]
+    serializer_class = RecipeSerializer
+    filter_backends = [SearchFilter]
+    search_fields = ['name', 'description', 'ingredients__name']
+
+    def get_queryset(self):
+        """
+        Always apply hard filters before returning data.
+        """
+        ## Paginator
+        return Recipe.objects.filter(visibility__code="public")
+
     
 
 class IngredientViewSet(viewsets.ModelViewSet):
@@ -110,11 +143,15 @@ class UnitViewset(viewsets.ModelViewSet):
 
 
 router = DefaultRouter()
-router.register(r'recipe', RecipeViewSet, basename='recipe')
+# router.register(r'recipe', RecipeViewSet, basename='recipe')
+# router.register(r'recipe-search', RecipeSearchView, basename='recipe-search')
 router.register(r'ingredient', IngredientViewSet, basename='ingredient')
 router.register(r'unit', UnitViewset, basename='unit')
 
 # Include the router's URLs into your URL configuration
 urlpatterns = [
     path('', include(router.urls)),  # Prefix the API endpoints with "api/"
+    path('search/recipe/', RecipeSearchView.as_view(), name='recipe-search'), 
+    path('recipe/', RecipeAPIView.as_view(), name='recipe-list'), 
+    path('recipe/<int:pk>/', RecipeAPIView.as_view(), name='recipe-edit'), 
 ]
