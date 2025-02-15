@@ -1,10 +1,10 @@
-import { iapi } from "$utils/api";
+import { iapi, papi } from "$utils/api";
 import { fail, error } from "@sveltejs/kit";
 
-export async function load({ params }) {
+export async function load({ fetch, params }) {
     let recipe;
 
-    const response = await iapi(`recipe/recipe/${params.handle}`); // Make an API request
+    const response = await papi(fetch, `recipe/recipe/${params.handle}`); // Make an API request
 
     if (!response.ok) {
         throw error(response.status, response.statusText)

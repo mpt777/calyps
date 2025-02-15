@@ -1,4 +1,5 @@
 export async function iapi(endpoint, data){
+  console.log("Here", `/api/v1/${endpoint}`)
   return fetch(`/api/v1/${endpoint}`, data)
 }
 

@@ -36,6 +36,23 @@ export async function handle({ event, resolve }) {
           throw redirect(303, "/")
         }
       }
+
+      // console.log('Server Hook:', event.url.href);
+      // console.log("href", event.url.pathname)
+
+      // if (event.url.pathname.startsWith('/private')) {
+      //   return await event.fetch(`${event.url.href.replace("/private", "/api")}`);
+      // }
+
+      // if (!event.locals.obj && event.url.pathname.startsWith('/api')) {
+      //   try {
+      //     const objResp = await event.fetch('/api/endpoint');
+      //     if (!objResp.ok) throw objResp;
+      //     event.locals.obj = await objResp.json();
+      //   } catch {
+      //     event.locals.obj = null;
+      //   }
+      // }
   
     return await resolve(event)
   }

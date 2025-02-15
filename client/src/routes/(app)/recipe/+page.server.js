@@ -1,13 +1,8 @@
 import { papi } from "$utils/api";
 
 export async function load({ params, fetch, url }) {
-    let searchQuery = ""
-    let search = url.searchParams.get('search');
-    if (search) {
-        searchQuery = `?search=${search}`
-    }
+    const paginator = await(await papi(fetch, `recipe/search/recipe/?${url.searchParams.toString()}`, {method: "GET"})).json();
+    console.log(paginator)
 
-    const recipes = await(await papi(fetch, `recipe/search/recipe/${searchQuery}`, {method: "GET"})).json();
-
-    return { recipes };
+    return { paginator };
 }

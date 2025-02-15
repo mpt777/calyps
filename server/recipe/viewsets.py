@@ -11,13 +11,15 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.generics import ListAPIView
 from rest_framework.filters import SearchFilter
 from django.db.models import Q
+from rest_framework.pagination import CursorPagination, PageNumberPagination
 
 
 class RecipeAPIView(APIView):
     permission_classes = [AllowAny]
 
-    def get_object(self, recipe_id):
+    def get_object(self, recipe_id=""):
         """Retrieve a recipe by ID or handle."""
+        recipe_id = self.kwargs.get("pk")
         if not recipe_id:
             raise NotFound("Recipe not found. Provide either ID or handle.")
         
@@ -59,11 +61,11 @@ class RecipeAPIView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-    @check_owner_permission
-    @require_authentication
+    @check_owner_permission()
     def patch(self, request, *args, **kwargs):
         """Handle PATCH request to partially update an existing recipe."""
         recipe_id = kwargs.get('pk')
+        print(kwargs)
         recipe = self.get_object(recipe_id)
         serializer = RecipeSerializer(recipe, data=request.data, partial=True)
         
@@ -81,7 +83,6 @@ class RecipeAPIView(APIView):
             )
 
     @check_owner_permission
-    @require_authentication
     def delete(self, request, *args, **kwargs):
         """Handle DELETE request to delete a recipe."""
         recipe_id = kwargs.get('pk')
@@ -100,11 +101,18 @@ class RecipeAPIView(APIView):
         )
 
 
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 9
+    page_size_query_param = 'page_size'
+    max_page_size = 100
+
+
 class RecipeSearchView(ListAPIView):
     permission_classes = [AllowAny]
     serializer_class = RecipeSerializer
     filter_backends = [SearchFilter]
     search_fields = ['name', 'description', 'ingredients__name']
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
         """
@@ -116,6 +124,15 @@ class RecipeSearchView(ListAPIView):
             Q(created_by_id=self.request.user.id)
             # Q(visibility__code__in=["friends"])
         ).distinct()
+    
+    # def list(self, request, *args, **kwargs):
+    #     queryset = self.get_queryset()
+    #     paginated_queryset = self.paginate_queryset(queryset)  # Automatically applies pagination
+
+    #     if paginated_queryset is not None:
+    #         serializer = self.get_serializer(paginated_queryset, many=True)
+    #         return self.get_paginated_response(serializer.data)
+    #     return Response(serializer.data, status=status.HTTP_200_OK)
 
     
 
@@ -158,5 +175,5 @@ urlpatterns = [
     path('', include(router.urls)),  # Prefix the API endpoints with "api/"
     path('search/recipe/', RecipeSearchView.as_view(), name='recipe-search'), 
     path('recipe/', RecipeAPIView.as_view(), name='recipe-list'), 
-    path('recipe/<int:pk>/', RecipeAPIView.as_view(), name='recipe-edit'), 
+    path('recipe/<str:pk>/', RecipeAPIView.as_view(), name='recipe'), 
 ]

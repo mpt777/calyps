@@ -16,6 +16,6 @@ export const _url = {
  * @param {string} alias
  */
 export function url(alias, kwargs ={}) {
-  console.log(alias, kwargs)
+  // console.log(alias, kwargs)
   return resolveRoute(_url[alias], kwargs)
 }
