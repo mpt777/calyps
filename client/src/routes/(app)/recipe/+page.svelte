@@ -1,10 +1,18 @@
 <script>
     import { page } from "$app/state";
     import RecipeCardList from "$components/recipe/RecipeCardList.svelte";
+    import { iapi, papi } from "$utils/api";
+    import { debounce } from "$utils/form";
     import { url } from "$utils/url.js";
     import path from "path";
 
     let {data} = $props();
+
+    let recipes = $state(data.recipes)
+    let search = $state("");
+    async function getData() {
+      recipes = await(await iapi(`recipe/search/recipe/?search=${search}`, {method: "GET"})).json();
+    }
 
 </script>
 
@@ -20,7 +28,7 @@
         <i class="ri-search-line p-4"></i>
       </button>
 
-      <input type="text" name="search" placeholder="Search">
+      <input type="text" name="search" placeholder="Search" oninput={debounce(getData, 300)} bind:value={search}>
 
     </div>
   </form>
@@ -34,4 +42,4 @@
   </div>
   {/if}
 </div>
-<RecipeCardList recipes={data.recipes}></RecipeCardList>
+<RecipeCardList recipes={recipes}></RecipeCardList>

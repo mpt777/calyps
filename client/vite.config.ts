@@ -11,5 +11,8 @@ export default defineConfig({
 			// other allowed directories can stay here if needed
 		  ]
 		},
+		proxy: {
+				'/api': 'http://server:8000',
+		},
 	}
 });

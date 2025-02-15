@@ -1,5 +1,5 @@
 export async function iapi(endpoint, data){
-  return fetch(`http://server:8000/api/v1/${endpoint}`, data)
+  return fetch(`/api/v1/${endpoint}`, data)
 }
 
 
