@@ -40,7 +40,7 @@
 <ToastMessage />
 {/if }
 
-<div class="flex flex-col h-screen overflow-hidden">
+<div class="flex flex-col h-svh overflow-hidden">
 	<!-- Header -->
 	<header class="bg-surface-50-900-token p-4 shadow-md z-10">
 		<div class="flex justify-between">
