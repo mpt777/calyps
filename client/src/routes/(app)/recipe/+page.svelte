@@ -5,7 +5,6 @@
     import { iapi, papi } from "$utils/api";
     import { debounce } from "$utils/form";
     import { url } from "$utils/url.js";
-    import path from "path";
     import { onMount } from "svelte";
 
     let {data} = $props();
