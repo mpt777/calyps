@@ -116,11 +116,11 @@
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div class="space-y-4">
+            <div class=" space-y-4">
                 <h2 class="text-2xl md:text-3xl lg:text-4xl font-extrabold text-center">Ingredients</h2>
-                <ul class="list">
+                <ul class="list space-y-1">
                     {#each ingredients as ingredient }
-                        <li>
+                        <li class="">
                             <IngredientCheck name="{ingredient.getAmount()} {ingredient.pluralizeUnit()} {ingredient.name}" /> <!-- {} -->
                         </li>
                     {/each}
