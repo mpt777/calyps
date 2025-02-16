@@ -86,7 +86,9 @@
       </main>
       <footer class="p-4 bg-surface-500/20">
         <div class="flex justify-between">
-          <div></div>
+          <div>
+						<a class="anchor" href="mailto:hello@calyps.io"><i class="ri-mail-send-line"></i> hello@calyps.io</a>
+					</div>
           <div class="text-xl">
 
 							<Tooltip>
