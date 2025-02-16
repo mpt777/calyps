@@ -44,7 +44,8 @@
                     </div>
                     {/snippet}
                     {#snippet _trigger()}
-                    <a href="{url("recipe_edit", {handle:recipe.handle})}" class="btn btn-sm variant-filled-tertiary">
+                    
+                    <a href="{url("recipe_edit", {handle:recipe?.handle})}" class="btn btn-sm variant-filled-tertiary">
                     <!-- <a href="/recipe/{recipe.handle}/edit" class="btn btn-sm variant-filled-tertiary" aria-label="Edit Recipe"> -->
                         <i class="ri-pencil-line text-3xl"></i>
                     </a>

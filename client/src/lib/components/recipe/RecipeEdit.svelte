@@ -37,7 +37,7 @@
     return {"value": e.id, "name": e.name}
   })
 
-  let formData = $state(data.form)
+  let formData = $state(data.form);
 
 
   $effect(() => {
@@ -45,9 +45,9 @@
   })
 
   function setHandle() {
-    if (!formData.id) {
-      formData.handle = generateHandle(formData.name)
-    }
+    // if (!formData.id) {
+    //   formData.handle = generateHandle(formData.name)
+    // }
     formData.handle = generateHandle(formData.handle)
   }
 
@@ -128,10 +128,12 @@
               </div>
               {/snippet}
               {#snippet _trigger()}
+              {#if data.form.handle}
               <a href={url("recipe", {handle: data.form.handle})} class="anchor" aria-label="View Recipe">
               <!-- <a href="/recipe/{data.form.handle}" class="anchor" aria-label="View Recipe"> -->
                 <i class="ri-eye-line"></i>
               </a>
+              {/if}
               {/snippet}
             </Tooltip>
           </div>
