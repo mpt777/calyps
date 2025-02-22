@@ -52,7 +52,7 @@ class Tag(models.Model):
        unique_together = ("tag_type", "content_type", "object_id")
 
     def __str__(self):
-        return self.name
+        return self.tag_type.name
 
     def clean(self):
        self.name = self.name.lower()

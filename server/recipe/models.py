@@ -5,6 +5,7 @@ from django.forms import ValidationError
 from django.utils.text import slugify
 
 from common.models import TimeStampedModel
+from django.contrib.contenttypes.fields import GenericRelation
 
 # Register your models here.
 
@@ -30,6 +31,7 @@ class Recipe(TimeStampedModel):
 
   # visibility = models.CharField(default="draft", choices=CHOICES, max_length=255)
   visibility = models.ForeignKey("common.Visibility", related_name="recipes", on_delete=models.PROTECT)
+  tags = GenericRelation("common.Tag", related_query_name="recipes", related_name="recipes")  # Ensure it's correctly linked to Tag
 
   def __str__(self):
     return self.name

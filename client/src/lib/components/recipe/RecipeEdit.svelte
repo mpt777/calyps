@@ -166,7 +166,7 @@
         <hr>
         <div>
           <Label label="Tags"></Label>
-          <TagsInput name="example" bind:value={formData.tags} placeholder="Add Tag..." padding="p-2"/>
+          <TagsInput name="example" bind:value={formData.tag_types} placeholder="Add Tag..." padding="p-2"/>
         </div>
         <hr>
         

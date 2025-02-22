@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from common.serializers import VisibilitySerializer
+from common.serializers import GenericTagSerializer, VisibilitySerializer
 from common.models import Tag, TagType, Visibility
 
 from .models import Recipe, Ingredient, Unit
@@ -59,6 +59,11 @@ class RecipeSerializer(serializers.ModelSerializer):
     def get_unit_choices(self, obj):
         return UnitSerializer(Unit.objects.all(), many=True).data
 
+    def to_representation(self, instance):
+        """Customize output to return tag type names instead of IDs."""
+        data = super().to_representation(instance)
+        data["tag_types"] = list(instance.tags.values_list("tag_type__name", flat=True).distinct())
+        return data
 
     class Meta:
         model = Recipe

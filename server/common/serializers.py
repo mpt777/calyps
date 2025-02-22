@@ -44,7 +44,6 @@ class GenericTagSerializer(serializers.Serializer):
                 tag_type=tag_type,
                 content_type=ContentType.objects.get_for_model(content_object),
                 object_id=content_object.id,
-                defaults={"name": tag_type.name}
             )
 
         return content_object  # Return the object itself
