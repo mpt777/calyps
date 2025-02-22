@@ -11,7 +11,7 @@ class TagTypeAdmin(admin.ModelAdmin):
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "tag_type", "content_type", "object_id", "content_object")
+    list_display = ("id", "tag_type", "content_type", "object_id", "content_object")
     list_filter = ("tag_type", "content_type")
     search_fields = ("name",)
 

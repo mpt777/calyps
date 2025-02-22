@@ -41,7 +41,6 @@ class TagType(models.Model):
 
 
 class Tag(models.Model):
-    name = models.CharField(max_length=255)
     tag_type = models.ForeignKey("TagType", related_name="tags", on_delete=models.CASCADE)
 
     # Generic foreign key fields

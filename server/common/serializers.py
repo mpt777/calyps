@@ -19,10 +19,35 @@ class TagSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Tag
-        fields = ["id", "name", "tag_type", "content_type", "object_id", "content_object"]
+        fields = ["id", "tag_type", "content_type", "object_id", "content_object"]
 
     def get_content_object(self, obj):
         return str(obj.content_object) if obj.content_object else None
+    
+
+class GenericTagSerializer(serializers.Serializer):
+    tag_types = serializers.ListSerializer(
+        child=serializers.CharField(), write_only=True
+    )
+
+    class Meta:
+        fields = ["tag_types"]
+
+    def create(self, validated_data):
+        tag_type_names = validated_data.get("tag_types", [])
+        content_object = self.context["content_object"]  # Expecting an object in context
+
+        for tag_type_name in tag_type_names:
+            tag_type, _ = TagType.objects.get_or_create(name=tag_type_name.lower())
+
+            Tag.objects.get_or_create(
+                tag_type=tag_type,
+                content_type=ContentType.objects.get_for_model(content_object),
+                object_id=content_object.id,
+                defaults={"name": tag_type.name}
+            )
+
+        return content_object  # Return the object itself
 
 ############################################################
 

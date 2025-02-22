@@ -20,6 +20,8 @@
   import { enhance } from "$app/forms";
     import { generateHandle } from "$scripts/humanize";
     import Input from "$components/form/Input.svelte";
+    import { TagsInput } from "@skeletonlabs/skeleton-svelte";
+    import Label from "$components/form/Label.svelte";
 
   let {data, form} = $props();
 
@@ -105,8 +107,8 @@
     sortIngredients()
   }
 </script>
-<!-- <pre class="mt-5 w-fit border p-5">{JSON.stringify(formData, null, 2)}</pre>
-<pre class="mt-5 w-fit border p-5">{JSON.stringify(form, null, 2)}</pre> -->
+<pre class="mt-5 w-fit border p-5">{JSON.stringify(formData, null, 2)}</pre>
+<!-- <pre class="mt-5 w-fit border p-5">{JSON.stringify(form, null, 2)}</pre> -->
 
 
 <form method="POST" use:enhance class="space-y-4">
@@ -161,6 +163,11 @@
           </div>
         </div>
 
+        <hr>
+        <div>
+          <Label label="Tags"></Label>
+          <TagsInput name="example" bind:value={formData.tags} placeholder="Add Tag..." padding="p-2"/>
+        </div>
         <hr>
         
         <Quill name="description" placeholder="Description" label="Description" required={false} bind:value={formData.description} errors={form?.errors}/>

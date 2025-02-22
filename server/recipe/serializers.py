@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from common.serializers import VisibilitySerializer
-from common.models import Visibility
+from common.models import Tag, TagType, Visibility
 
 from .models import Recipe, Ingredient, Unit
 from django.contrib.auth.models import User
@@ -22,17 +22,6 @@ class IngredientSerializer(serializers.ModelSerializer):
 
 class IngredientInlineSerializer(IngredientSerializer):
     DELETE = serializers.BooleanField(default=False)
-    # _id = serializers.IntegerField()
-
-    # def __init__(self, *args, **kwargs):
-    #     instance = kwargs.get('instance',"")
-    #     if instance:
-    #         kwargs['initial'] = kwargs.get('initial', {})
-    #         kwargs['initial']['form_id'] = instance.id 
-
-    #     super().__init__(*args, **kwargs)
-
-    
 
     class Meta:
         model = Ingredient
@@ -41,24 +30,28 @@ class IngredientInlineSerializer(IngredientSerializer):
         #     '_id': {'write_only': True},
         # }
 
+# class TagInlineSerializer(serializers.ModelSerializer):
+#     tag_type_name = serializers.CharField(write_only=True)
+
+#     class Meta:
+#         model = Tag
+#         fields = ['tag_type_name']
+
+#     def create(self, validated_data):
+#         tag_type_name = validated_data.pop('tag_type_name')
+#         tag_type, _ = TagType.objects.get_or_create(name=tag_type_name)
+#         tag = Tag.objects.create(tag_type=tag_type, **validated_data)
+#         return tag
+
 
 class RecipeSerializer(serializers.ModelSerializer):
     ingredients = IngredientInlineSerializer(many=True, required=False, allow_empty=True)
+    # tags = TagInlineSerializer(many=True, required=False, allow_empty=True)
     image = serializers.StringRelatedField()  # Returns image as a string
     created_by = serializers.StringRelatedField()  # Returns username of creator
-    # visibility = serializers.SlugRelatedField(queryset=Visibility., slug_field='code') # Returns visibility as a string
-    # visibility_choices = serializers.SerializerMethodField()
-    # unit_choices = serializers.SerializerMethodField()
-    # prep_time = serializers.SerializerMethodField()
-    # cook_time = serializers.SerializerMethodField()
-
-    # def get_prep_time(self, obj):
-    #     print(obj.prep_time.total_seconds())
-    #     return obj.prep_time.total_seconds() if obj.prep_time else 0
-
-    # def get_cook_time(self, obj):
-    #     print(obj.cook_time.total_seconds())
-    #     return obj.cook_time.total_seconds() if obj.cook_time else 0
+    tag_types = serializers.ListSerializer(
+        child=serializers.CharField(), write_only=True
+    )
 
     def get_visibility_choices(self, obj):
         return VisibilitySerializer(Visibility.objects.all(), many=True).data
@@ -73,6 +66,7 @@ class RecipeSerializer(serializers.ModelSerializer):
             "id", "name", "handle", "description", "instructions",
             "image", "created_by", "prep_time", "cook_time",
             "servings", "visibility", "ingredients",
+            "tag_types",
             # "visibility_choices", "unit_choices"
         ]
 
@@ -104,6 +98,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         return recipe
 
     def update(self, instance, validated_data):
+        tag_types = validated_data.pop("tag_types", [])
         ingredients_data = validated_data.pop('ingredients', [])
 
         for i in range(len(ingredients_data)):
@@ -112,6 +107,10 @@ class RecipeSerializer(serializers.ModelSerializer):
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         instance.save()
+
+        tag_serializer = GenericTagSerializer(data={"tag_types": tag_types}, context={"content_object": instance})
+        tag_serializer.is_valid(raise_exception=True)
+        tag_serializer.save()
 
         self._process_related(instance, ingredients_data)
         return instance

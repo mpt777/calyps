@@ -9,6 +9,7 @@ export const recipeSchema = z.object({
     id: z.number().optional(),
     name: z.string().min(2, "Name must be at least 2 characters."),
     handle: z.string().regex(/^[a-zA-Z0-9_-]+$/, "Handle can only contain letters, numbers, underscores, and hyphens."),
+    tags: z.array(z.string()).optional(),
     description: z.string().optional().default(""),
     instructions: z.string().optional().default(""),
     ingredients: z.array(
