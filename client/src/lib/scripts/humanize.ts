@@ -34,11 +34,11 @@ export function formatTimeString(seconds : number) {
   
   if (minutes > 0) {
       if (result.length > 0) result += ' and ';
-      result += `${minutes} minute${minutes !== 1 ? 's' : ''}`;
+      result += `${minutes} min${minutes !== 1 ? 's' : ''}`;
   }
   
   if (result === '') {
-      result = '0 minutes'; // If no hours or minutes, just return 0 minutes
+      result = '0 mins'; // If no hours or minutes, just return 0 minutes
   }
   
   return result;

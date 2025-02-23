@@ -57,7 +57,18 @@
         </div>
     </header>
 
+    {#if recipe.tag_types}
+    <section class="p-4 pt-0">
+      <div class="flex items-center  justify-center gap-1">
+        {#each recipe.tag_types as tag_type}
+        <div class="chip preset-filled ">{tag_type}</div>
+        {/each}
+      </div>
+    </section>
+    
+    {/if}
     <hr>
+
     <section class="p-2 space-y-4">
         <!-- <RecipeTags tags={recipe.tags} css="justify-center"/> -->
 
@@ -73,9 +84,10 @@
                 </Segment>
             </div>
             
-            <div>
+            <div >
                 <Label label="Cook Mode"/>
-                <WakeLock />
+                <div><WakeLock /></div>
+                <span class="text-xs">Prevents Screen Sleep</span>
             </div>
 
             <div>
@@ -91,32 +103,32 @@
 
         </div>
         
-        <div class="flex justify-around">
-            <div class="text-center">
-                <div class="font-bold">Cook Time:</div>
-                <div>{formatTimeString(recipe.cook_time)}</div>
+        <div class="flex justify-around gap-1">
+            <div class="text-center w-full">
+                <i class="ri-time-line"></i> Cook Time: 
+                <span class="font-bold text-nowrap">{formatTimeString(recipe.cook_time)}</span>
             </div>
-            <div class="text-center">
-                <div class="font-bold">Prep Time:</div>
-                <div>{formatTimeString(recipe.prep_time)}</div>
+            <div class="text-center w-full">
+                <i class="ri-time-line-fill"></i> Prep Time:
+                <span class="font-bold text-nowrap">{formatTimeString(recipe.prep_time)}</span>
             </div>
-            <div class="text-center">
-                <div class="font-bold">Servings:</div>
-                <div>{recipe.servings * parseFloat(scalar)}</div>
+            <div class="text-center w-full">
+                <i class="ri-group-line"></i> Servings:
+                <span class="font-bold text-nowrap">{recipe.servings * parseFloat(scalar)}</span>
             </div>
         </div>
 
     </section>
 
     <hr>
-    <section class="p-4 space-y-16">
+    <section class="p-8 space-y-8">
 
         <div class=" space-y-4">
             <h2 class="text-2xl md:text-3xl lg:text-4xl font-extrabold text-center">Description</h2>
             <div class="max-w-prose mx-auto"><QuillDisplay content={recipe.description}/></div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
             <div class=" space-y-4">
                 <h2 class="text-2xl md:text-3xl lg:text-4xl font-extrabold text-center">Ingredients</h2>
                 <ul class="list space-y-1">
