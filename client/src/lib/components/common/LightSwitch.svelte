@@ -27,8 +27,9 @@
 
 <button class="btn btn-icon preset-outlined-surface-200-800 hover:preset-tonal" onclick={toggleDarkMode}>
 	{#if darkMode.value}
-	<i class="ri-moon-line"></i>
-	{:else }
 	<i class="ri-sun-line"></i>
+	
+	{:else }
+	<i class="ri-moon-line"></i>
 	{/if }
 </button>

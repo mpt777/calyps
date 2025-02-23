@@ -3,6 +3,8 @@
 
     import { enhance } from '$app/forms';
     import Field from '$components/form/Field.svelte';
+    import Input from '$components/form/Input.svelte';
+    import Password from '$components/form/Password.svelte';
     import Message from '$components/message/Message.svelte';
     import { url } from '$utils/url.js';
 
@@ -22,7 +24,9 @@
 				<Message message={ form?.message } level={form?.level}/>
 				<div class="space-y-4">
 					<Field name="username" placeholder="Username" label="Username" autocomplete="username" required={true}/>
-					<Field name="password" placeholder="Password" label="Password" autocomplete="new-password" required={true} type="password"/>
+
+					<Password></Password>
+
 				</div>
 
 			</section>

@@ -2,7 +2,7 @@
     import DurationField from "./DurationField.svelte";
 
   let {errors={}, value=$bindable(), placeholder="", label="", name="", forName="", autocomplete="", required=false, choices=[], _choices="", constraints=[], type="text", css="", form=undefined, step=1} = $props();
-  const inputProperties = { type };
+  const inputProperties = $derived({ type });
 
   let requiredClass = required ? "required" : ""; 
   let hasErrors = errors && errors[name];
