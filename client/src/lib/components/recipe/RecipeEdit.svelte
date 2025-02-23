@@ -107,7 +107,7 @@
     sortIngredients()
   }
 </script>
-<pre class="mt-5 w-fit border p-5">{JSON.stringify(formData, null, 2)}</pre>
+<!-- <pre class="mt-5 w-fit border p-5">{JSON.stringify(formData, null, 2)}</pre> -->
 <!-- <pre class="mt-5 w-fit border p-5">{JSON.stringify(form, null, 2)}</pre> -->
 
 
