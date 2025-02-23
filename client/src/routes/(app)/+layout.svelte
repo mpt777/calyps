@@ -42,10 +42,10 @@
 
 <div class="flex flex-col h-svh overflow-hidden">
 	<!-- Header -->
-	<header class="bg-surface-50-900-token p-4 shadow-md z-10">
-		<div class="flex justify-between">
-		  <div class="h4"><a href="/">Calyps.io</a></div>
-		  <div class="flex gap-4 items-center">
+	<header class="bg-surface-50-900-token p-2 md:p-4 shadow-md z-10">
+		<div class="flex justify-between items-center ">
+		  <a class="h4" href="/">Calyps.io</a>
+		  <div class="flex gap-4 items-center ">
 
 				{#if page.data.user}
 				<a href="{url('profile')}" class="cursor-pointer">

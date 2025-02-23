@@ -111,7 +111,7 @@ class RecipeSearchView(ListAPIView):
     permission_classes = [AllowAny]
     serializer_class = RecipeSerializer
     filter_backends = [SearchFilter]
-    search_fields = ['name', 'description', 'ingredients__name']
+    search_fields = ['name', 'description', 'ingredients__name', "tags__tag_type__name"]
     pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):

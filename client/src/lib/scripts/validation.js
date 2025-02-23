@@ -22,7 +22,7 @@ export const getDefaults = (schema) => {
     for (const key in schema.shape) {
         const field = schema.shape[key];
         if (field._def.defaultValue) {
-        defaults[key] = field._def.defaultValue();
+            defaults[key] = field._def.defaultValue();
         }
     }
     return defaults;
