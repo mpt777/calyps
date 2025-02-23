@@ -7,10 +7,11 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import  Response
 from rest_framework.views import APIView
 from .utils import get_tokens_for_user, get_user
-from .serializers import RegistrationSerializer, PasswordChangeSerializer
+from .serializers import RegistrationSerializer, PasswordChangeSerializer, UserSerializer
 from django.urls import include, path, re_path
 from rest_framework_simplejwt import views as jwt_views
 from rest_framework_simplejwt.authentication import JWTAuthentication
+
 
 def get_user_from_token(token):
     try:
@@ -79,11 +80,22 @@ class ChangePasswordView(APIView):
         request.user.set_password(serializer.validated_data['new_password'])
         request.user.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+
+class ProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        serializer = UserSerializer(request.user)  # Serialize the user
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 urlpatterns = [
   path('signup', RegistrationView.as_view(), name='signup'),
   path('current', CurrentUser.as_view(), name='current'),
+
+  path('profile/', ProfileView.as_view(), name='profile'),
+
   path('login', LoginView.as_view(), name='login'),
   path('logout', LogoutView.as_view(), name='logout'),
   path('change-password', ChangePasswordView.as_view(), name='change_password'),

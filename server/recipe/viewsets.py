@@ -134,6 +134,16 @@ class RecipeSearchView(ListAPIView):
     #         return self.get_paginated_response(serializer.data)
     #     return Response(serializer.data, status=status.HTTP_200_OK)
 
+
+class RecipeMySearchView(ListAPIView):
+    permission_classes = [AllowAny]
+    serializer_class = RecipeSerializer
+    filter_backends = [SearchFilter]
+    search_fields = ['name', 'description', 'ingredients__name', "tags__tag_type__name"]
+    pagination_class = StandardResultsSetPagination
+
+    def get_queryset(self):
+        return Recipe.objects.filter(created_by_id=self.request.user.id).distinct()
     
 
 class IngredientViewSet(viewsets.ModelViewSet):
@@ -174,6 +184,7 @@ router.register(r'unit', UnitViewset, basename='unit')
 urlpatterns = [
     path('', include(router.urls)),  # Prefix the API endpoints with "api/"
     path('search/recipe/', RecipeSearchView.as_view(), name='recipe-search'), 
+    path('me/recipe/', RecipeMySearchView.as_view(), name='recipe-me'), 
     path('recipe/', RecipeAPIView.as_view(), name='recipe-list'), 
     path('recipe/<str:pk>/', RecipeAPIView.as_view(), name='recipe'), 
 ]

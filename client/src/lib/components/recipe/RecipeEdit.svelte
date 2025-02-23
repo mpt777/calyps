@@ -116,8 +116,8 @@
   <input name="hack" value={JSON.stringify(formData)} class="hidden">
   <Message message={ form?.message } level={form?.level}/>
 
-<div class="flex gap-8 max-w-screen-lg mx-auto flex-wrap md:flex-nowrap ">
-  <div class="w-full">
+<div class="grid grid-cols-12 gap-y-8 md:gap-8 max-w-screen-lg mx-auto">
+  <div class="col-span-12 md:col-span-8">
     <div class="calyps--card w-full bg-surface-50-950">
       <header class="card-header p-4 bg-surface-200-700-token ">
         <div class="flex justify-between items-center">
@@ -166,7 +166,7 @@
         <hr>
         <div>
           <Label label="Tags"></Label>
-          <TagsInput name="example" bind:value={formData.tag_types} placeholder="Add Tag..." padding="p-2"/>
+          <TagsInput name="example" bind:value={formData.tag_types} placeholder="Add Tag..." padding="p-2" tagListClasses="overflow-y-auto"/>
         </div>
         <hr>
         
@@ -226,43 +226,46 @@
     </div>
   </div>
 
-  <div class="calyps--card min-w-64 max-h-fit sticky top-0 bg-surface-50-950">
-    <header class="card-header p-4 bg-surface-200-700-token ">
-      <h3 class="h3">Visibility</h3>
-    </header>
-    <hr>
-    <section class="p-4 space-y-4">
-      <div class="input-group divide-surface-200-800 grid-cols-[1fr_auto] divide-x overflow-visible">
-        <Input name="handle" placeholder="handle" label="Handle" required={true} bind:value={formData.handle} errors={form?.errors} />
+  <div class="col-span-12 md:col-span-4">
 
-        <!-- <a class="anchor cursor-pointer p-1" >
-          <i class="ri-settings-2-line"></i>
-        </a> -->
+    <div class="calyps--card min-w-64 max-h-fit sticky top-0 bg-surface-50-950">
+      <header class="card-header p-4 bg-surface-200-700-token ">
+        <h3 class="h3">Visibility</h3>
+      </header>
+      <hr>
+      <section class="p-4 space-y-4">
+        <div class="input-group divide-surface-200-800 grid-cols-[1fr_auto] divide-x overflow-visible">
+          <Input name="handle" placeholder="handle" label="Handle" required={true} bind:value={formData.handle} errors={form?.errors} />
 
-        <!-- <Tooltip>
-         onclick={setHandle()}
-          {#snippet _content()}
-          <div class="text-sm">
-              This is the Recipe Handle. It is how users will navigate to this recipe. Click to Format
-          </div>
-          {/snippet}
-          {#snippet _trigger()}
-          <a  class="p-1" onclick={setHandle()}>
+          <!-- <a class="anchor cursor-pointer p-1" >
             <i class="ri-settings-2-line"></i>
-          </a>
-          {/snippet}
-        </Tooltip> -->
+          </a> -->
 
-      </div>
-      
+          <!-- <Tooltip>
+          onclick={setHandle()}
+            {#snippet _content()}
+            <div class="text-sm">
+                This is the Recipe Handle. It is how users will navigate to this recipe. Click to Format
+            </div>
+            {/snippet}
+            {#snippet _trigger()}
+            <a  class="p-1" onclick={setHandle()}>
+              <i class="ri-settings-2-line"></i>
+            </a>
+            {/snippet}
+          </Tooltip> -->
 
-      <Field name="visibility" placeholder="visibility" label="Visibility" required={true} bind:value={formData.visibility} errors={form?.errors} type="select" 
-      choices={visibilityChoices}/>  
+        </div>
+        
 
-      <div class=" flex justify-center">
-        <button class="btn preset-filled-secondary-500 w-full" type="submit" >Save</button>
-      </div>
-    </section>
+        <Field name="visibility" placeholder="visibility" label="Visibility" required={true} bind:value={formData.visibility} errors={form?.errors} type="select" 
+        choices={visibilityChoices}/>  
+
+        <div class=" flex justify-center">
+          <button class="btn preset-filled-secondary-500 w-full" type="submit" >Save</button>
+        </div>
+      </section>
+    </div>
   </div>
 </div>
 </form>
