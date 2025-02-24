@@ -13,12 +13,16 @@
     @apply px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0;
   }
   .dl-horizontal>dt {
-    @apply text-sm font-medium text-gray-900;
+    @apply text-sm font-medium;
   }
   .dl-horizontal>dd  {
-    @apply mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0;
+    @apply mt-1 text-sm dark:text-gray-600 sm:col-span-2 sm:mt-0;
   }
 </style>
+
+<svelte:head>
+  <title>My Profile</title>
+</svelte:head>
 
 
 
@@ -57,23 +61,23 @@
         <dl class="divide-y divide-gray-100">
           <div class="dl-horizontal">
             <dt class="">Username</dt>
-            <dd class="">{data.profile.username}</dd>
+            <dd class="text-muted">{data.profile.username}</dd>
           </div>
           <div class="dl-horizontal">
             <dt class="">Name</dt>
-            <dd class="">{data.profile.first_name} {data.profile.last_name}</dd>
+            <dd class="text-muted">{data.profile.first_name} {data.profile.last_name}</dd>
           </div>
           <div class="dl-horizontal">
             <dt class="">Email</dt>
-            <dd class="">{data.profile.email}</dd>
+            <dd class="text-muted">{data.profile.email}</dd>
           </div>
           <div class="dl-horizontal">
             <dt class="">Since</dt>
-            <dd class="">{new Date(data.profile.date_joined).toLocaleDateString()}</dd>
+            <dd class="text-muted">{new Date(data.profile.date_joined).toLocaleDateString()}</dd>
           </div>
           <div class="dl-horizontal">
             <dt class="">Last Login</dt>
-            <dd class="">{new Date(data.profile.last_login).toLocaleString()}</dd>
+            <dd class="text-muted">{new Date(data.profile.last_login).toLocaleString()}</dd>
           </div>
         </dl>
 
