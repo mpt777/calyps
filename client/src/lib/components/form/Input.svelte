@@ -1,7 +1,7 @@
 <script>
     import DurationField from "./DurationField.svelte";
 
-  let {errors={}, value=$bindable(), placeholder="", label="", name="", forName="", autocomplete="", required=false, choices=[], _choices="", constraints=[], type="text", css="", form=undefined, step=1} = $props();
+  let {errors={}, value=$bindable(), placeholder="", label="", name="", forName="", autocomplete="", required=false, choices=[], _choices="", constraints=[], type="text", css="", form=undefined, step=1, multiple=false, accept=""} = $props();
   const inputProperties = $derived({ type });
 
   let requiredClass = required ? "required" : ""; 
@@ -46,6 +46,8 @@
 {:else if type === "file"}
   <input
   {...inputProperties}
+  multiple={multiple}
+  accept={accept}
   placeholder={placeholder}
   autocomplete={autocomplete}
   required={required}
