@@ -98,10 +98,10 @@ class RecipeSerializer(serializers.ModelSerializer):
             
     def create(self, validated_data):
         ingredients_data = validated_data.pop('ingredients', [])
-        user_id = self.context.get("request").user.id
-        if not user_id:
-            raise serializers.ValidationError("Must be logged in to create")
-        validated_data["created_by"] = User.objects.get(id=user_id)
+        # user_id = self.context.get("request").user.id
+        # if not user_id:
+        #     raise serializers.ValidationError("Must be logged in to create")
+        # validated_data["created_by"] = User.objects.get(id=user_id)
         recipe = Recipe.objects.create(**validated_data)
         self._process_related(recipe, ingredients_data)
         return recipe
