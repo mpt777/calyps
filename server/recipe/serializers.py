@@ -51,7 +51,7 @@ class RecipeSerializer(serializers.ModelSerializer):
     image = serializers.StringRelatedField()  # Returns image as a string
     created_by = serializers.StringRelatedField()  # Returns username of creator
     tag_types = serializers.ListSerializer(
-        child=serializers.CharField(), write_only=True, required=False, allow_empty=True)
+        child=serializers.CharField(), write_only=True, required=False, allow_empty=True
     )
 
     def get_visibility_choices(self, obj):
