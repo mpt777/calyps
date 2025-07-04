@@ -1619,14 +1619,14 @@ onMount(() => {
         <p> You, as Tato must run (left, right), jump (up/space), and fall through platforms (down) to collect the plates, and make it safely back home.</p>
         <p> The forces of nature are conspiring against you. They have summoned your worst nightmare, little blue boxes to stop your path! Thankfully, you can smash their little heads with a swift stomp.</p>
         <br>
-        <p> &lt;Press Space to Continue&gt; </p>
+        <p> Press Space to Continue </p>
 
     </div>
 
     <div class="text-box intro">
         <p> This is the level select screen! Jump into the spell plates to start Tato's Grand Adventure!</p>
         <br>
-        <p> &lt;Press Space to Continue&gt; </p>
+        <p> Press Space to Continue </p>
     </div>
 
 
@@ -1635,14 +1635,14 @@ onMount(() => {
         <p> You Died!</p>
         <p> The forces of nature enjoy your adventure. They have granted you another life.</p>
         <br>
-        <p> &lt;Press Space to Start your Adventure Again!&gt; </p>
+        <p> Press Space to Start your Adventure Again! </p>
     </div>
 
     <div class="text-box level-end">
         <p> Thank you for playing this level!</p>
         <p> If you want to collect all of the spell plates and make it back home, please go back to the main menu and play Story Mode!</p>
         <br>
-        <p> &lt;Press Space to Start your Adventure Again!&gt; </p>
+        <p> Press Space to Start your Adventure Again! </p>
     </div>
 
     <div class="text-box story-end order1">
@@ -1650,7 +1650,7 @@ onMount(() => {
         <p>You walk into your room, and lay your head on your pillow. You're tired! After all, being as awesome as Tato is pretty exhausting! You close your eyes, and you slowly begin to sleep.</p>
         <p> The End </p>
         <br>
-        <p> &lt;Space&gt; </p>
+        <p> Space </p>
     </div>
 
 
@@ -1673,7 +1673,7 @@ onMount(() => {
                 <p class = "space"> <i>And You: Thank you for playing Tato's Grand Adventure</i> </p>
             </div>
             
-            <p class="press_space"> &lt;Press Space to Start Your New Adventure&gt; </p>
+            <p class="press_space"> Press Space to Start Your New Adventure </p>
         </div>
     </div>
   </div>

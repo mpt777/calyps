@@ -20,7 +20,7 @@
 
 <div class="flex justify-center">
 	<div class="calyps--card">
-		<header class="card-header p-4 bg-surface-200-700-token ">
+		<header class="card-header p-4 bg-surface-200-800 ">
 			<h2 class="h2">
 				Ticket to Ride Calculator
 			</h2>
@@ -34,8 +34,8 @@
 				<div class="input-group-cell preset-tonal-surface">{train.name} Segment</div>
 				<input type="number" class="input--min-w-4" min=0 value={train.count}/>
 
-				<div class="input-group-shim !p-0">
-					<div class="flex !p-0 h-full">
+				<div class="input-group-shim p-0!">
+					<div class="flex p-0! h-full">
 						<a class="btn h-full preset-filled-warning-500 rounded-none cursor-pointer" onclick={() => train.count = Math.max(train.count-1, 0)} aria-label="Remove Segment">-</a>
 						<a class="btn h-full preset-filled-tertiary-500 rounded-none cursor-pointer"  onclick={() => train.count++} aria-label="Add Segment">+</a>
 					</div>
@@ -55,7 +55,7 @@
 		<footer class="card-footer p-4 flex justify-between">
 			<div>
 			</div>
-				<a href="/projects" class="btn variant-ghost float-right"><i class="ri-arrow-left-line"></i> Return</a>
+				<a href="/projects" class="btn preset-tonal border border-surface-500 float-right"><i class="ri-arrow-left-line"></i> Return</a>
 		</footer>
 	</div>
 </div>

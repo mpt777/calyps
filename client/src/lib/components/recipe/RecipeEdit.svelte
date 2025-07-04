@@ -116,10 +116,10 @@
   <input name="hack" value={JSON.stringify(formData)} class="hidden">
   <Message message={ form?.message } level={form?.level}/>
 
-<div class="grid grid-cols-12 gap-y-8 md:gap-8 max-w-screen-lg mx-auto">
+<div class="grid grid-cols-12 gap-y-8 md:gap-8 max-w-(--breakpoint-lg) mx-auto">
   <div class="col-span-12 md:col-span-8">
     <div class="calyps--card w-full bg-surface-50-950">
-      <header class="card-header p-4 bg-surface-200-700-token ">
+      <header class="card-header p-4 bg-surface-200-800 ">
         <div class="flex justify-between items-center">
           <h2 class="h2">Recipe</h2>
           <div>
@@ -179,7 +179,7 @@
     <br>
 
     <div class="calyps--card w-full bg-surface-50-950">
-      <header class="card-header p-4 bg-surface-200-700-token ">
+      <header class="card-header p-4 bg-surface-200-800 ">
         <div class="flex justify-between items-center">
           <h3 class="h3">Ingredients</h3>
             <div>
@@ -229,7 +229,7 @@
   <div class="col-span-12 md:col-span-4">
 
     <div class="calyps--card min-w-64 max-h-fit sticky top-0 bg-surface-50-950">
-      <header class="card-header p-4 bg-surface-200-700-token ">
+      <header class="card-header p-4 bg-surface-200-800 ">
         <h3 class="h3">Visibility</h3>
       </header>
       <hr>

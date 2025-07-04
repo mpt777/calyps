@@ -7,7 +7,7 @@
   let requiredClass = required ? "required" : ""; 
   let hasErrors = errors && errors[name];
   let classes = hasErrors ? "with-error" : "";
-  let errorClass = hasErrors ? "variant-ringed-error" : "";
+  let errorClass = hasErrors ? "preset-outlined-error-500" : "";
 
   // const handleInput = e => {
   //     value = e.target.value;

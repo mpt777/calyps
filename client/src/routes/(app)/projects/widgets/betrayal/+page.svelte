@@ -67,8 +67,8 @@
 				<div class="input-group-cell preset-tonal-surface">Dice Rolled</div>
 				<input type="number" class="input--min-w-4" min=0 value="{diceCount}"/>
 
-				<div class="input-group-shim !p-0">
-					<div class="flex !p-0 h-full">
+				<div class="input-group-shim p-0!">
+					<div class="flex p-0! h-full">
 						<a class="btn h-full preset-filled-warning-500 rounded-none cursor-pointer" onclick={() => diceCount = Math.max(diceCount-1, 0)}>-</a>
 						<a class="btn h-full preset-filled-tertiary-500 rounded-none cursor-pointer" onclick={() => diceCount++}>+</a>
 					</div>
@@ -79,8 +79,8 @@
 				<div class="input-group-cell preset-tonal-surface">Value of Interest</div>
 				<input type="number" class="input--min-w-4 divide-x" min=0 value="{interest}"/>
 
-				<div class="input-group-shim !p-0">
-					<div class="flex !p-0 h-full">
+				<div class="input-group-shim p-0!">
+					<div class="flex p-0! h-full">
 						<a class="btn h-full preset-filled-warning-500 rounded-none cursor-pointer" onclick={() => interest = Math.max(interest-1, 0)}>-</a>
 						<a class="btn h-full preset-filled-tertiary-500 rounded-none cursor-pointer" onclick={() => interest++}>+</a>
 					</div>
@@ -112,7 +112,7 @@
 		<footer class="card-footer p-4 flex justify-between">
 			<div>
 			</div>
-				<a href="/projects" class="btn variant-ghost float-right"><i class="ri-arrow-left-line"></i> Return</a>
+				<a href="/projects" class="btn preset-tonal border border-surface-500 float-right"><i class="ri-arrow-left-line"></i> Return</a>
 		</footer>
 	</div>
 </div>

@@ -13,7 +13,7 @@
 	<div class="flex justify-center ">
 		
 		<div class="calyps--card max-w-sm w-full" >
-			<header class="card-header p-4 bg-surface-200-700-token ">
+			<header class="card-header p-4 bg-surface-200-800 ">
 				<h2 class="h2">
 					Login
 				</h2>
@@ -37,10 +37,10 @@
 				</div>
 				
 				<div class="flex justify-between">
-						<a href="/auth/forgot-password" class="btn variant-ghost btn-sm">
+						<a href="/auth/forgot-password" class="btn preset-tonal border border-surface-500 btn-sm">
 								Forgot Password
 						</a>
-						<a href="{url("signup")}" class="btn variant-ghost btn-sm">
+						<a href="{url("signup")}" class="btn preset-tonal border border-surface-500 btn-sm">
 								Sign Up
 						</a>
 				</div>

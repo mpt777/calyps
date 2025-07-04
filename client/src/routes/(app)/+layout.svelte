@@ -42,7 +42,7 @@
 
 <div class="flex flex-col h-svh overflow-hidden">
 	<!-- Header -->
-	<header class="bg-surface-50-900-token p-2 md:p-4 shadow-md z-10">
+	<header class="bg-surface-50-950 p-2 md:p-4 shadow-md z-10">
 		<div class="flex justify-between items-center ">
 		  <a class="h4" href="/">Calyps.io</a>
 		  <div class="flex gap-4 items-center ">
@@ -51,7 +51,7 @@
 				<a href="{url('profile')}" class="cursor-pointer">
 					<Avatar
 						name={page.data.user.username?.charAt(0)}
-						border="border-4 border-surface-300-600-token hover:!border-primary-500"
+						border="border-4 border-surface-300-700 hover:border-primary-500!"
 						size="size-10"
 					/>
 				</a>
@@ -76,7 +76,7 @@
 	<!-- Grid Columns -->
 	<div class="flex h-full overflow-hidden">
 	  <!-- Left Sidebar. -->
-	  <aside class="p-4 bg-surface-50-900-token hidden md:block border-r border-surface-500/30 ">
+	  <aside class="p-4 bg-surface-50-950 hidden md:block border-r border-surface-500/30 ">
       <Navigation/>
     </aside>
 	  <!-- Main Content -->
@@ -95,7 +95,7 @@
 								{#snippet _content()}
 								<div class="text-sm">
 									<div><p>View the Legacy <br>Emptytxt.com</p></div>
-									<div class="arrow bg-surface-100-800-token"></div>
+									<div class="arrow bg-surface-100-900"></div>
 								</div>
 								{/snippet}
 								{#snippet _trigger()}

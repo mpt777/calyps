@@ -22,7 +22,7 @@ export class Message implements IMessage {
     constructor(imessage:IMessage) {
         this.title = imessage.title || "";
         this.message = imessage.message || "";
-        this.background=imessage.background || "variant-filled-secondary";
+        this.background=imessage.background || "preset-filled-secondary-500";
         this.timeout=imessage.timeout || 5000;
         this.hoverable=imessage.hoverable || false;
         this.hideDismiss=imessage.hideDismiss || false;

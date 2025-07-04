@@ -1,8 +1,22 @@
-
+@import '../static/fonts/remix/remixicon.css' layer(base);
 @import 'quill/dist/quill.core.css' layer(base);
 @import 'quill/dist/quill.snow.css' layer(base);
 
 @import 'tailwindcss';
+
+@import "@skeletonlabs/skeleton";
+
+@import "@skeletonlabs/skeleton/optional/presets";
+
+@import "@skeletonlabs/skeleton/themes/cerberus";
+
+@import "@skeletonlabs/skeleton";
+
+@import "@skeletonlabs/skeleton/optional/presets";
+
+/*
+  Add your theme import for your theme: "mona" here
+*/
 
 @config '../tailwind.config.js';
 
@@ -24,17 +38,18 @@
   }
 }
 
-@utility calyps--card {
-  @apply bg-white/10 dark:bg-black/10 shadow-md border-surface-500/30 border card;
+@layer utilities {
+  calyps--card {
+    @apply bg-white/10 dark:bg-black/10 shadow-md border-surface-500/30 border card;
+  }
+  btn--scale {
+    @apply active:scale-90 transition-transform;
+  }
+  text-muted {
+    @apply text-gray-600 dark:text-gray-200;
+  }
 }
 
-@utility btn--scale {
-  @apply active:scale-90 transition-transform;
-}
-
-@utility text-muted {
-  @apply text-gray-600 dark:text-gray-200;
-}
 
 /* [data-theme] {
     background-image: radial-gradient(at 0% 100%, rgba(var(--color-secondary-500) / .33) 0px, transparent 50%), radial-gradient(at 98% 100%, rgba(var(--color-tertiary-500) / .33) 0px, transparent 50%);

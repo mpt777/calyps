@@ -10,7 +10,7 @@
 </script>
 		
 <div class="calyps--card max-w-sm w-full mx-auto" >
-  <header class="card-header p-4 bg-surface-200-700-token ">
+  <header class="card-header p-4 bg-surface-200-800 ">
     <div class="flex justify-between items-center">
       <h3 class="h3">
         {recipe.name}
@@ -68,7 +68,7 @@
               {/snippet}
               {#snippet _trigger()}
               <div class="flex align-center h-full">
-                <a href="{url("recipe_edit", {handle:recipe.handle})}" class="btn btn-sm variant-filled-primary">
+                <a href="{url("recipe_edit", {handle:recipe.handle})}" class="btn btn-sm preset-filled-primary-500">
                 <!-- <a href="/recipe/{recipe.handle}/edit" class="btn btn-sm variant-filled-tertiary" aria-label="Edit Recipe"> -->
                     <i class="ri-pencil-line text-lg"></i>
                 </a>

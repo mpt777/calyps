@@ -2,10 +2,10 @@
 	<title>Games</title>
 </svelte:head>
 
-<div class="w-full text-token grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="w-full base-font-color grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 	
 	<a href="https://store.steampowered.com/app/3395730/Banshee_Bash/" target="_blank"
-		class="card variant-filled card-hover overflow-hidden border-surface-500/30 border">
+		class="card preset-filled card-hover overflow-hidden border-surface-500/30 border">
 		
 		<img src="/images/capsule_header.jpg" class="w-full" alt="Banshee Bash Header">
 		<section class="p-4">

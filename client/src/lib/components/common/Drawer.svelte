@@ -1,8 +1,5 @@
 <script lang="ts">
 	import { setContext } from 'svelte';
-
-	
-	import { Modal } from '@skeletonlabs/skeleton-svelte';
 	import { drawerState } from '$scripts/globalState.svelte';
 
 

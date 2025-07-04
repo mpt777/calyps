@@ -27,7 +27,7 @@
 </script>
 <div class="flex justify-center">
 	<div class="calyps--card">
-		<header class="card-header p-4 bg-surface-200-700-token ">
+		<header class="card-header p-4 bg-surface-200-800 ">
 			<h2 class="h2">
 				Secret Santa
 			</h2>
@@ -64,7 +64,7 @@
 		<footer class="card-footer p-4 flex justify-between">
 			<div>
 			</div>
-				<a href="{url("projects")}" class="btn variant-ghost float-right"><i class="ri-arrow-left-line"></i> Return</a>
+				<a href="{url("projects")}" class="btn preset-tonal border border-surface-500 float-right"><i class="ri-arrow-left-line"></i> Return</a>
 		</footer>
 	</div>
 </div>

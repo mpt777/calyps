@@ -17,7 +17,7 @@
 	<title>Projects</title>
 </svelte:head>
 
-<div class="w-full text-token grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="w-full base-font-color grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 	
 	{#each data as d}
 		<a href="{d.url}" class="calyps--card border-surface-100-900">
