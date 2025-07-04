@@ -1,26 +1,40 @@
-@import '/fonts/remix/remixicon.css?url';
-@import "quill/dist/quill.core.css";
-@import 'quill/dist/quill.snow.css'; 
+@import '/fonts/remix/remixicon.css?url' layer(base);
+@import 'quill/dist/quill.core.css' layer(base);
+@import 'quill/dist/quill.snow.css' layer(base);
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-@layer components {
-    .calyps--card {
-        @apply bg-white/10 dark:bg-black/10 shadow-md border-surface-500/30 border card;      
-    }
+@config '../tailwind.config.js';
 
-    .btn--scale {
-        @apply active:scale-90 transition-transform;
-    }
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
 
-    .text-muted {
-        @apply text-gray-600 dark:text-gray-200
-    }
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
 }
 
+@utility calyps--card {
+  @apply bg-white/10 dark:bg-black/10 shadow-md border-surface-500/30 border card;
+}
 
+@utility btn--scale {
+  @apply active:scale-90 transition-transform;
+}
+
+@utility text-muted {
+  @apply text-gray-600 dark:text-gray-200;
+}
 
 /* [data-theme] {
     background-image: radial-gradient(at 0% 100%, rgba(var(--color-secondary-500) / .33) 0px, transparent 50%), radial-gradient(at 98% 100%, rgba(var(--color-tertiary-500) / .33) 0px, transparent 50%);
