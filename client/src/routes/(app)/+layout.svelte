@@ -24,9 +24,6 @@
 	let { children } = $props();
 
 	let breadcrumbs = $derived(page.data.breadcrumbs || []);
-
-	let drawerState = $state(false);
-	setContext('drawerState', drawerState);
 </script>
 
 <svelte:head>
