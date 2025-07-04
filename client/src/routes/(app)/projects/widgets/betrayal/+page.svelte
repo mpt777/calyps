@@ -64,31 +64,31 @@
 		<section class="p-4 space-y-4">
 
 			<div class="input-group divide-surface-200-800 grid-cols-[auto_1fr_auto] divide-x">
-				<div class="ig-cell preset-tonal-surface">Dice Rolled</div>
+				<div class="ig-cell preset-tonal">Dice Rolled</div>
 				<input type="number" class="ig-input input--min-w-4" min=0 value="{diceCount}"/>
 
 				<div class="input-group-shim p-0!">
 					<div class="flex p-0! h-full">
-						<a class="btn h-full preset-filled-warning-500 rounded-none cursor-pointer" onclick={() => diceCount = Math.max(diceCount-1, 0)}>-</a>
-						<a class="btn h-full preset-filled-tertiary-500 rounded-none cursor-pointer" onclick={() => diceCount++}>+</a>
+						<button type="button" class="btn h-full preset-filled-warning-500 rounded-none cursor-pointer" onclick={() => diceCount = Math.max(diceCount-1, 0)}>-</button>
+						<button type="button" class="btn h-full preset-filled-tertiary-500 rounded-none cursor-pointer" onclick={() => diceCount++}>+</button>
 					</div>
 				</div>
 			</div>
 
 			<div class="input-group divide-surface-200-800 grid-cols-[auto_1fr_auto] divide-x">
-				<div class="ig-cell preset-tonal-surface">Value of Interest</div>
+				<div class="ig-cell preset-tonal">Value of Interest</div>
 				<input type="number" class="ig-input input--min-w-4 divide-x" min=0 value="{interest}"/>
 
 				<div class="input-group-shim p-0!">
 					<div class="flex p-0! h-full">
-						<a class="btn h-full preset-filled-warning-500 rounded-none cursor-pointer" onclick={() => interest = Math.max(interest-1, 0)}>-</a>
-						<a class="btn h-full preset-filled-tertiary-500 rounded-none cursor-pointer" onclick={() => interest++}>+</a>
+						<button type="button" class="btn h-full preset-filled-warning-500 rounded-none cursor-pointer" onclick={() => interest = Math.max(interest-1, 0)}>-</button>
+						<button type="button" class="btn h-full preset-filled-tertiary-500 rounded-none cursor-pointer" onclick={() => interest++}>+</button>
 					</div>
 				</div>
 			</div>
 
 			<div class="input-group divide-surface-200-800 grid-cols-[auto_1fr_auto] divide-x">
-				<div class="ig-cell preset-tonal-surface divide-x">Probability</div>
+				<div class="ig-cell preset-tonal divide-x">Probability</div>
 
 				<select class="ig-input select rounded-none" bind:value={probabilityType}>
 					<option value="0">Greater Than or Equal</option>
@@ -101,9 +101,9 @@
 			</div>
 
 			<div class="input-group divide-surface-200-800 grid-cols-[auto_1fr_auto] divide-x">
-				<a class="btn btn-lg h-full preset-filled-primary-500 rounded-none cursor-pointer" onclick={calculate} aria-label="Calculate">
+				<button type="button" class="btn btn-lg h-full preset-filled-primary-500 rounded-none cursor-pointer" onclick={calculate} aria-label="Calculate">
 					<i class="ri-calculator-line"></i> Results 
-				</a>
+				</button>
 				<button>{result.toFixed(4)}</button>
 			</div>
 
