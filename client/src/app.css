@@ -1,18 +1,4 @@
-/* @import '../static/fonts/remix/remixicon.css' layer(base); */
-@import 'quill/dist/quill.core.css' layer(base);
-@import 'quill/dist/quill.snow.css' layer(base);
 
-@import 'tailwindcss';
-
-@import "@skeletonlabs/skeleton";
-
-@import "@skeletonlabs/skeleton/optional/presets";
-
-@import "@skeletonlabs/skeleton/themes/cerberus";
-
-@import "@skeletonlabs/skeleton";
-
-@import "@skeletonlabs/skeleton/optional/presets";
 
 /*
   Add your theme import for your theme: "mona" here
