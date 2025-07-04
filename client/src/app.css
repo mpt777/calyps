@@ -1,4 +1,4 @@
-@import '/fonts/remix/remixicon.css?url' layer(base);
+
 @import 'quill/dist/quill.core.css' layer(base);
 @import 'quill/dist/quill.snow.css' layer(base);
 
