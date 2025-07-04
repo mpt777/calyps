@@ -1,4 +1,4 @@
-import { skeleton, contentPath } from "@skeletonlabs/skeleton";
+import { skeleton, contentPath } from "@skeletonlabs/skeleton/plugins";
 import * as themes from "@skeletonlabs/skeleton/themes";
 import forms from '@tailwindcss/forms';
 
