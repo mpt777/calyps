@@ -77,7 +77,7 @@
         <div class="flex gap-3 flex-wrap text-center justify-around items-center">
             <div class="p-1">
                 <Label label="System"/>
-                <Segment bind:value={system} >
+                <Segment value={system} onValueChange={(e) => (system = e.value)} >
                     <Segment.Item value="DEFAULT" classes={"btn-sm"} >Written</Segment.Item>
                     <Segment.Item value="US" classes={"btn-sm"} >US</Segment.Item>
                     <Segment.Item value="Metric" classes={"btn-sm"} >Metric</Segment.Item>
@@ -92,7 +92,7 @@
 
             <div>
                 <Label label="Servings"/>
-                <Segment bind:value={scalar} >
+                <Segment value={scalar}  onValueChange={(e) => (scalar = e.value)}>
                     <Segment.Item value="1" classes={"btn-sm"} >1</Segment.Item>
                     <Segment.Item value="2" classes={"btn-sm"} >2</Segment.Item>
                     <Segment.Item value="3" classes={"btn-sm"} >3</Segment.Item>

@@ -22,4 +22,4 @@
   };
 </script>
 
-<Switch name="disturb" bind:checked={value}></Switch>
+<Switch name="disturb" checked={value} onCheckedChange={(e) => (value = e.checked)}></Switch>

@@ -18,7 +18,7 @@
 <div class="grid grid-cols-12 gap-4">
   <div class="col-span-12 md:col-span-8">
 
-    <Tabs bind:value={group}>
+    <Tabs value={group} onValueChange={(e) => (group = e.value)}>
       {#snippet list()}
         <Tabs.Control value="recipe">Recipe</Tabs.Control>
         <Tabs.Control value="saved">Saved</Tabs.Control>
