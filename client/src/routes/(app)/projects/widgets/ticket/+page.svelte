@@ -31,8 +31,8 @@
 		<section class="p-4 space-y-4">
 			{#each trains as train}
 			<div class="input-group divide-surface-200-800 grid-cols-[auto_1fr_auto] divide-x">
-				<div class="input-group-cell preset-tonal-surface">{train.name} Segment</div>
-				<input type="number" class="input--min-w-4" min=0 value={train.count}/>
+				<div class="ig-cell preset-tonal-surface">{train.name} Segment</div>
+				<input type="number" class="ig-input input--min-w-4" min=0 value={train.count}/>
 
 				<div class="input-group-shim p-0!">
 					<div class="flex p-0! h-full">

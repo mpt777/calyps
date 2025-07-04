@@ -20,6 +20,7 @@
 
 	function update() {
 		darkMode.value ? document.documentElement.classList.add('dark') : document.documentElement.classList.remove('dark');
+		darkMode.value ? document.documentElement.setAttribute('data-mode', "dark") : document.documentElement.removeAttribute('data-mode');
 	}
 
   

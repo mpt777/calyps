@@ -39,8 +39,8 @@
 		<section class="p-4 space-y-4">
 
 			<div class="input-group divide-surface-200-800 grid-cols-[auto_1fr_auto] divide-x">
-				<div class="input-group-cell preset-tonal-surface">Your Name</div>
-				<input type="text" class="input--min-w-4" bind:value={inputedName}/>
+				<div class="ig-cell preset-tonal-surface">Your Name</div>
+				<input type="text" class="ig-input input--min-w-4" bind:value={inputedName}/>
 				<a class="btn h-full preset-filled-primary-500 rounded-none cursor-pointer" onclick="{() => findGiftee()}">Find!</a>
 			</div>
 

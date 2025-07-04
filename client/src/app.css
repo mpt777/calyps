@@ -1,0 +1,100 @@
+@import '../static/fonts/remix/remixicon.css' layer(base);
+@import 'quill/dist/quill.core.css' layer(base);
+@import 'quill/dist/quill.snow.css' layer(base);
+
+@import 'tailwindcss';
+
+@import "@skeletonlabs/skeleton";
+
+@import "@skeletonlabs/skeleton/optional/presets";
+
+@import '@skeletonlabs/skeleton/themes/mona';
+
+@source '../node_modules/@skeletonlabs/skeleton-svelte/dist';
+
+@custom-variant dark (&:where(.dark, .dark *));
+/*
+  Add your theme import for your theme: "mona" here
+*/
+
+/* @config '../tailwind.config.js'; */
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+
+.calyps--card {
+  @apply bg-white/10 dark:bg-black/10 shadow-md border-surface-500/30 border card overflow-hidden flex flex-col;
+}
+.btn--scale {
+  @apply active:scale-90 transition-transform;
+}
+.text-muted {
+  @apply text-gray-600 dark:text-gray-200;
+}
+
+
+
+/* [data-theme] {
+    background-image: radial-gradient(at 0% 100%, rgba(var(--color-secondary-500) / .33) 0px, transparent 50%), radial-gradient(at 98% 100%, rgba(var(--color-tertiary-500) / .33) 0px, transparent 50%);
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+} */
+
+.input-group input.input--min-w-4 {
+    min-width: 1rem !important;
+}
+
+.required:after {
+    content:" *";
+    color: red;
+}
+
+
+/* Editor */
+
+.editor-wrapper * {
+    font-family: unset !important;
+}
+.ql-editor.ql-blank::before {
+    color: unset !important;
+}
+.ql-container {
+    font-size: unset !important;
+}
+
+.ql-wrapper .ql-toolbar {
+    border-radius: var(--radii-container) var(--radii-container) 0 0;
+    @apply preset-tonal
+}
+
+.ql-wrapper .ql-container {
+    border-radius: 0 0 var(--radii-container) var(--radii-container);
+}
+
+.dl-horizontal {
+  @apply px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0;
+}
+.dl-horizontal>dt {
+  @apply text-sm font-medium;
+}
+.dl-horizontal>dd  {
+  @apply mt-1 text-sm dark:text-gray-600 sm:col-span-2 sm:mt-0;
+}

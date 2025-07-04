@@ -22,8 +22,8 @@
 
   </header>
 
-  {#if recipe.tag_types}
-  <section class="p-2 pt-0">
+  {#if recipe.tag_types.length}
+  <section class="p-2">
     <div class="flex gap-1">
       {#each recipe.tag_types as tag_type}
       <div class="chip preset-filled ">{tag_type}</div>
@@ -34,7 +34,7 @@
 
   <hr>
 
-  <section class="p-2">
+  <section class="p-2 h-full">
     <div class="flex justify-around text-xs">
       <div class="text-center">
           <div>
@@ -49,9 +49,11 @@
     </div>
   </section>
 
+  {#if recipe.description}
   <section class="p-2 space-y-4 text-sm">
     <QuillDisplay content={recipe.description}></QuillDisplay>
   </section>
+  {/if}
 
   <hr>
 

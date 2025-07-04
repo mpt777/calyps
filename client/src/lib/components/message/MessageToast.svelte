@@ -1,20 +1,18 @@
 <script lang="ts">
   import { getContext } from 'svelte';
-  import { type ToastContext } from '@skeletonlabs/skeleton-svelte';
-
-  export const toast: ToastContext = getContext('toast');
 	// import { getToastStore } from '@skeletonlabs/skeleton';
 
 	// const toastStore = getToastStore();
 	import type { Message } from '$scripts/message';
 	import { page } from '$app/state';
+	import { toaster } from '$lib/toaster-svelte';
 
 
 	function createToasts(messages : []) {
 		(messages || [] ).forEach((element : Message) => {
 			console.log("Trigger")
 
-			toast.create({
+			toaster.success({
 				title: element.title,
 				description: element.message,
 				type: "info",

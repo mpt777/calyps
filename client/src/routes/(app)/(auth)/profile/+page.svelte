@@ -8,17 +8,6 @@
     let group = $state("recipe")
 </script>
 
-<style>
-  .dl-horizontal {
-    @apply px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0;
-  }
-  .dl-horizontal>dt {
-    @apply text-sm font-medium;
-  }
-  .dl-horizontal>dd  {
-    @apply mt-1 text-sm dark:text-gray-600 sm:col-span-2 sm:mt-0;
-  }
-</style>
 
 <svelte:head>
   <title>My Profile</title>

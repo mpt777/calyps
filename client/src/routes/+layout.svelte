@@ -11,10 +11,13 @@
 
 	// initializeStores();
 
-    import { ToastProvider } from '@skeletonlabs/skeleton-svelte';
     let {children} = $props();
+
+    import { Toaster } from '@skeletonlabs/skeleton-svelte';
+    import { toaster } from '../lib/toaster-svelte';
   </script>
   
-<ToastProvider placement={"top-end"}>
-    {@render children()}
-</ToastProvider>
+<Toaster {toaster}></Toaster>
+
+
+{@render children()}

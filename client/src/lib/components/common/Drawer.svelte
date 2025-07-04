@@ -1,7 +1,13 @@
 <script lang="ts">
 	import { setContext } from 'svelte';
-	import { drawerState } from '$scripts/globalState.svelte';
+	// import { drawerState } from '$scripts/globalState.svelte';
+	import { Modal } from '@skeletonlabs/skeleton-svelte';
 
+	let drawerState = $state(false);
+
+	function drawerClose() {
+		drawerState = false;
+	}
 
   let {_trigger, _content} = $props();
 </script>
@@ -16,9 +22,10 @@ Tips for Drawer modals:
 -->
 
 <Modal
-	bind:open={drawerState.open}
+	open={drawerState}
+	onOpenChange={(e) => (drawerState = e.open)}
 	triggerBase="btn preset-tonal"
-	contentBase="bg-surface-100-900 p-4 shadow-xl w-[200px] h-100"
+	contentBase="bg-surface-100-900 p-4 shadow-xl w-[200px]"
 	positionerJustify="justify-start"
 	positionerAlign=""
 	positionerPadding=""
