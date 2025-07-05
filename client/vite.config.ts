@@ -7,6 +7,9 @@ export default defineConfig({
 		tailwindcss(),
 		sveltekit()
 	],
+	build: {
+    minify: 'esbuild', // Alternative minifier
+  },
 	server: {
 		allowedHosts: ['calyps.io'],
 		fs: {
