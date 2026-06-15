@@ -1,40 +1,28 @@
-<script lang="ts">
-	import { setContext } from 'svelte';
+<script>
+	import { Dialog, Portal } from "@skeletonlabs/skeleton-svelte";
+	import Navigation from '$components/nav/Navigation.svelte';
 	import { drawerState } from '$scripts/globalState.svelte';
-	import { Modal } from '@skeletonlabs/skeleton-svelte';
 
-  let {_trigger, _content} = $props();
+	let {} = $props();
+
+	const animBackdrop = 'transition transition-discrete opacity-0 starting:data-[state=open]:opacity-0 data-[state=open]:opacity-100';
+	const animModal =
+		'transition transition-discrete opacity-0 -translate-x-full starting:data-[state=open]:opacity-0 starting:data-[state=open]:-translate-x-full data-[state=open]:opacity-100 data-[state=open]:translate-x-0';
+
 </script>
-
-<!--
-Tips for Drawer modals:
-- Use `contentBase` to set styles, including height/width
-- Set justify-start to align to the left
-- Clear the align and padding styles
-- Use `positionerClasses` to set the
-- Set transition.x values that matches content width in pixels
--->
-
-<Modal
-	open={drawerState.open}
-	onOpenChange={(e) => (drawerState.open = e.open)}
-	triggerBase="btn preset-tonal"
-	contentBase="bg-surface-100-900 p-4 shadow-xl w-[200px]"
-	positionerJustify="justify-start"
-	positionerAlign=""
-	positionerPadding=""
-	transitionsPositionerIn={{ x: -200, duration: 200 }}
-	transitionsPositionerOut={{ x: -200, duration: 200 }}
->
-	{#snippet trigger()}{@render _trigger()}{/snippet}
-	{#snippet content()}
-	<div class="relative h-full">
-		<button class="btn preset-tonal absolute top-0 right-0" onclick={() => drawerState.open = false} aria-label="Toggle Drawer">
-				<i class="ri-close-large-line"></i>
-		</button>
-
-
-		{@render _content()}
-	</div>
-	{/snippet}
-</Modal>
+<Dialog open={drawerState.open}>
+	<Dialog.Trigger class="btn btn-icon preset-outlined-surface-200-800 hover:preset-tonal md:hidden" onclick={() => drawerState.open = !drawerState.open}>
+		<i class="ri-menu-line"></i>
+	</Dialog.Trigger>
+	<Portal>
+		<Dialog.Backdrop class="fixed inset-0 z-50 bg-surface-50-950/50 transition transition-discrete {animBackdrop}" />
+		<Dialog.Positioner class="fixed inset-0 z-50 flex justify-start">
+			<Dialog.Content class="h-screen card bg-surface-100-900 w-sm p-4 space-y-4 shadow-xl {animModal}">
+					<Dialog.CloseTrigger class="btn-icon preset-tonal float-right" onclick={() => drawerState.open = false}>
+						<i class="ri-close-large-fill"></i>
+					</Dialog.CloseTrigger>
+				<div class="p-0 pb-4 pt-8 h-full"><Navigation/></div>
+			</Dialog.Content>
+		</Dialog.Positioner>
+	</Portal>
+</Dialog>

@@ -7,9 +7,6 @@ export default defineConfig({
 		tailwindcss(),
 		sveltekit()
 	],
-	build: {
-    minify: 'esbuild', // Alternative minifier
-  },
 	server: {
 		allowedHosts: ['calyps.io'],
 		fs: {
@@ -18,15 +15,5 @@ export default defineConfig({
 			// other allowed directories can stay here if needed
 		  ]
 		},
-		// proxy: {
-		// 		'/api': 'http://server:8000',
-		// },
-		// proxy: {
-    //   '/api': {
-    //     target: 'http://server:8000',
-    //     changeOrigin: false,
-    //     rewrite: (path) => path
-    //   }
-    // }
 	}
 });

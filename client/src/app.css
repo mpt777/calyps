@@ -5,9 +5,6 @@
 @import 'tailwindcss';
 
 @import "@skeletonlabs/skeleton";
-
-@import "@skeletonlabs/skeleton/optional/presets";
-
 @import '@skeletonlabs/skeleton/themes/mona';
 
 @source '../node_modules/@skeletonlabs/skeleton-svelte/dist';
@@ -82,7 +79,7 @@
 
 .ql-wrapper .ql-toolbar {
     border-radius: var(--radii-container) var(--radii-container) 0 0;
-    @apply preset-tonal
+    /* @apply preset-tonal */
 }
 
 .ql-wrapper .ql-container {

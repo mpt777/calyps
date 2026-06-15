@@ -25,6 +25,11 @@
         <ul class="">
             <li><NavLink title="Recipe" href="/recipe"/></li>
         </ul>
+        <hr class="my-4">
+
+        <ul class="">
+            <li><NavLink title="IOT" href="/iot"/></li>
+        </ul>
     </nav>
 
     <nav class="list-nav">

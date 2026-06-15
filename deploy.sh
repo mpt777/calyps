@@ -18,7 +18,7 @@ ssh ${SERVER_USER}@${SERVER_HOST} "mkdir -p ${REMOTE_PATH}"
 
 echo "🚀 Copying files to ${SERVER_HOST}..."
 scp $COMPOSE_FILE stack.tar ${SERVER_USER}@${SERVER_HOST}:${REMOTE_PATH}/
-scp -r ./nginx ./server ./client ${SERVER_USER}@${SERVER_HOST}:${REMOTE_PATH}/
+# scp -r ./nginx ./server ./client ${SERVER_USER}@${SERVER_HOST}:${REMOTE_PATH}/
 
 echo "📦 Loading Docker images on server..."
 ssh ${SERVER_USER}@${SERVER_HOST} "cd ${REMOTE_PATH} && docker load -i stack.tar"

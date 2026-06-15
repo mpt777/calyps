@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'durationwidget',
 
     "server",
+    "iot",
     "common",
     "media",
     "recipe",
@@ -171,3 +172,7 @@ SIMPLE_JWT = {
 
 # AUTH_PROFILE_MODULE = 'users.MyUser'
 # AUTH_USER_MODEL = 'users.MyUser'
+
+CELERY_TIMEZONE = "US/Denver"
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60

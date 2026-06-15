@@ -1,4 +1,4 @@
-import { skeleton, contentPath } from "@skeletonlabs/skeleton/plugins";
+import { skeleton, contentPath } from "@skeletonlabs/skeleton/plugin";
 import * as themes from "@skeletonlabs/skeleton/themes";
 import forms from '@tailwindcss/forms';
 
@@ -15,14 +15,9 @@ export default {
   },
   plugins: [
     forms,
-    skeleton({
-      // NOTE: each theme included will increase the size of your CSS bundle
-      themes: [themes.mona],
-    }),
   ],
   safelist: [
     'bg-warning-500',
-    "preset-filled-error-500",
-    'preset-tonal-error',
+    "preset-filled-error-500"
   ]
 };
