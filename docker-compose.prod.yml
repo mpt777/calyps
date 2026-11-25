@@ -1,5 +1,12 @@
+# Fixed project name: keeps the volumes (lemio_postgres_data holds the
+# database) and container names the same whatever folder this is run from.
+name: lemio
+
 services:
   server:
+    # Explicit image names, so the images deploy.sh ships are the ones the
+    # server runs (otherwise Compose names them <folder>-server).
+    image: calyps-server
     build:
       context: ./server
       dockerfile: Dockerfile.prod
@@ -48,6 +55,7 @@ services:
 
   nginx-proxy:
     container_name: nginx-proxy
+    image: calyps-nginx-proxy
     build: ./nginx
     restart: always
     ports:
