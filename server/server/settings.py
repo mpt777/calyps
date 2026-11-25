@@ -176,3 +176,17 @@ SIMPLE_JWT = {
 CELERY_TIMEZONE = "US/Denver"
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
+# Recipe card scanning (POST /api/v1/recipe/scan/recipe/).
+# Swap the engine by pointing RECIPE_SCAN_EXTRACTOR at another
+# recipe.scanning.base.RecipeExtractor subclass; RECIPE_SCAN_OPTIONS is passed
+# to its constructor.
+RECIPE_SCAN_EXTRACTOR = os.environ.get(
+    "RECIPE_SCAN_EXTRACTOR", "recipe.scanning.easyocr_extractor.EasyOCRExtractor"
+)
+RECIPE_SCAN_OPTIONS = {
+    "languages": os.environ.get("RECIPE_SCAN_LANGUAGES", "en").split(","),
+    "gpu": bool(int(os.environ.get("RECIPE_SCAN_GPU", "0"))),
+    # Weights are downloaded into the image at build time (see Dockerfile).
+    "model_storage_directory": os.environ.get("EASYOCR_MODEL_DIR", "/opt/easyocr"),
+}
+RECIPE_SCAN_MAX_UPLOAD_BYTES = 15 * 1024 * 1024

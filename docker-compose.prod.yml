@@ -3,7 +3,8 @@ services:
     build:
       context: ./server
       dockerfile: Dockerfile.prod
-    command: gunicorn server.wsgi:application --bind 0.0.0.0:8000
+    # Long timeout: recipe-card scanning runs OCR on the CPU (the first scan also loads the model).
+    command: gunicorn server.wsgi:application --bind 0.0.0.0:8000 --timeout 120
     # command: gunicorn --config ./server/gunicorn_config.py server.wsgi:application 
     env_file:
       - ./server/.env.prod
@@ -28,6 +29,9 @@ services:
       dockerfile: ./Dockerfile.prod
     env_file:
       - ./client/.env.prod
+    environment:
+      # adapter-node's default is 512K; recipe-card photos can be several MB.
+      BODY_SIZE_LIMIT: 16M
     # ports:
     #   - 3000:3000
     expose:

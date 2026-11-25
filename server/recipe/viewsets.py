@@ -12,6 +12,13 @@ from rest_framework.generics import ListAPIView
 from rest_framework.filters import SearchFilter
 from django.db.models import Q
 from rest_framework.pagination import CursorPagination, PageNumberPagination
+from rest_framework.parsers import MultiPartParser
+from django.conf import settings
+import logging
+
+from .scanning import ExtractionError, get_extractor
+
+logger = logging.getLogger(__name__)
 
 
 class RecipeAPIView(APIView):
@@ -169,6 +176,57 @@ class IngredientViewSet(viewsets.ModelViewSet):
         return super().destroy(request, *args, **kwargs)
 
 
+class RecipeScanView(APIView):
+    """Read a photo of a recipe card and return a draft recipe (nothing is saved).
+
+    POST multipart/form-data with an ``image`` file. The engine is chosen by the
+    ``RECIPE_SCAN_EXTRACTOR`` setting.
+    """
+    permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser]
+
+    def post(self, request, *args, **kwargs):
+        upload = request.FILES.get("image")
+        if upload is None:
+            return Response({"message": "Attach a photo as the 'image' field."}, status=status.HTTP_400_BAD_REQUEST)
+
+        max_bytes = getattr(settings, "RECIPE_SCAN_MAX_UPLOAD_BYTES", 15 * 1024 * 1024)
+        if upload.size > max_bytes:
+            return Response(
+                {"message": f"That photo is too large (max {max_bytes // (1024 * 1024)} MB)."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        if upload.content_type and not upload.content_type.startswith("image/"):
+            return Response({"message": "That file isn't an image."}, status=status.HTTP_400_BAD_REQUEST)
+
+        units = {unit.code: unit.id for unit in Unit.objects.all()}
+
+        try:
+            extractor = get_extractor()
+        except Exception:
+            logger.exception("Recipe scan extractor failed to load")
+            return Response(
+                {"message": "Recipe scanning isn't available right now."},
+                status=status.HTTP_503_SERVICE_UNAVAILABLE,
+            )
+
+        try:
+            draft = extractor.extract(upload.read(), list(units))
+        except ExtractionError as error:
+            return Response({"message": str(error)}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception:
+            logger.exception("Recipe scan failed")
+            return Response(
+                {"message": "Something went wrong reading that photo."},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+
+        data = draft.to_dict()
+        for ingredient in data["ingredients"]:
+            ingredient["unit"] = units.get(ingredient["unit_code"])
+        return Response({"draft": data}, status=status.HTTP_200_OK)
+
+
 class UnitViewset(viewsets.ModelViewSet):
     queryset = Unit.objects.all()
     serializer_class = UnitSerializer
@@ -185,6 +243,7 @@ urlpatterns = [
     path('', include(router.urls)),  # Prefix the API endpoints with "api/"
     path('search/recipe/', RecipeSearchView.as_view(), name='recipe-search'), 
     path('me/recipe/', RecipeMySearchView.as_view(), name='recipe-me'), 
+    path('scan/recipe/', RecipeScanView.as_view(), name='recipe-scan'),
     path('recipe/', RecipeAPIView.as_view(), name='recipe-list'), 
     path('recipe/<str:pk>/', RecipeAPIView.as_view(), name='recipe'), 
 ]

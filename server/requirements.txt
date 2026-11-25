@@ -10,3 +10,10 @@ bleach==6.2.0
 django-durationwidget==1.0.5
 
 debugpy==1.8.12
+
+# Recipe card scanning. CPU-only PyTorch: the default PyPI build pulls in
+# ~2.5 GB of CUDA libraries the server can't use.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.14.1+cpu
+torchvision==0.29.2+cpu
+easyocr==1.7.2
