@@ -15,8 +15,9 @@
 			<div>Games are quick, and will allow you to level up for unlockable cosmetics to add some flair!</div>
 		</section>
 		<hr>
-		<section class="p-4">
-			<div>Coming Q2 2025</div>
+		<section class="p-4 flex items-center justify-between gap-2">
+			<span class="badge preset-filled-primary-500 font-bold">Out now!</span>
+			<span class="font-semibold">Play it on Steam &rarr;</span>
 		</section>
 	</a>
 </div>
