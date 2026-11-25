@@ -3,7 +3,8 @@
 set -eo pipefail
 
 SERVER_USER="root"
-SERVER_HOST="calyps.io"
+# Override to deploy somewhere else, e.g. DEPLOY_HOST=203.0.113.5 ./deploy.sh
+SERVER_HOST="${DEPLOY_HOST:-calyps.io}"
 # The live stack. (/lemio on the server is an older copy with different
 # settings: don't deploy from it.)
 REMOTE_PATH="/root/lemio"

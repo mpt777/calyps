@@ -4,6 +4,8 @@ name: lemio
 
 services:
   server:
+    # Come back up after a reboot (nginx-proxy already has restart: always).
+    restart: unless-stopped
     # Explicit image names, so the images deploy.sh ships are the ones the
     # server runs (otherwise Compose names them <folder>-server).
     image: calyps-server
@@ -15,6 +17,12 @@ services:
     # command: gunicorn --config ./server/gunicorn_config.py server.wsgi:application 
     env_file:
       - ./server/.env.prod
+    environment:
+      DJANGO_SETTINGS_MODULE: server.settings
+      # Recipe-card scanning needs ~1.6 GB of RAM for EasyOCR; the 2 GB droplet
+      # can't spare it. Any non-importable value makes the scan endpoint answer
+      # "isn't available right now". Remove this line once the droplet has 4 GB.
+      RECIPE_SCAN_EXTRACTOR: disabled
     volumes:
       - static_volume:/home/app/web/staticfiles
       - media_volume:/home/app/web/mediafiles
@@ -26,6 +34,8 @@ services:
       - db
 
   client:
+    # Come back up after a reboot (nginx-proxy already has restart: always).
+    restart: unless-stopped
     image: client
     # volumes:
       # - ./client:/usr/src/app
@@ -47,6 +57,8 @@ services:
       - server
       
   db:
+    # Come back up after a reboot (nginx-proxy already has restart: always).
+    restart: unless-stopped
     image: postgres:15
     volumes:
       - postgres_data:/var/lib/postgresql/data/
@@ -74,6 +86,8 @@ services:
       - server
       - client
   acme-companion:
+    # Come back up after a reboot (nginx-proxy already has restart: always).
+    restart: unless-stopped
     image: nginxproxy/acme-companion
     env_file:
       - ./server/.env.prod.proxy-companion

@@ -3,7 +3,13 @@ import { json } from "@sveltejs/kit";
 
 // Forwards a recipe-card photo to Django, which returns a draft recipe.
 // `fetch` here goes through handleFetch, which adds the user's auth token.
-export async function POST({ request, fetch }) {
+export async function POST({ request, fetch, cookies }) {
+  // Answer here rather than forwarding: gunicorn replies 401 without reading
+  // the upload and closes the connection, which fetch reports as a failure.
+  if (!cookies.get("Authorization")) {
+    return json({ message: "Log in to scan a recipe card." }, { status: 401 });
+  }
+
   const incoming = await request.formData();
   const image = incoming.get("image");
   if (!(image instanceof File) || image.size === 0) {
