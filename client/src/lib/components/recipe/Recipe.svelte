@@ -1,7 +1,7 @@
 <script lang="ts">
 	// import QuillDisplay from "$components/form/QuillDisplay.svelte";
 
-    import { Segment } from '@skeletonlabs/skeleton-svelte';
+    import { SegmentedControl } from '@skeletonlabs/skeleton-svelte';
     import { page } from '$app/state';
 	// import { RadioGroup, RadioItem } from "@skeletonlabs/skeleton";
 	// import { Ingredient, System, getSystemFromString } from "./Ingredient";
@@ -76,28 +76,53 @@
 
         <div class="flex gap-3 flex-wrap text-center justify-around items-center">
             <div class="p-1">
-                <Label label="System"/>
-                <Segment value={system} onValueChange={(e) => (system = e.value)} >
-                    <Segment.Item value="DEFAULT" classes={"btn-sm"} >Written</Segment.Item>
-                    <Segment.Item value="US" classes={"btn-sm"} >US</Segment.Item>
-                    <Segment.Item value="Metric" classes={"btn-sm"} >Metric</Segment.Item>
-                </Segment>
+                <SegmentedControl value={system} onValueChange={(e) => (system = e.value)} >
+                    <SegmentedControl.Label>System</SegmentedControl.Label>
+                    <SegmentedControl.Control>
+                        <SegmentedControl.Indicator />
+                        <SegmentedControl.Item value="DEFAULT" >
+                            <SegmentedControl.ItemText>Written</SegmentedControl.ItemText>
+                            <SegmentedControl.ItemHiddenInput />
+                        </SegmentedControl.Item>
+                        <SegmentedControl.Item value="US" >
+                            <SegmentedControl.ItemText>US</SegmentedControl.ItemText>
+                            <SegmentedControl.ItemHiddenInput />
+                        </SegmentedControl.Item>
+                        <SegmentedControl.Item value="Metric" >
+                            <SegmentedControl.ItemText>Metric</SegmentedControl.ItemText>
+                            <SegmentedControl.ItemHiddenInput />
+                        </SegmentedControl.Item>
+                    </SegmentedControl.Control>
+                </SegmentedControl>
             </div>
             
             <div >
-                <Label label="Cook Mode"/>
-                <div><WakeLock /></div>
-                <span class="text-xs">Prevents Screen Sleep</span>
+                <div><WakeLock label="Prevents Screen Sleep"/></div>
             </div>
 
             <div>
-                <Label label="Servings"/>
-                <Segment value={scalar}  onValueChange={(e) => (scalar = e.value)}>
-                    <Segment.Item value="1" classes={"btn-sm"} >1</Segment.Item>
-                    <Segment.Item value="2" classes={"btn-sm"} >2</Segment.Item>
-                    <Segment.Item value="3" classes={"btn-sm"} >3</Segment.Item>
-                    <Input bind:value={scalar} type="number" css="p-0 bg-transparent border-none text-center w-10"/>
-                </Segment>
+                <SegmentedControl value={scalar} onValueChange={(e) => (scalar = e.value)} >
+                    <SegmentedControl.Label>Servings</SegmentedControl.Label>
+                    <SegmentedControl.Control>
+                        <SegmentedControl.Indicator />
+                        <SegmentedControl.Item value="1">
+                            <SegmentedControl.ItemText>1</SegmentedControl.ItemText>
+                            <SegmentedControl.ItemHiddenInput />
+                        </SegmentedControl.Item>
+                        <SegmentedControl.Item value="2" >
+                            <SegmentedControl.ItemText>2</SegmentedControl.ItemText>
+                            <SegmentedControl.ItemHiddenInput />
+                        </SegmentedControl.Item>
+                        <SegmentedControl.Item value="3" >
+                            <SegmentedControl.ItemText>3</SegmentedControl.ItemText>
+                            <SegmentedControl.ItemHiddenInput />
+                        </SegmentedControl.Item>
+                        <div>
+                            <Input bind:value={scalar} type="number" css="p-0 bg-transparent border-none text-center w-10 h-full"/>
+                        </div>
+                    </SegmentedControl.Control>
+
+                </SegmentedControl>
                 
             </div>
 

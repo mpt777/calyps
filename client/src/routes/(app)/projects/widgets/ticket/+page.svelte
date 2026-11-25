@@ -30,9 +30,9 @@
 		<section class="p-4">Enter the number of segments based on their length down below..</section>
 		<section class="p-4 space-y-4">
 			{#each trains as train}
-			<div class="input-group divide-surface-200-800 grid-cols-[auto_1fr_auto] divide-x">
-				<div class="ig-cell preset-tonal-surface">{train.name} Segment</div>
-				<input type="number" class="ig-input input--min-w-4" min=0 value={train.count}/>
+			<div class="field-group divide-surface-200-800 grid-cols-[auto_1fr_auto] divide-x">
+				<div class="label label-text preset-tonal-surface">{train.name} Segment</div>
+				<input type="number" class="input input--min-w-4" min=0 value={train.count}/>
 
 				<div class="input-group-shim p-0!">
 					<div class="flex p-0! h-full">
@@ -43,7 +43,7 @@
 			</div>
 			{/each}
 
-			<div class="input-group divide-surface-200-800 grid-cols-[auto_1fr_auto] divide-x">
+			<div class="field-group divide-surface-200-800 grid-cols-[auto_1fr_auto] divide-x">
 				<button type="button" class="btn btn-lg h-full preset-filled-primary-500 rounded-none cursor-pointer" onclick={calculate} aria-label="Calculate Results">
 					<i class="ri-calculator-line"></i> Results 
 				</button>

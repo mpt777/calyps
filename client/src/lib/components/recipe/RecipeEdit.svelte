@@ -166,7 +166,25 @@
         <hr>
         <div>
           <Label label="Tags"></Label>
-          <TagsInput name="example" bind:value={formData.tag_types} placeholder="Add Tag..." padding="p-2" tagListClasses="overflow-y-auto"/>
+          <TagsInput name="example" value={formData.tag_types} onValueChange={(e) => (formData.tag_types = e.value)}>
+            <TagsInput.Control class="p-2">
+              <TagsInput.Context>
+                {#snippet children(tagsInput)}
+                  {#each tagsInput().value as value, index (index)}
+                    <TagsInput.Item {value} {index}>
+                      <TagsInput.ItemPreview>
+                        <TagsInput.ItemText>{value}</TagsInput.ItemText>
+                        <TagsInput.ItemDeleteTrigger />
+                      </TagsInput.ItemPreview>
+                      <TagsInput.ItemInput />
+                    </TagsInput.Item>
+                  {/each}
+                {/snippet}
+              </TagsInput.Context>
+              <TagsInput.Input placeholder="Add Tag..." />
+            </TagsInput.Control>
+            <TagsInput.HiddenInput />
+          </TagsInput>
         </div>
         <hr>
         
@@ -234,7 +252,7 @@
       </header>
       <hr>
       <section class="p-4 space-y-4">
-        <div class="input-group divide-surface-200-800 grid-cols-[1fr_auto] divide-x overflow-visible">
+        <div class="field-group divide-surface-200-800 grid-cols-[1fr_auto] divide-x overflow-visible">
           <Input name="handle" placeholder="handle" label="Handle" required={true} bind:value={formData.handle} errors={form?.errors} />
 
           <!-- <a class="anchor cursor-pointer p-1" >

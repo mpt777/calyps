@@ -19,22 +19,21 @@
   <div class="col-span-12 md:col-span-8">
 
     <Tabs value={group} onValueChange={(e) => (group = e.value)}>
-      {#snippet list()}
-        <Tabs.Control value="recipe">Recipe</Tabs.Control>
-        <Tabs.Control value="saved">Saved</Tabs.Control>
-        <Tabs.Control value="collection">Collections</Tabs.Control>
-      {/snippet}
-      {#snippet content()}
-        <Tabs.Panel value="recipe">
-          <RecipeCardList recipes={data.paginator.results}></RecipeCardList>
-        </Tabs.Panel>
-        <Tabs.Panel value="saved">
-          Todo
-        </Tabs.Panel>
-        <Tabs.Panel value="collection">
-          Todo
-        </Tabs.Panel>
-      {/snippet}
+      <Tabs.List>
+        <Tabs.Trigger value="recipe">Recipe</Tabs.Trigger>
+        <Tabs.Trigger value="saved">Saved</Tabs.Trigger>
+        <Tabs.Trigger value="collection">Collections</Tabs.Trigger>
+        <Tabs.Indicator />
+      </Tabs.List>
+      <Tabs.Content value="recipe">
+        <RecipeCardList recipes={data.paginator.results}></RecipeCardList>
+      </Tabs.Content>
+      <Tabs.Content value="saved">
+        Todo
+      </Tabs.Content>
+      <Tabs.Content value="collection">
+        Todo
+      </Tabs.Content>
     </Tabs>
     
     

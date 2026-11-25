@@ -2,12 +2,16 @@
 @import 'quill/dist/quill.core.css' layer(base);
 @import 'quill/dist/quill.snow.css' layer(base);
 
-@import 'tailwindcss';
+@import "tailwindcss";
+@plugin "@tailwindcss/forms";
 
-@import "@skeletonlabs/skeleton";
-@import '@skeletonlabs/skeleton/themes/mona';
+@import '@skeletonlabs/skeleton'; 
+@import '@skeletonlabs/skeleton-svelte'; 
+@import '@skeletonlabs/skeleton/themes/mona'; 
 
-@source '../node_modules/@skeletonlabs/skeleton-svelte/dist';
+@source "../node_modules/@skeletonlabs/skeleton/**/*.{js,svelte,ts}";
+@source "../node_modules/@skeletonlabs/skeleton-svelte/**/*.{js,svelte,ts}";
+
 
 @custom-variant dark (&:where(.dark, .dark *));
 /*
@@ -55,7 +59,7 @@
     background-size: cover;
 } */
 
-.input-group input.input--min-w-4 {
+.field-group input.input--min-w-4 {
     min-width: 1rem !important;
 }
 

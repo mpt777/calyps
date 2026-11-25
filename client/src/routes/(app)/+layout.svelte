@@ -46,11 +46,9 @@
 
 				{#if page.data.user}
 				<a href="{url('profile')}" class="cursor-pointer">
-					<Avatar
-						name={page.data.user.username?.charAt(0)}
-						border="border-4 border-surface-300-700 hover:border-primary-500!"
-						size="size-10"
-					/>
+					<Avatar class="size-10 border-4 border-surface-300-700 hover:border-primary-500!">
+						<Avatar.Fallback>{page.data.user.username?.charAt(0)}</Avatar.Fallback>
+					</Avatar>
 				</a>
 				{/if}
 

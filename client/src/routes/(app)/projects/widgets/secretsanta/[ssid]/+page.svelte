@@ -38,9 +38,9 @@
 		<section class="p-4">Please enter your name (case insesitive) to reveal who will be your giftee!</section>
 		<section class="p-4 space-y-4">
 
-			<div class="input-group divide-surface-200-800 grid-cols-[auto_1fr_auto] divide-x">
-				<div class="ig-cell preset-tonal-surface">Your Name</div>
-				<input type="text" class="ig-input input--min-w-4" bind:value={inputedName}/>
+			<div class="field-group divide-surface-200-800 grid-cols-[auto_1fr_auto] divide-x">
+				<div class="label label-text preset-tonal-surface">Your Name</div>
+				<input type="text" class="input input--min-w-4" bind:value={inputedName}/>
 				<button class="btn h-full preset-filled-primary-500 rounded-none cursor-pointer" onclick="{() => findGiftee()}">Find!</button>
 			</div>
 

@@ -2,6 +2,7 @@
   import { Switch } from '@skeletonlabs/skeleton-svelte';
   let wakeLock = null;
   let value = $state(false);
+  let {label} = $props();
 
   $effect(() => {
     value ? requestWakeLock() : releaseWakeLock();
@@ -22,4 +23,11 @@
   };
 </script>
 
-<Switch name="disturb" checked={value} onCheckedChange={(e) => (value = e.checked)}></Switch>
+	<Switch {value} onCheckedChange={(e) => (value = e.checked)}>
+		<Switch.Control>
+			<Switch.Thumb />
+		</Switch.Control>
+		<Switch.Label>{label}</Switch.Label>
+		<Switch.HiddenInput />
+	</Switch>
+<!-- <Switch name="disturb" checked={value} onCheckedChange={(e) => (value = e.checked)}></Switch> -->

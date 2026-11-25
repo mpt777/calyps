@@ -15,6 +15,9 @@ export default {
   },
   plugins: [
     forms,
+    skeleton({
+      themes: [themes.mona], // or whatever theme you want
+    }),
   ],
   safelist: [
     'bg-warning-500',

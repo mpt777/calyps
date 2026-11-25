@@ -49,7 +49,7 @@
     </span>
 
     <form method="GET">
-      <div class="input-group divide-surface-200-800 grid-cols-[auto_1fr_auto] divide-x items-center">
+      <div class="field-group divide-surface-200-800 grid-cols-[auto_1fr_auto] divide-x items-center">
         <button type="submit" aria-label="Search">
           <i class="ri-search-line p-4"></i>
         </button>

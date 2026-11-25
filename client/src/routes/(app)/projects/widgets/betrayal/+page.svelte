@@ -63,9 +63,9 @@
 		<section class="p-4">Select the number of dice in play, the value of interest, and the type of probability.</section>
 		<section class="p-4 space-y-4">
 
-			<div class="input-group divide-surface-200-800 grid-cols-[auto_1fr_auto] divide-x">
-				<div class="ig-cell preset-tonal">Dice Rolled</div>
-				<input type="number" class="ig-input input--min-w-4" min=0 value="{diceCount}"/>
+			<div class="field-group divide-surface-200-800 grid-cols-[auto_1fr_auto] divide-x">
+				<div class="label label-text preset-tonal">Dice Rolled</div>
+				<input type="number" class="input input--min-w-4" min=0 value="{diceCount}"/>
 
 				<div class="input-group-shim p-0!">
 					<div class="flex p-0! h-full">
@@ -75,9 +75,9 @@
 				</div>
 			</div>
 
-			<div class="input-group divide-surface-200-800 grid-cols-[auto_1fr_auto] divide-x">
-				<div class="ig-cell preset-tonal">Value of Interest</div>
-				<input type="number" class="ig-input input--min-w-4 divide-x" min=0 value="{interest}"/>
+			<div class="field-group divide-surface-200-800 grid-cols-[auto_1fr_auto] divide-x">
+				<div class="label label-text preset-tonal">Value of Interest</div>
+				<input type="number" class="input input--min-w-4 divide-x" min=0 value="{interest}"/>
 
 				<div class="input-group-shim p-0!">
 					<div class="flex p-0! h-full">
@@ -87,10 +87,10 @@
 				</div>
 			</div>
 
-			<div class="input-group divide-surface-200-800 grid-cols-[auto_1fr_auto] divide-x">
-				<div class="ig-cell preset-tonal divide-x">Probability</div>
+			<div class="field-group divide-surface-200-800 grid-cols-[auto_1fr_auto] divide-x">
+				<div class="label label-text preset-tonal divide-x">Probability</div>
 
-				<select class="ig-input select rounded-none" bind:value={probabilityType}>
+				<select class="select rounded-none" bind:value={probabilityType}>
 					<option value="0">Greater Than or Equal</option>
 					<option value="1">Greater Than</option>
 					<option value="2">Equal</option>
@@ -100,7 +100,7 @@
 
 			</div>
 
-			<div class="input-group divide-surface-200-800 grid-cols-[auto_1fr_auto] divide-x">
+			<div class="field-group divide-surface-200-800 grid-cols-[auto_1fr_auto] divide-x">
 				<button type="button" class="btn btn-lg h-full preset-filled-primary-500 rounded-none cursor-pointer" onclick={calculate} aria-label="Calculate">
 					<i class="ri-calculator-line"></i> Results 
 				</button>
